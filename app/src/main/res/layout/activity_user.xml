@@ -6,7 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Views.Activity.LoginActivity">
 
+    <FrameLayout
+        android:id="@+id/frameTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_46sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@color/bg_user_top"/>
+
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_165sdp"
         android:background="@color/bg_user"
@@ -14,8 +27,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005">
+        app:layout_constraintTop_toBottomOf="@+id/frameTop"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvAlert"
@@ -29,6 +42,7 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvAlert"
@@ -39,6 +53,187 @@
             android:layout_marginBottom="57dp"
             android:src="@drawable/img_user" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNameUser"
+            style="@style/text_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginBottom="112dp"
+            android:layout_toEndOf="@+id/imgUser"
+            android:text="@string/login"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSdtUser"
+            style="@style/text_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginBottom="72dp"
+            android:layout_toEndOf="@+id/imgUser"
+            android:text="@string/login"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddressUser"
+            style="@style/text_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="38dp"
+            android:layout_toEndOf="@+id/imgUser"
+            android:text="@string/login"
+            android:textSize="@dimen/_12sdp" />
     </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnFavourite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingStart="@dimen/_18sdp"
+        android:text="@string/favourite"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintVertical_bias="0.022"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavourite"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingStart="@dimen/_18sdp"
+        android:text="@string/history"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavourite"
+        app:layout_constraintVertical_bias="0.005"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistory"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSettingAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingStart="@dimen/_18sdp"
+        android:text="@string/settingAccount"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHistory"
+        app:layout_constraintVertical_bias="0.026"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSettingAccount"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnChangePass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingStart="@dimen/_18sdp"
+        android:text="@string/changePass"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSettingAccount"
+        app:layout_constraintVertical_bias="0.026"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChangePass"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingStart="@dimen/_18sdp"
+        android:text="@string/logout"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChangePass"
+        app:layout_constraintVertical_bias="0.026"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
+        app:layout_constraintHorizontal_bias="0.038"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogout"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
