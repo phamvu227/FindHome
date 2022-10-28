@@ -15,4 +15,6 @@
     <string name="settingAccount">Cài đặt tài khoản</string>
     <string name="changePass">Đổi mật khẩu</string>
     <string name="logout">Đăng xuất</string>
+    <string name="addPhong">Thêm phòng trọ</string>
+    <string name="roomRent">Phòng trọ cho thuê</string>
 </resources>
