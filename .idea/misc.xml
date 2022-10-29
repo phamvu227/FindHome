@@ -3,13 +3,31 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/bg_alert_user.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/bg_button_host.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/custom_circle_green_room_detail.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_back.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_aircondition_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_avt_01_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_collapseandmore_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_comment_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_like_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_male_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_chi_tiet_room.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_host.xml" value="0.1" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_lessor_details.xml" value="0.14130434782608695" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_login.xml" value="0.14130434782608695" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_register.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_room_detaild.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_room_details.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_user.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/comment_element_grid_room_detail_view.xml" value="0.14130434782608695" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/item_room_rent.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/rom_element_grid_view.xml" value="0.14130434782608695" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/rom_element_list_view.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/room_element_grid_view.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/utility_element_grid_rom_detail_view.xml" value="0.14130434782608695" />
       </map>
     </option>
   </component>

@@ -8,7 +8,4 @@
     <color name="colorRed">#E14D4D</color>
     <color name="colorOrange">#F3A205</color>
     <color name="colorGreen">#42C522</color>
-    <color name="bgLogin">#009688</color>
-    <color name="bg_user">#009688</color>
-    <color name="bg_user_top">#005E55</color>
 </resources>
