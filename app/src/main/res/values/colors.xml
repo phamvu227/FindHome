@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="colorGrayType1">#666666</color>
-    <color name="colorGrayType2">#95A5A6</color>
-    <color name="colorRed">#E14D4D</color>
-    <color name="colorOrange">#F3A205</color>
-    <color name="colorGreen">#42C522</color>
-    <color name="bgLogin">#009688</color>
-    <color name="bg_user">#009688</color>
-    <color name="bg_user_top">#005E55</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bgLogin">#008080</color>
+    <color name="bg_user">#004D4D</color>
+    <color name="bg_user_top">#008080</color>
 </resources>

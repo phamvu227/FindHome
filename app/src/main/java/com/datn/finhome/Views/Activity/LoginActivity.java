@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.datn.finhome.Base.BaseActivity;
-import com.datn.finhome.R;
 import com.datn.finhome.databinding.ActivityLoginBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
