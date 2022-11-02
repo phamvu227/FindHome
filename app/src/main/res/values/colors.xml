@@ -10,4 +10,5 @@
     <color name="bgLogin">#008080</color>
     <color name="bg_user">#004D4D</color>
     <color name="bg_user_top">#008080</color>
+    <color name="success">#2196F3</color>
 </resources>

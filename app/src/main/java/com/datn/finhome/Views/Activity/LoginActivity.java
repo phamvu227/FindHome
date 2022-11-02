@@ -1,79 +1,260 @@
 package com.datn.finhome.Views.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.datn.finhome.Base.BaseActivity;
+import com.datn.finhome.R;
 import com.datn.finhome.databinding.ActivityLoginBinding;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener, FirebaseAuth.AuthStateListener {
+    public static int REQUEST_CODE_LOGIN_WITH_GOOGLE = 99;
+    //Biến kiểm tra xem đang login kiểu nào: google, facebook, tài khoản app
+    public static int CHECK_TYPE_PROVIDER_LOGIN = 0;
+    public static int CODE_PROVIDER_LOGIN_WITH_GOOGLE = 1;
+    public static int CODE_PROVIDER_LOGIN_WITH_FACEBOOK = 2;
 
-    ActivityLoginBinding binding;
-    GoogleSignInClient mGoogleSignInClient;
+    public static final String SHARE_UID = "currentUserId";
+    public static final String IS_ADMIN = "isAdmin";
+    public static final String PREFS_DATA_NAME = "currentUserId";
+
+    ImageButton btnLoginWithGoogle;
+    GoogleApiClient apiClient;
+    FirebaseAuth firebaseAuth;
+
+    Button btn_signUp;
+    Button btn_login;
+
+    EditText edt_username_login;
+    EditText edt_password_login;
+
+    ProgressDialog progressDialog;
+
+    SharedPreferences sharedPreferences;
+
+    DatabaseReference nodeRoot;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_login);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        //Khởi tạo firebaseAuth
+        firebaseAuth = FirebaseAuth.getInstance();
+        //Text Đăng xuất
+        firebaseAuth.signOut();
+        // Lưu mã user đăng nhập vào app
+        sharedPreferences = getSharedPreferences(PREFS_DATA_NAME, MODE_PRIVATE);
+
+        btnLoginWithGoogle = (ImageButton) findViewById(R.id.btnImg_google_login);
+        btn_signUp = (Button) findViewById(R.id.btn_signUp);
+        btn_login = (Button) findViewById(R.id.btn_login);
+        edt_username_login = (EditText) findViewById(R.id.edt_username_login);
+        edt_password_login = (EditText) findViewById(R.id.edt_password_login);
+//        tvForgotPassword = (TextView) findViewById(R.id.tv_forgot_password);
+
+        progressDialog = new ProgressDialog(LoginActivity.this, R.style.MyProgessDialogStyle);
+        btn_login.setOnClickListener(this);
+        btnLoginWithGoogle.setOnClickListener(this);
+
+        CreateClientLoginWithGoogle();
+        /*ClickForgotPassword();*/
+        nodeRoot = FirebaseDatabase.getInstance().getReference();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //Thêm sự kiện listenerStateChange
+        firebaseAuth.addAuthStateListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Xóa sự kiện ListenerStateChange
+        firebaseAuth.removeAuthStateListener(this);
+    }
+
+    //Tạo client đăng nhập bằng google
+    private void CreateClientLoginWithGoogle() {
+        //Chú ý chỗ lấy id web này.....:( 8 tiếng để tìm ra lỗi ở đây
+        GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("115253171209-ii7mjp8rj6r0mqsnl5ei2arne611gmpe.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        //updateUI(account);
+        //Tạo ra sign client
+        apiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+                .build();
     }
+    //end Tạo client đăng nhập bằng google
+
+    //Đăng nhập vào tài khoản google
+    private void LoginGoogle(GoogleApiClient apiClient) {
+        //set code
+        CHECK_TYPE_PROVIDER_LOGIN = CODE_PROVIDER_LOGIN_WITH_GOOGLE;
+        Intent ILoginGoogle = Auth.GoogleSignInApi.getSignInIntent(apiClient);
+        //Hiển thị client google để đăng nhập
+        startActivityForResult(ILoginGoogle, REQUEST_CODE_LOGIN_WITH_GOOGLE);
+    }
+    //end Đăng nhập vào tài khoản google
 
     @Override
-    protected void initUi() {
-
-    }
-
-    @Override
-    protected void doWork() {
-
-        binding.signInButton.setSize(SignInButton.SIZE_STANDARD);
-
-        binding.signInButton.setOnClickListener(v -> {
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, 200);
-        });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //Kiểm tra nếu resultcode trả về là của client Login with google
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == 200) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+        if (requestCode == REQUEST_CODE_LOGIN_WITH_GOOGLE) {
+
+
+            if (resultCode == RESULT_OK) {
+
+                GoogleSignInResult signInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                //Lấy ra account google được đăng nhập
+                GoogleSignInAccount account = signInResult.getSignInAccount();
+                //Lấy ra token của account google
+                String tokenID = account.getIdToken();
+
+                CheckLoginFirebase(tokenID);
+            }
+
         }
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account);
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
-            //updateUI(null);
+    //Lấy token id và đăng nhập vào firebase
+    private void CheckLoginFirebase(String tokenID) {
+        if (CHECK_TYPE_PROVIDER_LOGIN == CODE_PROVIDER_LOGIN_WITH_GOOGLE) {
+            AuthCredential authCredential = GoogleAuthProvider.getCredential(tokenID, null);
+            //SignIn to firebase
+            firebaseAuth.signInWithCredential(authCredential);
         }
     }
+    //end Lấy token id và đăng nhập vào firebase
+
+    @Override
+    public void onConnectionFailed(@android.support.annotation.NonNull ConnectionResult connectionResult) {
+
+    }
+
+    private void login() {
+        String username = edt_username_login.getText().toString();
+        String password = edt_password_login.getText().toString();
+
+        if (username.trim().length() == 0 || password.trim().length() == 0) {
+            Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không hợp lệ", Toast.LENGTH_SHORT).show();
+        } else {
+            progressDialog.setMessage("Đang đăng nhập...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
+
+            firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@android.support.annotation.NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()) {
+                        progressDialog.dismiss();
+                        Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.btnImg_google_login:
+                LoginGoogle(apiClient);
+                break;
+            case R.id.btn_signUp:
+                Intent iSignup = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(iSignup);
+                break;
+            case R.id.btn_login:
+                login();
+                break;
+        }
+    }
+
+    @Override
+    public void onAuthStateChanged(@android.support.annotation.NonNull FirebaseAuth firebaseAuth) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+            checkAdminLogin(user.getUid());
+
+            progressDialog.dismiss();
+            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+        } else {
+
+        }
+    }
+
+    private void checkAdminLogin(String UID) {
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
+//                Boolean isAdmin = false;
+
+                // Lưu lại mã user đăng nhập vào app
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(SHARE_UID, UID);
+
+
+                //Load trang chủ
+                Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                startActivity(intent);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+        nodeRoot.child("Admins").addListenerForSingleValueEvent(valueEventListener);
+    }
+
+    public void register(View view) {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
 
 }

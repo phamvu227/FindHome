@@ -3,6 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/custom_button_face.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/custom_button_login.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/custom_edit_text_login.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/ic_svg_google_100.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/progress.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_detail_host.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_login.xml" value="0.12" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_main.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_main_menu.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_regist.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_register.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_splash.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_user.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/fragment_acout_view.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/menu/main_menu.xml" value="0.1" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/bg_alert_user.xml" value="0.1" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/bg_button_host.xml" value="0.1" />
         <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/custom_circle_green_room_detail.xml" value="0.1" />

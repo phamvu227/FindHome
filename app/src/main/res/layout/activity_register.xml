@@ -1,86 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/appCompatTextView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/register"
-        android:textSize="@dimen/_20sdp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/edName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.473" />
+        android:layout_height="match_parent"
+       >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="15dp"
+                />
+            <EditText
+                android:id="@+id/edt_email_signUp"
+                android:layout_width="372dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/custom_edit_text_login"
+                android:hint="Email"
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edName"
-        android:layout_width="@dimen/_272sdp"
-        android:layout_height="wrap_content"
-        android:hint="@string/Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.218" />
+            <EditText
+                android:id="@+id/edt_password_signUp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_width="372dp"
+                android:layout_height="52dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/custom_edit_text_login"
+                android:hint="Mat khau"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:inputType="textPassword"
+                />
+            <EditText
+                android:id="@+id/edt_retype_password_signUp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_width="372dp"
+                android:layout_height="52dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/custom_edit_text_login"
+                android:hint="Nhap lai mat khau"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edUserName"
-        android:layout_width="@dimen/_272sdp"
-        android:layout_height="wrap_content"
-        android:hint="@string/userName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edSDT"
-        app:layout_constraintVertical_bias="0.078" />
+                android:inputType="textPassword"
+                />
+            <EditText
+                android:id="@+id/edt_name_signUp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_width="372dp"
+                android:layout_height="52dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/custom_edit_text_login"
+                android:hint="Tên của bạn"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edSDT"
-        android:layout_width="@dimen/_272sdp"
-        android:layout_height="wrap_content"
-        android:hint="@string/hintSdt"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edName"
-        app:layout_constraintVertical_bias="0.077" />
+                />
+            <EditText
+                android:id="@+id/edt_phone_signUp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_width="372dp"
+                android:layout_height="52dp"
+                android:paddingLeft="10dp"
+                android:background="@drawable/custom_edit_text_login"
+                android:hint="Số Điện Thoại"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:inputType="phone"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="7dp"
+                >
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edPass"
-        android:layout_width="@dimen/_272sdp"
-        android:layout_height="wrap_content"
-        android:hint="@string/passWord"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edUserName"
-        app:layout_constraintVertical_bias="0.114" />
+                <TextView
+                    android:layout_width="95dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="Giới Tính"
+                    android:textSize="18dp"
+                    android:textColor="@android:color/black"
+                    />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRegister"
-        android:layout_width="@dimen/_272sdp"
-        android:layout_height="wrap_content"
-        android:background="@color/bgLogin"
-        android:text="@string/register"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edPass"
-        app:layout_constraintVertical_bias="0.109" />
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/rad_gender_female_signUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Nam"
+                        android:textColor="@android:color/black"
+                        android:buttonTint="@android:color/black"
+                        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <RadioButton
+                        android:id="@+id/rad_gender_male_signUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:buttonTint="@android:color/black"
+                        android:text="Nữ"
+                        android:textColor="@android:color/black" />
+                </RadioGroup>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btn_signUp"
+                android:layout_width="372dp"
+                android:layout_height="52dp"
+                android:text="ĐĂNG KÝ"
+                android:background="@drawable/custom_button_login"
+                android:width="300dp"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="20dp"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
