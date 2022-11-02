@@ -93,8 +93,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginLeft="7dp"
+                android:layout_gravity="center"
                 >
 
                 <TextView
