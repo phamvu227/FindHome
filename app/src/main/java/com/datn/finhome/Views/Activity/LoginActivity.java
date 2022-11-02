@@ -112,7 +112,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //Tạo client đăng nhập bằng google
     private void CreateClientLoginWithGoogle() {
-        //Chú ý chỗ lấy id web này.....:( 8 tiếng để tìm ra lỗi ở đây
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("115253171209-ii7mjp8rj6r0mqsnl5ei2arne611gmpe.apps.googleusercontent.com")
                 .requestEmail()
