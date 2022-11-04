@@ -13,11 +13,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.datn.finhome.Base.BaseActivity;
 import com.datn.finhome.R;
 import com.datn.finhome.databinding.ActivityLoginBinding;
+
+import com.facebook.CallbackManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -42,17 +45,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener, FirebaseAuth.AuthStateListener {
+//    public static int RC_SIGN_IN = 123;
     public static int REQUEST_CODE_LOGIN_WITH_GOOGLE = 99;
-    //Biến kiểm tra xem đang login kiểu nào: google, facebook, tài khoản app
     public static int CHECK_TYPE_PROVIDER_LOGIN = 0;
     public static int CODE_PROVIDER_LOGIN_WITH_GOOGLE = 1;
-    public static int CODE_PROVIDER_LOGIN_WITH_FACEBOOK = 2;
 
     public static final String SHARE_UID = "currentUserId";
-    public static final String IS_ADMIN = "isAdmin";
     public static final String PREFS_DATA_NAME = "currentUserId";
 
-    ImageButton btnLoginWithGoogle;
+    ImageButton btnLoginWithGoogle,btnLoginWithFacebook;
+    private CallbackManager callbackManager;
     GoogleApiClient apiClient;
     FirebaseAuth firebaseAuth;
 
@@ -81,25 +83,62 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         sharedPreferences = getSharedPreferences(PREFS_DATA_NAME, MODE_PRIVATE);
 
         btnLoginWithGoogle = (ImageButton) findViewById(R.id.btnImg_google_login);
+        btnLoginWithFacebook = (ImageButton) findViewById(R.id.btnImg_facebook_login);
+
         btn_signUp = (Button) findViewById(R.id.btn_signUp);
         btn_login = (Button) findViewById(R.id.btn_login);
+
         edt_username_login = (EditText) findViewById(R.id.edt_username_login);
         edt_password_login = (EditText) findViewById(R.id.edt_password_login);
-//        tvForgotPassword = (TextView) findViewById(R.id.tv_forgot_password);
-
         progressDialog = new ProgressDialog(LoginActivity.this, R.style.MyProgessDialogStyle);
         btn_login.setOnClickListener(this);
         btnLoginWithGoogle.setOnClickListener(this);
-
+        btnLoginWithFacebook.setOnClickListener(this);
         CreateClientLoginWithGoogle();
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+//        callbackManager = CallbackManager.Factory.create();
+//        btnLoginFace = (Button) findViewById(R.id.login_button);
+//        btnLoginFace.setReadPermissions("email", "public_profile");
+//        btnLoginFace.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+//                handleFacebookAccessToken(loginResult.getAccessToken());
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Log.d(TAG, "facebook:onCancel");
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                Log.d(TAG, "facebook:onError", error);
+//            }
+//        });
+//// ...
+//        @Override
+//        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//            super.onActivityResult(requestCode, resultCode, data);
+//
+//            // Pass the activity result back to the Facebook SDK
+//            mCallbackManager.onActivityResult(requestCode, resultCode, data);
+//        }
+
         /*ClickForgotPassword();*/
         nodeRoot = FirebaseDatabase.getInstance().getReference();
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
-        //Thêm sự kiện listenerStateChange
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null){
+            startActivity(new Intent(LoginActivity.this,MainMenuActivity.class));
+        }
+       // Thêm sự kiện listenerStateChange
         firebaseAuth.addAuthStateListener(this);
     }
 
@@ -113,7 +152,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //Tạo client đăng nhập bằng google
     private void CreateClientLoginWithGoogle() {
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("115253171209-ii7mjp8rj6r0mqsnl5ei2arne611gmpe.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -134,7 +173,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivityForResult(ILoginGoogle, REQUEST_CODE_LOGIN_WITH_GOOGLE);
     }
     //end Đăng nhập vào tài khoản google
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -150,7 +188,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 GoogleSignInAccount account = signInResult.getSignInAccount();
                 //Lấy ra token của account google
                 String tokenID = account.getIdToken();
-
+                SharedPreferences.Editor editor = getApplicationContext()
+                        .getSharedPreferences("MyPrefs",MODE_PRIVATE)
+                        .edit();
+                editor.putString("username",account.getDisplayName());
+                editor.putString("useremail",account.getFamilyName());
+                editor.putString("userAvatar",account.getPhotoUrl().toString());
+                editor.apply();
                 CheckLoginFirebase(tokenID);
             }
 
@@ -166,6 +210,57 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
     //end Lấy token id và đăng nhập vào firebase
+
+//    private void setRequestCodeLoginWithGoogle(){
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                    .requestIdToken(getString(R.string.default_web_client_id))
+//                .requestEmail()
+//                .build();
+//        mGoogleSigInClient = GoogleSignIn.getClient(this,gso);
+//
+//    }
+//
+//    private void signIn(){
+//        Intent siginIntent = mGoogleSigInClient.getSignInIntent();
+//        startActivityForResult(siginIntent,RC_SIGN_IN);
+//    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == RC_SIGN_IN){
+//            Task<GoogleSignInAccount> task =  GoogleSignIn.getSignedInAccountFromIntent(data);
+//            try {
+//                GoogleSignInAccount account =  task.getResult(ApiException.class);
+//                firebaseAuthWithGoogle(account.getIdToken());
+//                SharedPreferences.Editor editor = getApplicationContext()
+//                        .getSharedPreferences("MyPrefs",MODE_PRIVATE)
+//                        .edit();
+//                editor.putString("username",account.getDisplayName());
+//                editor.putString("useremail",account.getEmail());
+//                editor.apply();
+//
+//            }catch (ApiException e){
+//              Toast.makeText(LoginActivity.this,"thất bại",Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
+//
+//    private void firebaseAuthWithGoogle(String idToken){
+//        AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
+//        firebaseAuth.signInWithCredential(credential)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@androidx.annotation.NonNull Task<AuthResult> task) {
+//                      if(task.isSuccessful()){
+//                            Intent intent = new Intent(LoginActivity.this,MainMenuActivity.class);
+//                            startActivity(intent);
+//                      }else {
+//
+//                      }
+//                    }
+//                });
+//    }
 
     @Override
     public void onConnectionFailed(@android.support.annotation.NonNull ConnectionResult connectionResult) {
@@ -200,7 +295,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.btnImg_google_login:
+//                signIn();
                 LoginGoogle(apiClient);
+                break;
+            case R.id.btnImg_facebook_login:
                 break;
             case R.id.btn_signUp:
                 Intent iSignup = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -216,7 +314,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onAuthStateChanged(@android.support.annotation.NonNull FirebaseAuth firebaseAuth) {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
-            checkAdminLogin(user.getUid());
+            checkLogin(user.getUid());
 
             progressDialog.dismiss();
             Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
@@ -225,11 +323,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void checkAdminLogin(String UID) {
+    private void checkLogin(String UID) {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
-//                Boolean isAdmin = false;
 
                 // Lưu lại mã user đăng nhập vào app
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -247,7 +344,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         };
 
-        nodeRoot.child("Admins").addListenerForSingleValueEvent(valueEventListener);
+        nodeRoot.child("user").addListenerForSingleValueEvent(valueEventListener);
     }
 
     public void register(View view) {

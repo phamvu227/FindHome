@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">FinHome</string>
+    <string name="facebook_app_id">1234</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+
     <string name="userName">Tên Đăng Nhập</string>
     <string name="passWord">Mật Khẩu</string>
     <string name="login">Đăng Nhập</string>

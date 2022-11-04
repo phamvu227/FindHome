@@ -106,7 +106,9 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/custom_button_face"
                     android:src="@drawable/ic_svg_google_100" />
+
             </LinearLayout>
+
         </LinearLayout>
     </RelativeLayout>
 

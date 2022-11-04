@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                         progressDialog.dismiss();
                         Toast.makeText(RegisterActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                        Intent iSignin = new Intent(RegisterActivity.this, MainActivity.class);
+                        Intent iSignin = new Intent(RegisterActivity.this, MainMenuActivity.class);
                         startActivity(iSignin);
                     } else {
                         progressDialog.dismiss();

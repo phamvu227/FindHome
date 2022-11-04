@@ -26,7 +26,6 @@ public class MainActivity extends Fragment {
         // Inflate the layout for this fragment
         layout = inflater.inflate(R.layout.activity_main, container, false);
 
-//        initControl();
 
         return layout;
     }
