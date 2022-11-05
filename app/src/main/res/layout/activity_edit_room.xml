@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/frameTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_46sdp"
+        android:background="@color/bg_user_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnBackEditRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:background="@null"
+            android:src="@drawable/ic_back" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameTop">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <EditText
+                android:id="@+id/edit_titleEditRoom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_82sdp"
+                android:layout_marginHorizontal="@dimen/_24sdp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:paddingLeft="@dimen/_18sdp"
+                android:hint="Tiêu đề"
+                android:inputType="textPersonName"
+                android:textColorHint="@color/black"/>
+
+            <EditText
+                android:id="@+id/edit_locationEditRoom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@drawable/edit_text_border"
+                android:drawableRight="@drawable/ic_location"
+                android:ems="10"
+                android:paddingLeft="@dimen/_18sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:inputType="textPersonName"
+                android:hint="Vị trí"
+                android:textColorHint="@color/black" />
+
+            <EditText
+                android:id="@+id/edit_size_roomEditRoom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginHorizontal="@dimen/_24sdp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:paddingLeft="@dimen/_18sdp"
+                android:inputType="textPersonName"
+                android:hint="Kích thước"
+                android:textColorHint="@color/black" />
+
+            <EditText
+                android:id="@+id/edit_rentEditRoom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:paddingLeft="@dimen/_18sdp"
+                android:inputType="textPersonName"
+                android:hint="Số tiền thuê"
+                android:textColorHint="@color/black" />
+
+            <EditText
+                android:id="@+id/edit_price_rentEditRoom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:background="@drawable/edit_text_border"
+                android:gravity="start"
+                android:hint="Mô tả"
+                android:inputType="textCapSentences|textMultiLine"
+                android:lines="5"
+                android:maxLines="5"
+                android:paddingStart="@dimen/_18sdp"
+                android:paddingTop="@dimen/_18sdp"
+                android:textColorHint="@color/black"
+                tools:ignore="RtlSymmetry" />
+
+            <Button
+                android:id="@+id/btn_add_imageEditRoom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_52sdp"
+                android:layout_marginHorizontal="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:text="Thêm Ảnh"
+                android:backgroundTint="#D9D9D9"
+                android:textColor="@color/black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete_roomEditRoom"
+                app:strokeColor="#FF0000"
+                app:strokeWidth="@dimen/_1sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_52sdp"
+                android:layout_marginHorizontal="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:backgroundTint="@color/white"
+                android:text="Xóa phòng"
+                android:textColor="#FF0000"
+                />
+
+            <Button
+                android:id="@+id/btn_saveEditRoom"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_52sdp"
+                android:layout_marginHorizontal="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Lưu"
+                android:backgroundTint="#008080"
+                android:textColor="@color/white"
+                android:textSize="13dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
