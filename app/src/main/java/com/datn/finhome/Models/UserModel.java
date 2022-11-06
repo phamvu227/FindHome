@@ -14,8 +14,7 @@ import com.squareup.picasso.RequestCreator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserModel implements Parcelable { // Linh thêm
-    //Các thuộc tính để render dữ liệu từ fire base
+public class UserModel implements Parcelable {
 
     String avatar;
     String name;

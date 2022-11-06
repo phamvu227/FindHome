@@ -20,6 +20,7 @@
             android:name=".Views.Activity.FaceActivity"
             android:exported="true">
 
+
         </activity>
         <activity
             android:name=".Views.Activity.SplashActivity"

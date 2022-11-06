@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.datn.finhome.Base.BaseActivity;
 import com.datn.finhome.R;
+import com.datn.finhome.Utils.OverUtils;
 import com.datn.finhome.databinding.ActivityLoginBinding;
 
 import com.facebook.CallbackManager;
@@ -44,16 +45,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener, FirebaseAuth.AuthStateListener {
-//    public static int RC_SIGN_IN = 123;
-    public static int REQUEST_CODE_LOGIN_WITH_GOOGLE = 99;
-    public static int CHECK_TYPE_PROVIDER_LOGIN = 0;
-    public static int CODE_PROVIDER_LOGIN_WITH_GOOGLE = 1;
-
-    public static final String SHARE_UID = "currentUserId";
-    public static final String PREFS_DATA_NAME = "currentUserId";
-
-    ImageButton btnLoginWithGoogle,btnLoginWithFacebook;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, FirebaseAuth.AuthStateListener {
+    OverUtils overUtils;
+    ImageButton btnLoginWithGoogle, btnLoginWithFacebook;
     private CallbackManager callbackManager;
     GoogleApiClient apiClient;
     FirebaseAuth firebaseAuth;
@@ -65,9 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText edt_password_login;
 
     ProgressDialog progressDialog;
-
     SharedPreferences sharedPreferences;
-
     DatabaseReference nodeRoot;
 
     @Override
@@ -80,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //Text Đăng xuất
         firebaseAuth.signOut();
         // Lưu mã user đăng nhập vào app
-        sharedPreferences = getSharedPreferences(PREFS_DATA_NAME, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(OverUtils.PREFS_DATA_NAME, MODE_PRIVATE);
 
         btnLoginWithGoogle = (ImageButton) findViewById(R.id.btnImg_google_login);
         btnLoginWithFacebook = (ImageButton) findViewById(R.id.btnImg_facebook_login);
@@ -130,15 +122,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null){
-            startActivity(new Intent(LoginActivity.this,MainMenuActivity.class));
+        if (user != null) {
+            startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
         }
-       // Thêm sự kiện listenerStateChange
+        // Thêm sự kiện listenerStateChange
         firebaseAuth.addAuthStateListener(this);
     }
 
@@ -167,20 +158,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //Đăng nhập vào tài khoản google
     private void LoginGoogle(GoogleApiClient apiClient) {
         //set code
-        CHECK_TYPE_PROVIDER_LOGIN = CODE_PROVIDER_LOGIN_WITH_GOOGLE;
+        overUtils.CHECK_TYPE_PROVIDER_LOGIN = overUtils.CODE_PROVIDER_LOGIN_WITH_GOOGLE;
         Intent ILoginGoogle = Auth.GoogleSignInApi.getSignInIntent(apiClient);
         //Hiển thị client google để đăng nhập
-        startActivityForResult(ILoginGoogle, REQUEST_CODE_LOGIN_WITH_GOOGLE);
+        startActivityForResult(ILoginGoogle, overUtils.REQUEST_CODE_LOGIN_WITH_GOOGLE);
     }
+
     //end Đăng nhập vào tài khoản google
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Kiểm tra nếu resultcode trả về là của client Login with google
-
-        if (requestCode == REQUEST_CODE_LOGIN_WITH_GOOGLE) {
-
-
+        if (requestCode == overUtils.REQUEST_CODE_LOGIN_WITH_GOOGLE) {
             if (resultCode == RESULT_OK) {
 
                 GoogleSignInResult signInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -189,11 +178,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //Lấy ra token của account google
                 String tokenID = account.getIdToken();
                 SharedPreferences.Editor editor = getApplicationContext()
-                        .getSharedPreferences("MyPrefs",MODE_PRIVATE)
+                        .getSharedPreferences("MyPrefs", MODE_PRIVATE)
                         .edit();
-                editor.putString("username",account.getDisplayName());
-                editor.putString("useremail",account.getFamilyName());
-                editor.putString("userAvatar",account.getPhotoUrl().toString());
+                editor.putString("username", account.getDisplayName());
+                editor.putString("useremail", account.getFamilyName());
+                editor.putString("userAvatar", account.getPhotoUrl().toString());
                 editor.apply();
                 CheckLoginFirebase(tokenID);
             }
@@ -203,7 +192,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //Lấy token id và đăng nhập vào firebase
     private void CheckLoginFirebase(String tokenID) {
-        if (CHECK_TYPE_PROVIDER_LOGIN == CODE_PROVIDER_LOGIN_WITH_GOOGLE) {
+        if (OverUtils.CHECK_TYPE_PROVIDER_LOGIN ==  OverUtils.CODE_PROVIDER_LOGIN_WITH_GOOGLE) {
             AuthCredential authCredential = GoogleAuthProvider.getCredential(tokenID, null);
             //SignIn to firebase
             firebaseAuth.signInWithCredential(authCredential);
@@ -211,56 +200,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     //end Lấy token id và đăng nhập vào firebase
 
-//    private void setRequestCodeLoginWithGoogle(){
-//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                    .requestIdToken(getString(R.string.default_web_client_id))
-//                .requestEmail()
-//                .build();
-//        mGoogleSigInClient = GoogleSignIn.getClient(this,gso);
-//
-//    }
-//
-//    private void signIn(){
-//        Intent siginIntent = mGoogleSigInClient.getSignInIntent();
-//        startActivityForResult(siginIntent,RC_SIGN_IN);
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == RC_SIGN_IN){
-//            Task<GoogleSignInAccount> task =  GoogleSignIn.getSignedInAccountFromIntent(data);
-//            try {
-//                GoogleSignInAccount account =  task.getResult(ApiException.class);
-//                firebaseAuthWithGoogle(account.getIdToken());
-//                SharedPreferences.Editor editor = getApplicationContext()
-//                        .getSharedPreferences("MyPrefs",MODE_PRIVATE)
-//                        .edit();
-//                editor.putString("username",account.getDisplayName());
-//                editor.putString("useremail",account.getEmail());
-//                editor.apply();
-//
-//            }catch (ApiException e){
-//              Toast.makeText(LoginActivity.this,"thất bại",Toast.LENGTH_LONG).show();
-//            }
-//        }
-//    }
-//
-//    private void firebaseAuthWithGoogle(String idToken){
-//        AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
-//        firebaseAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@androidx.annotation.NonNull Task<AuthResult> task) {
-//                      if(task.isSuccessful()){
-//                            Intent intent = new Intent(LoginActivity.this,MainMenuActivity.class);
-//                            startActivity(intent);
-//                      }else {
-//
-//                      }
-//                    }
-//                });
-//    }
 
     @Override
     public void onConnectionFailed(@android.support.annotation.NonNull ConnectionResult connectionResult) {
@@ -272,7 +211,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = edt_password_login.getText().toString();
 
         if (username.trim().length() == 0 || password.trim().length() == 0) {
-            Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không hợp lệ", Toast.LENGTH_SHORT).show();
+            overUtils.makeToast(getApplicationContext(),"Tài khoản mật khẩu không hợp lệ");
         } else {
             progressDialog.setMessage("Đang đăng nhập...");
             progressDialog.setIndeterminate(true);
@@ -283,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onComplete(@android.support.annotation.NonNull Task<AuthResult> task) {
                     if (!task.isSuccessful()) {
                         progressDialog.dismiss();
-                        Toast.makeText(LoginActivity.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                        overUtils.makeToast(getApplicationContext(),overUtils.ERROR_MESSAGE_LOGIN);
                     }
                 }
             });
@@ -317,7 +256,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             checkLogin(user.getUid());
 
             progressDialog.dismiss();
-            Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+            overUtils.makeToast(getApplicationContext(),overUtils.LOGIN_successfully);
         } else {
 
         }
@@ -330,7 +269,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 // Lưu lại mã user đăng nhập vào app
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(SHARE_UID, UID);
+                editor.putString(OverUtils.SHARE_UID, UID);
 
 
                 //Load trang chủ
@@ -338,6 +277,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

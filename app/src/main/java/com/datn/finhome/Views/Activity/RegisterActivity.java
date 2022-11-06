@@ -16,18 +16,19 @@ import android.widget.Toast;
 import com.datn.finhome.Controllers.UserController;
 import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Utils.OverUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
+    OverUtils overUtils;
     Button btn_signup;
     FirebaseAuth firebaseAuth;
     EditText edt_email_signUp, edt_password_signUp, edt_retype_password_signUp, edt_name_signUp, edt_phone_signUp;
     RadioButton rad_gender_female_signUp, rad_gender_male_signUp;
     ProgressDialog progressDialog;
-
     UserController userController;
 
     @Override
@@ -67,18 +68,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         final Boolean genderUser = gender;
-        String error = "Vui lòng nhập";
         if(email.trim().length() == 0) {
-            error += " email";
-            Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+            overUtils.makeToast(getApplicationContext(),overUtils.ERROR_EMAIL);
         }else if(phone.trim().length() <10 || phone.length() >10){
-            Toast.makeText(RegisterActivity.this,"Số điện thoại không hợp lệ",Toast.LENGTH_LONG).show();
+            overUtils.makeToast(getApplicationContext(),"Số điện thoại không hợp lệ");
         }
         else if (password.trim().length() == 0) {
-            error += " mật khẩu";
-            Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+            overUtils.makeToast(getApplicationContext(),overUtils.ERROR_PASS);
         } else if (!passwordRetype.equals(password)) {
-            Toast.makeText(RegisterActivity.this, "Mật khẩu không khớp. Vui lòng nhập lại!", Toast.LENGTH_LONG).show();
+            overUtils.makeToast(getApplicationContext(),overUtils.CHECK_PASS);
         } else {
             progressDialog.setMessage("Đang tạo tài khoản...");
             progressDialog.setIndeterminate(true);
@@ -101,12 +99,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         userController.addUser(userModel, uid);
 
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                        overUtils.makeToast(getApplicationContext(),overUtils.LOGIN_successfully);
                         Intent iSignin = new Intent(RegisterActivity.this, MainMenuActivity.class);
                         startActivity(iSignin);
                     } else {
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "Đăng kí thất bại", Toast.LENGTH_SHORT).show();
+                        overUtils.makeToast(getApplicationContext(),overUtils.ERROR_SIGNIN);
                     }
                 }
             });
