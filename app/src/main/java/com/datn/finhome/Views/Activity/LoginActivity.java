@@ -66,27 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //Khởi tạo firebaseAuth
-        firebaseAuth = FirebaseAuth.getInstance();
-        //Text Đăng xuất
-        firebaseAuth.signOut();
-        // Lưu mã user đăng nhập vào app
-        sharedPreferences = getSharedPreferences(OverUtils.PREFS_DATA_NAME, MODE_PRIVATE);
-
-        btnLoginWithGoogle = (ImageButton) findViewById(R.id.btnImg_google_login);
-        btnLoginWithFacebook = (ImageButton) findViewById(R.id.btnImg_facebook_login);
-
-        btn_signUp = (Button) findViewById(R.id.btn_signUp);
-        btn_login = (Button) findViewById(R.id.btn_login);
-
-        edt_username_login = (EditText) findViewById(R.id.edt_username_login);
-        edt_password_login = (EditText) findViewById(R.id.edt_password_login);
-        progressDialog = new ProgressDialog(LoginActivity.this, R.style.MyProgessDialogStyle);
-        btn_login.setOnClickListener(this);
-        btnLoginWithGoogle.setOnClickListener(this);
-        btnLoginWithFacebook.setOnClickListener(this);
-        CreateClientLoginWithGoogle();
+        initView();
 //        FacebookSdk.sdkInitialize(getApplicationContext());
 //        callbackManager = CallbackManager.Factory.create();
 //        btnLoginFace = (Button) findViewById(R.id.login_button);
@@ -125,10 +105,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-            startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
-        }
+//        FirebaseUser user = firebaseAuth.getCurrentUser();
+//        if (user != null) {
+//            startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
+//        }
         // Thêm sự kiện listenerStateChange
         firebaseAuth.addAuthStateListener(this);
     }
@@ -211,7 +191,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = edt_password_login.getText().toString();
 
         if (username.trim().length() == 0 || password.trim().length() == 0) {
-            overUtils.makeToast(getApplicationContext(),"Tài khoản mật khẩu không hợp lệ");
+            overUtils.makeToast(getApplicationContext(),overUtils.VALIDATE_TK_MK);
         } else {
             progressDialog.setMessage("Đang đăng nhập...");
             progressDialog.setIndeterminate(true);
@@ -266,7 +246,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
-
                 // Lưu lại mã user đăng nhập vào app
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(OverUtils.SHARE_UID, UID);
@@ -286,6 +265,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         nodeRoot.child("user").addListenerForSingleValueEvent(valueEventListener);
     }
+
+
+    private void initView(){
+        //Khởi tạo firebaseAuth
+        firebaseAuth = FirebaseAuth.getInstance();
+        //Text Đăng xuất
+        firebaseAuth.signOut();
+        // Lưu mã user đăng nhập vào app
+        sharedPreferences = getSharedPreferences(OverUtils.PREFS_DATA_NAME, MODE_PRIVATE);
+
+        btnLoginWithGoogle = (ImageButton) findViewById(R.id.btnImg_google_login);
+        btnLoginWithFacebook = (ImageButton) findViewById(R.id.btnImg_facebook_login);
+
+        btn_signUp = (Button) findViewById(R.id.btn_signUp);
+        btn_login = (Button) findViewById(R.id.btn_login);
+
+        edt_username_login = (EditText) findViewById(R.id.edt_username_login);
+        edt_password_login = (EditText) findViewById(R.id.edt_password_login);
+        progressDialog = new ProgressDialog(LoginActivity.this, R.style.MyProgessDialogStyle);
+        btn_login.setOnClickListener(this);
+        btnLoginWithGoogle.setOnClickListener(this);
+        btnLoginWithFacebook.setOnClickListener(this);
+        CreateClientLoginWithGoogle();
+    }
+
 
     public void register(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);

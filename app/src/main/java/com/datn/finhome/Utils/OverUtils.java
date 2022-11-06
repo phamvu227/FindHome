@@ -19,7 +19,10 @@ public class OverUtils {
     public static final String ERROR_PASS = "Vui lòng nhập mật khẩu";
     public static final String CHECK_PASS = "Mật khẩu không khớp vui lòng nhập lại!";
     public static final String ERROR_SIGNIN = "Đăng ký thất bại";
-
+    public static final String ERROR_PASS1 = "Mật khẩu cần 8 kí tự trở lên, trong đó có chứa kí tự đặc biệt, chữ cái viết hoa và số";
+    public static final String VALIDATE_PHONE = "Số điện thoại không hợp lệ";
+    public static final String VALIDATE_NAME = "Quý khánh vui lòng đặt tên đăng nhập từ 6 kí tự trở lên";
+    public static final String VALIDATE_TK_MK = "Tài khoản mật khẩu không hợp lệ";
     public static void makeToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
