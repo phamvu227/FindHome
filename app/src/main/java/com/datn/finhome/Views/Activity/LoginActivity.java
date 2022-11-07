@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +20,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.datn.finhome.Base.BaseActivity;
 import com.datn.finhome.R;
 import com.datn.finhome.Utils.OverUtils;
-import com.datn.finhome.databinding.ActivityLoginBinding;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -36,6 +43,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -47,7 +55,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, FirebaseAuth.AuthStateListener {
     OverUtils overUtils;
-    ImageButton btnLoginWithGoogle, btnLoginWithFacebook;
+    ImageButton btnLoginWithGoogle;
+    LoginButton btnLoginWithFacebook;
     private CallbackManager callbackManager;
     GoogleApiClient apiClient;
     FirebaseAuth firebaseAuth;
@@ -67,36 +76,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
-//        FacebookSdk.sdkInitialize(getApplicationContext());
-//        callbackManager = CallbackManager.Factory.create();
-//        btnLoginFace = (Button) findViewById(R.id.login_button);
-//        btnLoginFace.setReadPermissions("email", "public_profile");
-//        btnLoginFace.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-//                handleFacebookAccessToken(loginResult.getAccessToken());
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Log.d(TAG, "facebook:onCancel");
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//                Log.d(TAG, "facebook:onError", error);
-//            }
-//        });
-//// ...
-//        @Override
-//        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//            super.onActivityResult(requestCode, resultCode, data);
-//
-//            // Pass the activity result back to the Facebook SDK
-//            mCallbackManager.onActivityResult(requestCode, resultCode, data);
-//        }
-
         /*ClickForgotPassword();*/
         nodeRoot = FirebaseDatabase.getInstance().getReference();
     }
@@ -105,10 +84,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-//        FirebaseUser user = firebaseAuth.getCurrentUser();
-//        if (user != null) {
-//            startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
-//        }
         // Thêm sự kiện listenerStateChange
         firebaseAuth.addAuthStateListener(this);
     }
@@ -118,6 +93,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStop();
         //Xóa sự kiện ListenerStateChange
         firebaseAuth.removeAuthStateListener(this);
+    }
+
+
+    private void LoginFacebook(){
+        btnLoginWithFacebook.setReadPermissions("email", "public_profile");
+        btnLoginWithFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(overUtils.TAG, "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(overUtils.TAG, "facebook:onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(overUtils.TAG, "facebook:onError", error);
+            }
+        });
+
+    }
+
+    private void handleFacebookAccessToken(AccessToken accessToken) {
+        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@androidx.annotation.NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    FirebaseUser user =firebaseAuth.getCurrentUser();
+
+                }
+            }
+        });
     }
 
     //Tạo client đăng nhập bằng google
@@ -148,6 +161,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         //Kiểm tra nếu resultcode trả về là của client Login with google
         if (requestCode == overUtils.REQUEST_CODE_LOGIN_WITH_GOOGLE) {
             if (resultCode == RESULT_OK) {
@@ -196,6 +210,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             progressDialog.setMessage("Đang đăng nhập...");
             progressDialog.setIndeterminate(true);
             progressDialog.show();
+//            progressDialog.show(getApplicationContext(),"Vui Long cho","Dang dang nhap",true);
+//            progressDialog.setCancelable(true);
 
             firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -206,26 +222,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
             });
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.btnImg_google_login:
-//                signIn();
-                LoginGoogle(apiClient);
-                break;
-            case R.id.btnImg_facebook_login:
-                break;
-            case R.id.btn_signUp:
-                Intent iSignup = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(iSignup);
-                break;
-            case R.id.btn_login:
-                login();
-                break;
         }
     }
 
@@ -276,18 +272,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         sharedPreferences = getSharedPreferences(OverUtils.PREFS_DATA_NAME, MODE_PRIVATE);
 
         btnLoginWithGoogle = (ImageButton) findViewById(R.id.btnImg_google_login);
-        btnLoginWithFacebook = (ImageButton) findViewById(R.id.btnImg_facebook_login);
+        btnLoginWithFacebook = findViewById(R.id.login_button);
 
         btn_signUp = (Button) findViewById(R.id.btn_signUp);
         btn_login = (Button) findViewById(R.id.btn_login);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        FacebookSdk.setAutoInitEnabled(true);
+        FacebookSdk.fullyInitialize();
+        callbackManager = CallbackManager.Factory.create();
 
         edt_username_login = (EditText) findViewById(R.id.edt_username_login);
         edt_password_login = (EditText) findViewById(R.id.edt_password_login);
         progressDialog = new ProgressDialog(LoginActivity.this, R.style.MyProgessDialogStyle);
         btn_login.setOnClickListener(this);
-        btnLoginWithGoogle.setOnClickListener(this);
         btnLoginWithFacebook.setOnClickListener(this);
+        btnLoginWithGoogle.setOnClickListener(this);
         CreateClientLoginWithGoogle();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.btnImg_google_login:
+//                signIn();
+                LoginGoogle(apiClient);
+                break;
+            case R.id.login_button:
+                LoginFacebook();
+                break;
+            case R.id.btn_signUp:
+                Intent iSignup = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(iSignup);
+                break;
+            case R.id.btn_login:
+                login();
+                break;
+        }
     }
 
 

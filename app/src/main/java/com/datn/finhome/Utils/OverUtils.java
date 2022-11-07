@@ -11,6 +11,7 @@ public class OverUtils {
     public static int CHECK_TYPE_PROVIDER_LOGIN = 0;
     public static int CODE_PROVIDER_LOGIN_WITH_GOOGLE = 1;
     private static SharedPreferences sharedPreferences;
+    public static final String TAG ="FacebookAuthen";
     public static final String SHARE_UID = "currentUserId";
     public static final String PREFS_DATA_NAME = "currentUserId";
     public static final String ERROR_MESSAGE_LOGIN = "Tên đăng nhập hoặc mật khẩu không đúng";

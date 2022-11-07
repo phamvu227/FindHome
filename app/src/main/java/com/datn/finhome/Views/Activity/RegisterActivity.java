@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             overUtils.makeToast(getApplicationContext(),overUtils.ERROR_PASS);
         } else if (!passwordRetype.equals(password)) {
             overUtils.makeToast(getApplicationContext(),overUtils.CHECK_PASS);
-        } else if  (password.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")) {
+        } else if  (password.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])")) {
             overUtils.makeToast(getApplicationContext(),overUtils.ERROR_PASS1);
         }else {
             progressDialog.setMessage("Đang tạo tài khoản...");
