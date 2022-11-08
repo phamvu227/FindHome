@@ -22,8 +22,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/logo"
-                android:tint="@color/bg_user" />
+                android:src="@drawable/logo_findhome" />
 
             <EditText
                 android:id="@+id/edt_username_login"
@@ -64,16 +63,15 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />
 
-        <TextView
-            android:onClick="register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BẠN CHƯA CÓ TÀI KHOẢN?"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:onClick="register"
+                android:text="BẠN CHƯA CÓ TÀI KHOẢN?"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="250dp"
