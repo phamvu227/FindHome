@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/custom_button_face.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/custom_button_login.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/custom_edit_text_login.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/ic_back.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/ic_svg_facebook_100.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/ic_svg_google_100.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/progress.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_detail_host.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_face.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_host.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_login_fb.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_main.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_main_menu.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_regist.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_register.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_splash.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_user.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/fragment_acout_view.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/item_room_rent.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/menu/main_menu.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/bg_alert_user.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/bg_button_host.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/custom_circle_green_room_detail.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_back.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_aircondition_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_avt_01_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_collapseandmore_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_comment_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_like_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_male_100.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_chi_tiet_room.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_host.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_lessor_details.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_login.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_register.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_room_detaild.xml" value="0.1" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_room_details.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_user.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/comment_element_grid_room_detail_view.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/item_room_rent.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/rom_element_grid_view.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/rom_element_list_view.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/room_element_grid_view.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/utility_element_grid_rom_detail_view.xml" value="0.14130434782608695" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
