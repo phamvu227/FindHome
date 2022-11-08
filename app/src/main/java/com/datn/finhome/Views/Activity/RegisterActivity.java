@@ -34,10 +34,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_register);
         firebaseAuth = FirebaseAuth.getInstance();
+        initView();
+    }
 
+    private void initView() {
         btn_signup = (Button) findViewById(R.id.btn_signUp);
         edt_email_signUp = (EditText) findViewById(R.id.edt_email_signUp);
         edt_password_signUp = (EditText) findViewById(R.id.edt_password_signUp);
@@ -46,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         edt_phone_signUp = (EditText) findViewById(R.id.edt_phone_signUp);
         rad_gender_female_signUp = (RadioButton) findViewById(R.id.rad_gender_female_signUp);
         rad_gender_male_signUp = (RadioButton) findViewById(R.id.rad_gender_male_signUp);
-
         progressDialog = new ProgressDialog(RegisterActivity.this, R.style.MyProgessDialogStyle);
         userController = new UserController(this);
         btn_signup.setOnClickListener(this);
@@ -61,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String name = edt_name_signUp.getText().toString();
         final String avatar = "user.png";
         final Boolean owner = false;
-        final String phone = edt_phone_signUp.getText().toString();
+        final String phone = "+84" +edt_phone_signUp.getText().toString();
         Boolean gender = true;
         if(rad_gender_female_signUp.isChecked()) {
             gender = false;
@@ -70,14 +71,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final Boolean genderUser = gender;
         if(email.trim().length() == 0) {
             overUtils.makeToast(getApplicationContext(),overUtils.ERROR_EMAIL);
-        }else if(phone.trim().length() <10 || phone.length() >10){
-            overUtils.makeToast(getApplicationContext(),"Số điện thoại không hợp lệ");
+        }else if (name.length() <= 5) {
+            OverUtils.makeToast(getApplicationContext(), OverUtils.VALIDATE_NAME);
+        }else if(!phone.trim().matches("^\\+84\\d{10}$")){
+            overUtils.makeToast(getApplicationContext(),overUtils.VALIDATE_PHONE);
         }
         else if (password.trim().length() == 0) {
             overUtils.makeToast(getApplicationContext(),overUtils.ERROR_PASS);
         } else if (!passwordRetype.equals(password)) {
             overUtils.makeToast(getApplicationContext(),overUtils.CHECK_PASS);
-        } else {
+        } else if  (password.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])")) {
+            overUtils.makeToast(getApplicationContext(),overUtils.ERROR_PASS1);
+        }else {
             progressDialog.setMessage("Đang tạo tài khoản...");
             progressDialog.setIndeterminate(true);
             progressDialog.show();
@@ -110,6 +115,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             });
         }
     }
+
 
     @Override
     public void onClick(View v) {
