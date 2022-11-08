@@ -1,7 +1,6 @@
-package com.datn.finhome.Views.Activity;
+package com.datn.finhome.Views.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.datn.finhome.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class accountView extends Fragment implements View.OnClickListener {
+public class AccountViewFragment extends Fragment implements View.OnClickListener {
     private Button btnLogout;
     private TextView tvName,tvEmail;
     ImageView ImgAvt;
@@ -33,7 +32,7 @@ public class accountView extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layout = inflater.inflate(R.layout.activity_user, container, false);
+        layout = inflater.inflate(R.layout.fragment_user, container, false);
 
         initControl();
 
