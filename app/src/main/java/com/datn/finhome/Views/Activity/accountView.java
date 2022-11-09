@@ -1,5 +1,6 @@
 package com.datn.finhome.Views.Activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +27,7 @@ public class accountView extends Fragment implements View.OnClickListener {
     ImageView ImgAvt;
     FirebaseAuth firebaseAuth;
     View layout;
+    private Context mContext;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +61,30 @@ public class accountView extends Fragment implements View.OnClickListener {
 
     }
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
+    private void signout(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("Bạn có chắc muốn đăng xuất?")
+                .setPositiveButton("CÓ", (dialog, which) -> {
+                    firebaseAuth = FirebaseAuth.getInstance();
+                    firebaseAuth.signOut();
+//                startActivity(new Intent(context,LoginActivity.class));
+                    getActivity().finish();
+                })
+                .setNegativeButton("HỦY", (dialog, which) -> dialog.dismiss());
+        Dialog dialog = builder.create();
+        dialog.show();
+    }
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
             case R.id.btnLogout:
-                firebaseAuth = FirebaseAuth.getInstance();
-                firebaseAuth.signOut();
-                getActivity().finish();
+                signout();
 
         }
     }

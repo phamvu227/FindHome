@@ -8,13 +8,12 @@
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FinHome"
+        android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
         <activity
             android:name=".Views.Activity.HostDetailsActivity"
@@ -28,6 +27,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".Views.Activity.FaceActivity"
             android:exported="true"></activity>
@@ -43,15 +43,8 @@
             android:name=".Views.Activity.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".Views.Activity.UserActivity"
-            android:exported="false" />
-        <activity
             android:name=".Views.Activity.LoginActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:exported="true" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

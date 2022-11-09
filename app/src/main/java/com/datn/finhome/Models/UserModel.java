@@ -121,6 +121,7 @@ public class UserModel implements Parcelable {
 
     //hàm khởi tạo rỗng
     public UserModel() {
+
         nodeRoot = FirebaseDatabase.getInstance().getReference();
     }
 
