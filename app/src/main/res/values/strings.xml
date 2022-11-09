@@ -23,4 +23,6 @@
     <string name="roomRent">Phòng trọ cho thuê</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addressHost">Vị trí trên bản đồ</string>
+    <string name="c_th_thu">Có thể thuê</string>
 </resources>
