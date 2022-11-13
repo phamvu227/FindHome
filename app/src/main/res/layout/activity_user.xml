@@ -46,6 +46,7 @@
             android:layout_marginEnd="@dimen/_158sdp"
             android:background="@drawable/bg_alert_user"
             android:gravity="center"
+            android:paddingBottom="8dp"
             android:text="@string/alertUser"
             android:textStyle="bold" />
 
@@ -56,9 +57,9 @@
             android:layout_below="@+id/tvThongBao"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_28sdp"
-            android:layout_marginBottom="57dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="78dp"
+            android:layout_marginBottom="15dp"
             android:src="@drawable/img_user" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -67,8 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="112dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="69dp"
             android:layout_toEndOf="@+id/imgUser"
             android:text="@string/login"
             android:textSize="@dimen/_15sdp"
@@ -80,8 +81,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="21dp"
-            android:layout_marginBottom="72dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="38dp"
             android:layout_toEndOf="@+id/imgUser"
             android:text="@string/login"
             android:textSize="@dimen/_12sdp" />
@@ -92,8 +93,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="38dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="11dp"
             android:layout_toEndOf="@+id/imgUser"
             android:text="@string/login"
             android:textSize="@dimen/_12sdp" />
@@ -115,19 +116,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
         app:layout_constraintVertical_bias="0.022"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        tools:ignore="RtlHardcoded,RtlSymmetry"
+        />
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFavourite"
-        app:layout_constraintVertical_bias="0.0" />
+<!--    <View-->
+<!--        android:id="@+id/view2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:background="@color/black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnFavourite"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
+    <!--    <View-->
+<!--        android:id="@+id/view3"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:background="@color/black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"-->
+<!--        app:layout_constraintHorizontal_bias="0.038"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnHistory"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
+
+    <!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:background="@color/black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"-->
+<!--        app:layout_constraintHorizontal_bias="0.038"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnSettingAccount"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
+    <!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:background="@color/black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"-->
+<!--        app:layout_constraintHorizontal_bias="0.038"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnChangePass"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnHistory"
@@ -143,21 +180,10 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnFavourite"
-        app:layout_constraintVertical_bias="0.005"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
-        app:layout_constraintHorizontal_bias="0.038"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnHistory"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="RtlHardcoded,RtlSymmetry"
+        android:layout_marginTop="5dp"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSettingAccount"
@@ -173,19 +199,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnHistory"
-        app:layout_constraintVertical_bias="0.026"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
-        app:layout_constraintHorizontal_bias="0.038"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSettingAccount"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="RtlHardcoded,RtlSymmetry"
+        android:layout_marginTop="5dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnChangePass"
@@ -201,19 +217,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSettingAccount"
-        app:layout_constraintVertical_bias="0.026"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
-        app:layout_constraintHorizontal_bias="0.038"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChangePass"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="RtlHardcoded,RtlSymmetry"
+        android:layout_marginTop="5dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogout"
@@ -229,19 +235,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnChangePass"
-        app:layout_constraintVertical_bias="0.026"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="RtlHardcoded,RtlSymmetry"
+        android:layout_marginTop="5dp"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
-        app:layout_constraintHorizontal_bias="0.038"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogout"
-        app:layout_constraintVertical_bias="0.0" />
+    <!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="2dp"-->
+<!--        android:background="@color/black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"-->
+<!--        app:layout_constraintHorizontal_bias="0.038"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnLogout"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
