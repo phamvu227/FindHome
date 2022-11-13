@@ -1,4 +1,4 @@
-package com.datn.finhome.Views.Activity;
+package com.datn.finhome.Views.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.datn.finhome.R;
 
-public class MainActivity extends Fragment {
+public class HomeFragment extends Fragment {
 
     View layout;
     @Override
@@ -23,7 +23,7 @@ public class MainActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        layout = inflater.inflate(R.layout.activity_main, container, false);
+        layout = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         return layout;

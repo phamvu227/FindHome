@@ -4,13 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.datn.finhome.R;
+import com.datn.finhome.Views.Fragment.AccountViewFragment;
+import com.datn.finhome.Views.Fragment.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -18,8 +19,8 @@ public class MainMenuActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     FrameLayout fragmentContainer;
 
-    MainActivity HomeView;
-    accountView AccountView;
+    HomeFragment HomeView;
+    AccountViewFragment AccountView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         initControl();
         //Chạy lần đầu tiên sẽ load vào màn hình main
-        HomeView = new MainActivity();
+        HomeView = new HomeFragment();
         setFragment(HomeView);
 
     }
@@ -51,7 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_account:
                         //Chuyển sang màn hình quản lý tài khoản
-                        AccountView = new accountView();
+                        AccountView = new AccountViewFragment();
                         setFragment(AccountView);
                         return true;
 

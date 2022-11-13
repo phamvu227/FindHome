@@ -1,4 +1,4 @@
-package com.datn.finhome.Views.Activity;
+package com.datn.finhome.Views.Fragment;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.datn.finhome.R;
+import com.datn.finhome.Views.Activity.ChangePassActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class accountView extends Fragment implements View.OnClickListener {
@@ -37,7 +38,7 @@ public class accountView extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layout = inflater.inflate(R.layout.activity_user, container, false);
+        layout = inflater.inflate(R.layout.fragment_user, container, false);
 
         initControl();
 
@@ -54,7 +55,7 @@ public class accountView extends Fragment implements View.OnClickListener {
         btnChangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),ChangePassActivity.class));
+                startActivity(new Intent(getActivity(), ChangePassActivity.class));
             }
         });
         SharedPreferences preferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
