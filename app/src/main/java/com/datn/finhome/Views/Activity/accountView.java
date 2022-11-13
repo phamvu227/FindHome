@@ -22,7 +22,7 @@ import com.datn.finhome.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class accountView extends Fragment implements View.OnClickListener {
-    private Button btnLogout;
+    private Button btnLogout,btnChangePass;
     private TextView tvName,tvEmail;
     ImageView ImgAvt;
     FirebaseAuth firebaseAuth;
@@ -46,10 +46,17 @@ public class accountView extends Fragment implements View.OnClickListener {
     private void initControl() {
 
         btnLogout = layout.findViewById(R.id.btnLogout);
+        btnChangePass = layout.findViewById(R.id.btnChangePass);
         tvName = layout.findViewById(R.id.tvNameUser);
         tvEmail = layout.findViewById(R.id.tvAddressUser);
         ImgAvt = layout.findViewById(R.id.imgUser);
         btnLogout.setOnClickListener(this);
+        btnChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),ChangePassActivity.class));
+            }
+        });
         SharedPreferences preferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String userName = preferences.getString("username","");
         String userEmail = preferences.getString("useremail","");

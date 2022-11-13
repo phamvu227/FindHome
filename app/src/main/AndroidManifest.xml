@@ -18,11 +18,6 @@
         <activity
             android:name=".Views.Activity.HostDetailsActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -42,9 +37,17 @@
         <activity
             android:name=".Views.Activity.RegisterActivity"
             android:exported="true" />
+        <activity android:name=".Views.Activity.ChangePassActivity"
+            android:exported="true"/>
         <activity
             android:name=".Views.Activity.LoginActivity"
-            android:exported="true" />
+            android:exported="true">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

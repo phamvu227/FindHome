@@ -204,12 +204,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String username = edt_username_login.getText().toString();
         String password = edt_password_login.getText().toString();
 
+
         if (username.trim().length() == 0 || password.trim().length() == 0) {
             overUtils.makeToast(getApplicationContext(),overUtils.VALIDATE_TK_MK);
         } else {
             progressDialog.setMessage("Đang đăng nhập...");
             progressDialog.setIndeterminate(true);
             progressDialog.show();
+            SharedPreferences.Editor editor = getApplicationContext()
+                    .getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    .edit();
+            editor.putString("pass",password);
+            editor.commit();
+            Log.d("asssss", password);
 //            progressDialog.show(getApplicationContext(),"Vui Long cho","Dang dang nhap",true);
 //            progressDialog.setCancelable(true);
 
