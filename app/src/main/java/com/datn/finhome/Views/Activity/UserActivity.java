@@ -22,7 +22,7 @@ AppCompatButton btnFavorite, btnChangePass, btnHistory, btnSettingAccount, btnLo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
+        setContentView(R.layout.fragment_user);
         btnFavorite = findViewById(R.id.btnFavourite);
         btnChangePass = findViewById(R.id.btnChangePass);
         btnHistory = findViewById(R.id.btnHistory);

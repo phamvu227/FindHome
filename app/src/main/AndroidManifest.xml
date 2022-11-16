@@ -16,37 +16,39 @@
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
         <activity
+            android:name=".Views.Activity.SearchActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".Views.Activity.HostDetailsActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".Views.Activity.FaceActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Views.Activity.SplashActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".Views.Activity.MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".Views.Activity.RegisterActivity"
             android:exported="true" />
-        <activity android:name=".Views.Activity.ChangePassActivity"
-            android:exported="true"/>
+        <activity
+            android:name=".Views.Activity.ChangePassActivity"
+            android:exported="true" />
         <activity
             android:name=".Views.Activity.LoginActivity"
             android:exported="true">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data
