@@ -21,6 +21,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.datn.finhome.Adapter.MessageAdapter;
+import com.datn.finhome.Models.Chat;
+import com.datn.finhome.Models.UserModel;
+import com.datn.finhome.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -32,23 +36,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.project.lovedatingapp.R;
-import com.project.lovedatingapp.adapters.MessageAdapter;
-import com.project.lovedatingapp.models.Chat;
-import com.project.lovedatingapp.models.User;
+import com.google.firebase.firestore.auth.User;
+
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageActivity extends AppCompatActivity {
 
@@ -126,8 +121,8 @@ public class MessageActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                txtUsername.setText(user.getUsername());
+                UserModel user = snapshot.getValue(UserModel.class);
+                txtUsername.setText(user.getName());
                 if (urlImageUser != null) {
                     Glide.with(MessageActivity.this).load(urlImageUser).into(circleImage);
                 }
