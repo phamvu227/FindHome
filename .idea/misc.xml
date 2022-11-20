@@ -3,33 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/bg_btn_messages.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/bg_button_host.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/custom_edit_text_login.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/home.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/ic_svg_facebook_100.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/user.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_edit_room.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_host.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_host_details.xml" value="0.12409420289855072" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_info_accout.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_main_menu.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_register.xml" value="0.12409420289855072" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_search.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_setting_account.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_show_details.xml" value="0.12409420289855072" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_splash.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_user.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_viewhistory.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/change_the_password.xml" value="0.12409420289855072" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/chat_item_left.xml" value="0.12409420289855072" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/chat_item_right.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/fragment_home.xml" value="0.12409420289855072" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/fragment_user.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/item_detail_reviews.xml" value="0.12409420289855072" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/drawable-v24/bg_left.xml" value="0.124" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/drawable-v24/bg_right.xml" value="0.124" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/drawable/custom_button_face.xml" value="0.124" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/drawable/custom_button_login.xml" value="0.124" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/drawable/custom_edit_text_login.xml" value="0.124" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/activity_edit_room.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/activity_login.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/activity_main.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/activity_main_menu.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/activity_message.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/activity_register.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/activity_show_details.xml" value="0.6" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/activity_viewhistory.xml" value="0.2" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/change_the_password.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/item_detail_reviews.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/item_reviews.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/hunte/finhome/app/src/main/res/layout/item_room.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/edit_text_border.xml" value="0.1965" />
         <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/ic_favorite_false.xml" value="0.1965" />
         <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/ic_favorite_true.xml" value="0.1965" />
