@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.datn.finhome.R;
-import com.datn.finhome.Views.Fragment.accountView;
+import com.datn.finhome.Views.Fragment.AccountViewFragment;
 import com.datn.finhome.Views.Fragment.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -20,7 +20,7 @@ public class MainMenuActivity extends AppCompatActivity {
     FrameLayout fragmentContainer;
 
     HomeFragment HomeView;
-    accountView AccountView;
+    AccountViewFragment AccountView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_account:
                         //Chuyển sang màn hình quản lý tài khoản
-                        AccountView = new accountView();
+                        AccountView = new AccountViewFragment();
                         setFragment(AccountView);
                         return true;
 
