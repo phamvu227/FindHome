@@ -6,11 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +69,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText edt_username_login;
     EditText edt_password_login;
+
+    ImageView btnCheckPass;
 
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
@@ -290,8 +295,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         edt_username_login = (EditText) findViewById(R.id.edt_username_login);
         edt_password_login = (EditText) findViewById(R.id.edt_password_login);
+
+        btnCheckPass = (ImageView) findViewById(R.id.checkPass);
+
         progressDialog = new ProgressDialog(LoginActivity.this, R.style.MyProgessDialogStyle);
         btn_login.setOnClickListener(this);
+        btnCheckPass.setOnClickListener(this);
         btnLoginWithFacebook.setOnClickListener(this);
         btnLoginWithGoogle.setOnClickListener(this);
         CreateClientLoginWithGoogle();
@@ -313,6 +322,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent iSignup = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(iSignup);
                 break;
+            case R.id.checkPass:
+                setBtnCheckPass(v);
+                break;
             case R.id.btn_login:
                 login();
                 break;
@@ -323,5 +335,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void register(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
+    }
+
+    private void setBtnCheckPass(View view) {
+        if(edt_password_login.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+            ((ImageView)(view)).setImageResource(R.drawable.ic_visibility_off);
+            //Show Password
+            edt_password_login.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        }
+        else{
+            ((ImageView)(view)).setImageResource(R.drawable.ic_visibility);
+            //Hide Password
+            edt_password_login.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
     }
 }
