@@ -22,7 +22,7 @@ import com.datn.finhome.R;
 import com.datn.finhome.Views.Activity.ChangePassActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class accountView extends Fragment implements View.OnClickListener {
+public class AccountViewFragment extends Fragment implements View.OnClickListener {
     private Button btnLogout,btnChangePass;
     private TextView tvName,tvEmail;
     ImageView ImgAvt;

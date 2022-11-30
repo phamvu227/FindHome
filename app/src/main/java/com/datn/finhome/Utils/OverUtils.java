@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 public class OverUtils {
+    public static final int MY_REQUEST_CODE = 10;
     public static int REQUEST_CODE_LOGIN_WITH_GOOGLE = 99;
     public static int CHECK_TYPE_PROVIDER_LOGIN = 0;
     public static int CODE_PROVIDER_LOGIN_WITH_GOOGLE = 1;
@@ -34,4 +35,5 @@ public class OverUtils {
         }
         return sharedPreferences;
     }
+
 }

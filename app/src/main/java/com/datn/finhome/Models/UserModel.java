@@ -15,21 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel implements Parcelable {
-
-    private String avatar;
-    private String name;
-    private String email;
-    private String phoneNumber;
+   public String avatar;
+   public String name;
+   public String email;
+   public String phoneNumber;
     boolean owner, gender;
     private List<Image> mListImage;
-
-    public List<Image> getmListImage() {
-        return mListImage;
-    }
-
-    public void setmListImage(List<Image> mListImage) {
-        this.mListImage = mListImage;
-    }
 
     //Id người dùng ở đây là uid trong firebaseauthen
     String userID;
