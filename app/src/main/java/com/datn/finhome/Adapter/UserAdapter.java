@@ -29,6 +29,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private Context context;
@@ -59,10 +61,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull @NotNull UserAdapter.UserViewHolder holder, int position) {
         UserCategory user = list.get(position);
-        String upperString = user.getUser().getUsername().substring(0, 1).toUpperCase() + user.getUser().getUsername().substring(1).toLowerCase();
+        String upperString = user.getUser().getName().substring(0, 1).toUpperCase() + user.getUser().getName().substring(1).toLowerCase();
         holder.txtFullname.setText(upperString);
         Glide.with(context).load(user.getImages().get(0).getUrl()).into(holder.profilePicc);
-        lastMessage(user.getUser().getId(),holder.lastMessage);
+        lastMessage(user.getUser().getUserID(),holder.lastMessage);
         holder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

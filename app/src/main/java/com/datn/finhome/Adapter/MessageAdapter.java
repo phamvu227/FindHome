@@ -30,6 +30,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
     public static final String KEY_GET_USER = "GET_USER";
