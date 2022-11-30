@@ -69,6 +69,17 @@
                 app:layout_constraintVertical_bias="0.5" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/tvForgot"
+            android:text="Quên mật khẩu?"
+            android:textColor="@color/black"
+            />
+
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"

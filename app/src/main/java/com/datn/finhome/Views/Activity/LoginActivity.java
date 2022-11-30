@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText edt_username_login;
     EditText edt_password_login;
+    TextView tvForgot;
 
     ImageView btnCheckPass;
 
@@ -225,39 +226,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //            progressDialog.show(getApplicationContext(),"Vui Long cho","Dang dang nhap",true);
 //            progressDialog.setCancelable(true);
 
-            firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@android.support.annotation.NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        if (firebaseAuth.getCurrentUser().isEmailVerified()){
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            if (user != null) {
-                                checkLogin(user.getUid());
+                firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@android.support.annotation.NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            if (firebaseAuth.getCurrentUser().isEmailVerified()){
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                if (user != null) {
+                                    checkLogin(user.getUid());
+                                    progressDialog.dismiss();
+                                    overUtils.makeToast(getApplicationContext(), overUtils.LOGIN_successfully);
+                                }
+                            }else {
                                 progressDialog.dismiss();
-                                overUtils.makeToast(getApplicationContext(), overUtils.LOGIN_successfully);
-                            } else {
                                 Toast.makeText(LoginActivity.this, "Vui lòng xác thực email của bạn", Toast.LENGTH_SHORT).show();
                             }
+
+                        }else {
+                            progressDialog.dismiss();
+                            overUtils.makeToast(getApplicationContext(), overUtils.ERROR_MESSAGE_LOGIN);
                         }
-                        progressDialog.dismiss();
-                        overUtils.makeToast(getApplicationContext(), overUtils.ERROR_MESSAGE_LOGIN);
                     }
-                }
-            });
+
+                });
+
+
         }
     }
 
     @Override
     public void onAuthStateChanged(@android.support.annotation.NonNull FirebaseAuth firebaseAuth) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-            checkLogin(user.getUid());
 
-            progressDialog.dismiss();
-            overUtils.makeToast(getApplicationContext(), overUtils.LOGIN_successfully);
-        } else {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null && user.isEmailVerified()) {
+                    checkLogin(user.getUid());
+                    progressDialog.dismiss();
+                    overUtils.makeToast(getApplicationContext(), overUtils.LOGIN_successfully);
+                }
 
-        }
+
     }
 
     private void checkLogin(String UID) {
@@ -270,7 +277,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                 //Load trang chủ
-                Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
+                Intent intent = new Intent(getApplicationContext(), HostActivity.class);
                 startActivity(intent);
 
             }
@@ -281,7 +288,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         };
 
-        nodeRoot.child("user").addListenerForSingleValueEvent(valueEventListener);
+        nodeRoot.child("Users").addListenerForSingleValueEvent(valueEventListener);
     }
 
 
@@ -302,6 +309,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.setAutoInitEnabled(true);
         FacebookSdk.fullyInitialize();
         callbackManager = CallbackManager.Factory.create();
+        tvForgot = findViewById(R.id.tvForgot);
+        tvForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,ForgotPassActivity.class);
+                startActivity(intent);
+            }
+        });
 
         edt_username_login = (EditText) findViewById(R.id.edt_username_login);
         edt_password_login = (EditText) findViewById(R.id.edt_password_login);
