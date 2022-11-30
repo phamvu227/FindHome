@@ -228,7 +228,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@android.support.annotation.NonNull Task<AuthResult> task) {
-                    if (!task.isSuccessful()) {
+                    if (task.isSuccessful()) {
+                        if (firebaseAuth.getCurrentUser().isEmailVerified()){
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            if (user != null) {
+                                checkLogin(user.getUid());
+                                progressDialog.dismiss();
+                                overUtils.makeToast(getApplicationContext(), overUtils.LOGIN_successfully);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Vui lòng xác thực email của bạn", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                         progressDialog.dismiss();
                         overUtils.makeToast(getApplicationContext(), overUtils.ERROR_MESSAGE_LOGIN);
                     }
