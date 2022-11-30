@@ -20,6 +20,7 @@ public class UserModel implements Parcelable {
    public String email;
    public String phoneNumber;
     boolean owner, gender;
+    private List<Image> mListImage;
 
     //Id người dùng ở đây là uid trong firebaseauthen
     String userID;
