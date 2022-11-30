@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 
 import com.datn.finhome.R;
 import com.datn.finhome.Views.Fragment.HomeFragment;
+import com.datn.finhome.Views.Fragment.AccountViewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainMenuActivity extends AppCompatActivity {
