@@ -22,15 +22,7 @@ public class UserModel implements Parcelable {
    public String email;
    public String phoneNumber;
     boolean owner, gender;
-//    private List<RoomModel> list_room;
-//
-//    public List<RoomModel> getList_room() {
-//        return list_room;
-//    }
-
-//    public void setList_room(List<RoomModel> list_room) {
-//        this.list_room = list_room;
-//    }
+    private List<Image> mListImage;
 
     //Id người dùng ở đây là uid trong firebaseauthen
     String userID;
