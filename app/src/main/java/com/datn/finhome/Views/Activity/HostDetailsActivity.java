@@ -41,7 +41,7 @@ public class HostDetailsActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usersRef = mDatabase.child(HOST_FIREBASE);
-        DatabaseReference roomRef = mDatabase.child(ROOM_FIREBASE);
+        DatabaseReference roomRef = mDatabase.child(ROOM_FIREBASE).child("0001");
         ValueEventListener valueEventListenerHost = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -54,15 +54,16 @@ public class HostDetailsActivity extends AppCompatActivity {
                         .load(hostModel.getAvatar())
                         .into(binding.imgHost);
 
-                RoomModel roomModel = snapshot.getValue(RoomModel.class);
-                assert roomModel != null;
-                if(Objects.equals(hostModel.getHostID(), roomModel.getIdHost())){
-                    roomModelArrayList.add(new RoomModel(roomModel.getAddress(), roomModel.getAmount(), roomModel.getIdHost(), roomModel.getIdRoom(), roomModel.getImage(), roomModel.getName(), roomModel.getPrice()));
-                    roomAdapter = new RoomAdapter(getApplicationContext(), roomModelArrayList);
-                    roomAdapter.notifyDataSetChanged();
-                    binding.rcvHostDetails.setAdapter(roomAdapter);
-                    binding.rcvHostDetails.setHasFixedSize(true);
-                }
+//                RoomModel roomModel = snapshot.getValue(RoomModel.class);
+//                assert roomModel != null;
+//                if(Objects.equals(hostModel.getHostID(), roomModel.getIdHost())){
+//                    roomModelArrayList = new ArrayList<RoomModel>();
+//                    roomModelArrayList.add(new RoomModel(roomModel.getAddress(), roomModel.getAmount(), roomModel.getIdHost(), roomModel.getIdRoom(), roomModel.getImage(), roomModel.getName(), roomModel.getPrice()));
+//                    roomAdapter = new RoomAdapter(getApplicationContext(), roomModelArrayList);
+//                    roomAdapter.notifyDataSetChanged();
+//                    binding.rcvHostDetails.setAdapter(roomAdapter);
+//                    binding.rcvHostDetails.setHasFixedSize(true);
+//                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

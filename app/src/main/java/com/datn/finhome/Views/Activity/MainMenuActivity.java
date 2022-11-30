@@ -20,7 +20,7 @@ public class MainMenuActivity extends AppCompatActivity {
     FrameLayout fragmentContainer;
 
     HomeFragment HomeView;
-    AccountViewFragment AccountView;
+//    accountView AccountView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +52,8 @@ public class MainMenuActivity extends AppCompatActivity {
                         return true;
                     case R.id.nav_account:
                         //Chuyển sang màn hình quản lý tài khoản
-                        AccountView = new AccountViewFragment();
-                        setFragment(AccountView);
+//                        AccountView = new accountView();
+//                        setFragment(AccountView);
                         return true;
 
                     default:

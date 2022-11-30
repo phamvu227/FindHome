@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
     OverUtils overUtils;
@@ -60,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String password = edt_password_signUp.getText().toString();
         String passwordRetype = edt_retype_password_signUp.getText().toString();
         final String name = edt_name_signUp.getText().toString();
-        final String avatar = "user.png";
+        final String avatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
         final Boolean owner = false;
         final String phone = "+84" +edt_phone_signUp.getText().toString();
         Boolean gender = true;
@@ -91,22 +92,33 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        UserModel userModel = new UserModel();
-                        userModel.setName(name);
-                        userModel.setEmail(email);
-                        userModel.setAvatar(avatar);
-                        userModel.setGender(genderUser);
-                        userModel.setOwner(owner);
-                        userModel.setPhoneNumber(phone);
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@androidx.annotation.NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(RegisterActivity.this, "Chúng tôi đã gửi tin nhắn xác thực về email vui lòng xác thực để tiếp tục đăng nhập", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                                String uid = task.getResult().getUser().getUid();
+                                UserModel userModel = new UserModel();
+                                userModel.setName(name);
+                                userModel.setEmail(email);
+                                userModel.setAvatar(avatar);
+                                userModel.setGender(genderUser);
+                                userModel.setOwner(owner);
+                                userModel.setPhoneNumber(phone);
 
-                        String uid = task.getResult().getUser().getUid();
+                                userController.addUser(userModel, uid);
 
-                        userController.addUser(userModel, uid);
+                                progressDialog.dismiss();
+                                overUtils.makeToast(getApplicationContext(),"Đăng ký thành công");
+                                Intent iSignin = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(iSignin);
 
-                        progressDialog.dismiss();
-                        overUtils.makeToast(getApplicationContext(),overUtils.LOGIN_successfully);
-                        Intent iSignin = new Intent(RegisterActivity.this, MainMenuActivity.class);
-                        startActivity(iSignin);
+
+
                     } else {
                         progressDialog.dismiss();
                         overUtils.makeToast(getApplicationContext(),overUtils.ERROR_SIGNIN);

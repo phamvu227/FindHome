@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void LoginFacebook(){
+    private void LoginFacebook() {
         btnLoginWithFacebook.setReadPermissions("email", "public_profile");
         btnLoginWithFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
@@ -130,8 +130,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@androidx.annotation.NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    FirebaseUser user =firebaseAuth.getCurrentUser();
+                if (task.isSuccessful()) {
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
 
                 }
             }
@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     //Lấy token id và đăng nhập vào firebase
     private void CheckLoginFirebase(String tokenID) {
-        if (OverUtils.CHECK_TYPE_PROVIDER_LOGIN ==  OverUtils.CODE_PROVIDER_LOGIN_WITH_GOOGLE) {
+        if (OverUtils.CHECK_TYPE_PROVIDER_LOGIN == OverUtils.CODE_PROVIDER_LOGIN_WITH_GOOGLE) {
             AuthCredential authCredential = GoogleAuthProvider.getCredential(tokenID, null);
             //SignIn to firebase
             firebaseAuth.signInWithCredential(authCredential);
@@ -211,7 +211,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         if (username.trim().length() == 0 || password.trim().length() == 0) {
-            overUtils.makeToast(getApplicationContext(),overUtils.VALIDATE_TK_MK);
+            overUtils.makeToast(getApplicationContext(), overUtils.VALIDATE_TK_MK);
         } else {
             progressDialog.setMessage("Đang đăng nhập...");
             progressDialog.setIndeterminate(true);
@@ -219,7 +219,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             SharedPreferences.Editor editor = getApplicationContext()
                     .getSharedPreferences("MyPrefs", MODE_PRIVATE)
                     .edit();
-            editor.putString("pass",password);
+            editor.putString("pass", password);
             editor.commit();
             Log.d("asssss", password);
 //            progressDialog.show(getApplicationContext(),"Vui Long cho","Dang dang nhap",true);
@@ -228,9 +228,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@android.support.annotation.NonNull Task<AuthResult> task) {
-                    if (!task.isSuccessful()) {
+                    if (task.isSuccessful()) {
+                        if (firebaseAuth.getCurrentUser().isEmailVerified()){
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            if (user != null) {
+                                checkLogin(user.getUid());
+                                progressDialog.dismiss();
+                                overUtils.makeToast(getApplicationContext(), overUtils.LOGIN_successfully);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Vui lòng xác thực email của bạn", Toast.LENGTH_SHORT).show();
+                            }
+                        }
                         progressDialog.dismiss();
-                        overUtils.makeToast(getApplicationContext(),overUtils.ERROR_MESSAGE_LOGIN);
+                        overUtils.makeToast(getApplicationContext(), overUtils.ERROR_MESSAGE_LOGIN);
                     }
                 }
             });
@@ -244,7 +254,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             checkLogin(user.getUid());
 
             progressDialog.dismiss();
-            overUtils.makeToast(getApplicationContext(),overUtils.LOGIN_successfully);
+            overUtils.makeToast(getApplicationContext(), overUtils.LOGIN_successfully);
         } else {
 
         }
@@ -275,7 +285,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void initView(){
+    private void initView() {
         //Khởi tạo firebaseAuth
         firebaseAuth = FirebaseAuth.getInstance();
         //Text Đăng xuất
