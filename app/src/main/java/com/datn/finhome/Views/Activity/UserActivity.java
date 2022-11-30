@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import com.datn.finhome.ChildActivity.ChangePassActivity;
-import com.datn.finhome.ChildActivity.FavoriteActivity;
-import com.datn.finhome.ChildActivity.HistoryActivity;
-import com.datn.finhome.ChildActivity.SettingAccountActivity;
 import com.datn.finhome.R;
 
 public class UserActivity extends AppCompatActivity {
@@ -26,18 +22,18 @@ public class UserActivity extends AppCompatActivity {
         btnLogOut = findViewById(R.id.btnLogout);
         btnFavorite.setOnClickListener(view -> {
             Toast.makeText(UserActivity.this, "yêu thích", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(UserActivity.this, FavoriteActivity.class);
-            startActivity(i);
+//            Intent i = new Intent(UserActivity.this, FavoriteActivity.class);
+//            startActivity(i);
         });
         btnHistory.setOnClickListener(view -> {
             Toast.makeText(UserActivity.this, "Lịch sử", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(UserActivity.this, HistoryActivity.class);
-            startActivity(i);
+//            Intent i = new Intent(UserActivity.this, HistoryActivity.class);
+//            startActivity(i);
         });
         btnSettingAccount.setOnClickListener(view -> {
             Toast.makeText(UserActivity.this, "Cài đặt tài khoản", Toast.LENGTH_SHORT).show();
-            Intent i = new Intent(UserActivity.this, SettingAccountActivity.class);
-            startActivity(i);
+//            Intent i = new Intent(UserActivity.this, SettingAccountActivity.class);
+//            startActivity(i);
         });
         btnChangePass.setOnClickListener(view -> {
             Toast.makeText(UserActivity.this, "Đổi mật khẩu", Toast.LENGTH_SHORT).show();

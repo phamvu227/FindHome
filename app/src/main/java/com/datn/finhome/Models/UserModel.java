@@ -12,7 +12,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.RequestCreator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserModel implements Parcelable {
    public String avatar;
@@ -150,5 +152,11 @@ public class UserModel implements Parcelable {
             }
         });
     }
+
+//    public Map<String, Object> toMapListRoom() {
+//        HashMap<String, Object> map = new HashMap<String, Object>();
+//        map.put("list_room", list_room);
+//        return map;
+//    }
 
 }
