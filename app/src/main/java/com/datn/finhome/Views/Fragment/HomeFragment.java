@@ -45,7 +45,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @androidx.annotation.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView(view);
+        mRoomModel = new ArrayList<>();
+        rcv = view.findViewById(R.id.rcvRoomMain);
         reference = FirebaseDatabase.getInstance().getReference("Room");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
                     mRoomModel.add(roomModel);
                     roomAdapter = new RoomAdapter(getContext(), mRoomModel);
+                    rcv.setAdapter(roomAdapter);
                 }
             }
 
@@ -63,11 +65,5 @@ public class HomeFragment extends Fragment {
                 Log.e("TAG", error.getMessage());
             }
         });
-        rcv.setAdapter(roomAdapter);
-    }
-
-    private void initView(View view) {
-        mRoomModel = new ArrayList<>();
-        rcv = view.findViewById(R.id.rcvRoomMain);
     }
 }
