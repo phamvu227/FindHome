@@ -84,7 +84,7 @@
                 android:textColorHint="@color/black" />
 
             <EditText
-                android:id="@+id/edit_price"
+                android:id="@+id/edit_rent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginHorizontal="@dimen/_24sdp"
@@ -97,7 +97,7 @@
                 android:textColorHint="@color/black" />
 
             <EditText
-                android:id="@+id/edit_description"
+                android:id="@+id/edit_price_rent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_24sdp"
