@@ -12,9 +12,9 @@ public class RoomModel {
     String sizeRoom;
     Integer price;
     String description;
-    File image;
+//    File image;
 
-    public RoomModel() {
+    public RoomModel(String trim, String s, String trim1, String s1, String trim2) {
     }
 
     public String getTitle() {
@@ -57,19 +57,19 @@ public class RoomModel {
         this.description = description;
     }
 
-    public File getImage() {
-        return image;
-    }
-
-    public void setImage(File image) {
-        this.image = image;
-    }
+//    public File getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(File image) {
+//        this.image = image;
+//    }
 
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("address", address);
         result.put("name", title);
-        result.put("img", image);
+//        result.put("img", image);
         result.put("price", price);
         result.put("description", description);
         result.put("sizeRoom", sizeRoom);
