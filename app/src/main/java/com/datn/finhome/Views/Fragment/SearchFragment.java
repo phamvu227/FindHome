@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.datn.finhome.R;
 
-public class HomeFragment extends Fragment {
+public class SearchFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +22,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.activity_search, container, false);
         return view;
     }
 
@@ -32,12 +32,7 @@ public class HomeFragment extends Fragment {
         initView(view);
     }
 
-    private void initView(View view) {}
+    private void initView(View view) {
 
-//    private void setUpSearch() {
-//        btnSearch.setOnClickListener(v -> {
-//            Intent intent = new Intent(getContext(), SearchActivity.class);
-//            startActivity(intent);
-//        });
-//    }
+    }
 }

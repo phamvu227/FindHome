@@ -18,7 +18,7 @@
         android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicc"
-            android:src="@drawable/user"
+            android:src="@drawable/img_user"
             android:layout_width="50dp"
             android:layout_height="50dp"/>
         <LinearLayout

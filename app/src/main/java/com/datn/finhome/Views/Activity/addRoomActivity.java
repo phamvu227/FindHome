@@ -36,13 +36,11 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class addRoomActivity extends AppCompatActivity {
     EditText edTitle, edLocation, edSizeRoom, edRent, edPriceRent;
     Button btnAddImage, btnPost;
     RecyclerView recyclerImage;
     PhotoAdapter photoAdapter;
-    TextView textView;
     private static final int Read_permission = 101;
     private static final int PICK_IMAGE = 1;
     ArrayList<Uri> uri = new ArrayList<>();
@@ -51,15 +49,14 @@ public class addRoomActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
-        edTitle = findViewById(R.id.edit_title);
-        edLocation = findViewById(R.id.edit_location);
-        edSizeRoom = findViewById(R.id.edit_size_room);
-        edRent = findViewById(R.id.edit_rent);
-        edPriceRent = findViewById(R.id.edit_price_rent);
+        edTitle = findViewById(R.id.add_title);
+        edLocation = findViewById(R.id.add_location);
+        edSizeRoom = findViewById(R.id.add_size_room);
+        edRent = findViewById(R.id.add_rent);
+        edPriceRent = findViewById(R.id.add_price_rent);
         btnAddImage = findViewById(R.id.btn_add_image);
         btnPost = findViewById(R.id.btn_post);
-        recyclerImage = findViewById(R.id.recyclerImage);
-        textView = findViewById(R.id.textTest);
+        recyclerImage = findViewById(R.id.recycle_add_img);
 
         photoAdapter = new PhotoAdapter(uri, getApplicationContext());
         recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
@@ -127,7 +124,7 @@ public class addRoomActivity extends AppCompatActivity {
 
                 }
                 photoAdapter.notifyDataSetChanged();
-                textView.setText("Photos (" + uri.size() + ") ");
+               // textView.setText("Photos (" + uri.size() + ") ");
             } else {
                 if (uri.size() < 10) {
                     Uri imageUri = data.getData();
@@ -137,7 +134,7 @@ public class addRoomActivity extends AppCompatActivity {
                 }
             }
             photoAdapter.notifyDataSetChanged();
-            textView.setText("Photos (" + uri.size() + ") ");
+            //textView.setText("Photos (" + uri.size() + ") ");
         } else {
             Toast.makeText(this, "Bạn chưa chọn bức ảnh nào!", Toast.LENGTH_SHORT).show();
         }
