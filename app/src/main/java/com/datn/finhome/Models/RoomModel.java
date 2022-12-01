@@ -1,6 +1,8 @@
 package com.datn.finhome.Models;
 
-public class RoomModel {
+import java.io.Serializable;
+
+public class RoomModel implements Serializable {
     String id;
     String address;
     String description;
