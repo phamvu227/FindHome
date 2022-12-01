@@ -12,17 +12,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.RequestCreator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserModel implements Parcelable {
-
-    String avatar;
-    String name;
-    String email;
-    String phoneNumber;
+   public String avatar;
+   public String name;
+   public String email;
+   public String phoneNumber;
     boolean owner, gender;
-
-
+    private List<Image> mListImage;
 
     //Id người dùng ở đây là uid trong firebaseauthen
     String userID;
@@ -121,6 +121,7 @@ public class UserModel implements Parcelable {
 
     //hàm khởi tạo rỗng
     public UserModel() {
+
         nodeRoot = FirebaseDatabase.getInstance().getReference();
     }
 
@@ -151,5 +152,11 @@ public class UserModel implements Parcelable {
             }
         });
     }
+
+//    public Map<String, Object> toMapListRoom() {
+//        HashMap<String, Object> map = new HashMap<String, Object>();
+//        map.put("list_room", list_room);
+//        return map;
+//    }
 
 }
