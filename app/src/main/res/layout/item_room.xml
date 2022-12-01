@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerRoom"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:src="@drawable/bg_room"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.003" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgRoom"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/bg_room"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.003" />
 
-    <TextView
-        android:id="@+id/tvNameRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="10dp"
-        android:text="Phòng trọ sinh viên, có gác xép"
-        android:textSize="16dp"
-        android:textColor="@color/cardview_dark_background"
-        app:layout_constraintStart_toEndOf="@+id/imgRoom"
-        app:layout_constraintTop_toTopOf="@+id/imgRoom" />
+        <TextView
+            android:id="@+id/tvNameRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="10dp"
+            android:text="Phòng trọ sinh viên, có gác xép"
+            android:textSize="16dp"
+            android:textColor="@color/cardview_dark_background"
+            app:layout_constraintStart_toEndOf="@+id/imgRoom"
+            app:layout_constraintTop_toTopOf="@+id/imgRoom" />
 
-    <TextView
-        android:id="@+id/tvPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1.000.000đ"
-        android:textColor="#009B10"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvAddressRoom"
-        app:layout_constraintStart_toStartOf="@+id/tvNameRoom"
-        app:layout_constraintTop_toBottomOf="@+id/tvNameRoom"
-        app:layout_constraintVertical_bias="0.428" />
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.000.000đ"
+            android:textColor="#009B10"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvAddressRoom"
+            app:layout_constraintStart_toStartOf="@+id/tvNameRoom"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameRoom"
+            app:layout_constraintVertical_bias="0.428" />
 
-    <TextView
-        android:id="@+id/tvAddressRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="Cầu Giấy, Hà Nội"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgRoom"
-        app:layout_constraintStart_toStartOf="@+id/tvPrice" />
+        <TextView
+            android:id="@+id/tvAddressRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Cầu Giấy, Hà Nội"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgRoom"
+            app:layout_constraintStart_toStartOf="@+id/tvPrice" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/btnFavorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="250dp"
-        android:button="@drawable/ic_favorite_false"
-        app:layout_constraintBottom_toBottomOf="@+id/imgRoom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imgRoom"
-        app:layout_constraintTop_toTopOf="@+id/imgRoom" />
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/btnFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="250dp"
+            android:button="@drawable/ic_favorite_false"
+            app:layout_constraintBottom_toBottomOf="@+id/imgRoom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgRoom"
+            app:layout_constraintTop_toTopOf="@+id/imgRoom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
