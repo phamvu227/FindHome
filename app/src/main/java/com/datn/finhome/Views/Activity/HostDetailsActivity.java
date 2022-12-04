@@ -5,15 +5,16 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.datn.finhome.Adapter.RoomAdapter;
+import com.datn.finhome.IClickItemUserListener;
 import com.datn.finhome.Models.HostModel;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.databinding.ActivityHostDetailsBinding;
@@ -109,7 +110,12 @@ public class HostDetailsActivity extends AppCompatActivity {
                     assert roomModel != null;
                     if (Objects.equals(roomModel.getIdHost(), id)){
                         mRoomModel.add(roomModel);
-                        roomAdapter = new RoomAdapter(HostDetailsActivity.this, mRoomModel);
+                        roomAdapter = new RoomAdapter(HostDetailsActivity.this, mRoomModel, new IClickItemUserListener() {
+                            @Override
+                            public void onClickItemRoom(RoomModel roomModel) {
+
+                            }
+                        });
                         binding.rcvHostDetails.setAdapter(roomAdapter);
                         binding.rcvHostDetails.setHasFixedSize(true);
                     }
