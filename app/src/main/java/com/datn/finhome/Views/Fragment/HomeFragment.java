@@ -1,5 +1,6 @@
 package com.datn.finhome.Views.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -12,8 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.datn.finhome.Adapter.RoomAdapter;
+import com.datn.finhome.IClickItemUserListener;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Views.Activity.ShowDetailActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,10 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    private RoomAdapter roomAdapter;
-    private List<RoomModel> mRoomModel;
     private RecyclerView rcv;
     private DatabaseReference reference;
+    private RoomAdapter roomAdapter;
+    private List<RoomModel> mRoomModel;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +59,12 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
                     mRoomModel.add(roomModel);
-                    roomAdapter = new RoomAdapter(getContext(), mRoomModel);
+                    roomAdapter = new RoomAdapter(getContext(), mRoomModel, new IClickItemUserListener() {
+                        @Override
+                        public void onClickItemRoom(RoomModel roomModel) {
+                            onClickGoToDetail(roomModel);
+                        }
+                    });
                     rcv.setAdapter(roomAdapter);
                 }
             }
@@ -65,5 +74,12 @@ public class HomeFragment extends Fragment {
                 Log.e("TAG", error.getMessage());
             }
         });
+    }
+    private  void onClickGoToDetail(RoomModel roomModel){
+        Intent intent = new Intent(getActivity(), ShowDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Room", roomModel);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
