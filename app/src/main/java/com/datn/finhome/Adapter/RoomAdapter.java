@@ -13,18 +13,21 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.datn.finhome.IClickItemUserListener;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
 
 import java.util.List;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder> {
-    private Context context;
+    Context context;
     private List<RoomModel> list;
+    private IClickItemUserListener iClickItemUserListener;
 
-    public RoomAdapter(Context context, List<RoomModel> list) {
+    public RoomAdapter(Context context, List<RoomModel> list, IClickItemUserListener listener) {
         this.context = context;
         this.list = list;
+        this.iClickItemUserListener = listener;
     }
 
     public void setList(List<RoomModel> list){
@@ -51,6 +54,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
             //add favorite | xóa favorite
         });
         holder.container.setOnClickListener(v -> {
+            iClickItemUserListener.onClickItemRoom(roomModel);
             // chuyển màn + truyền dữ liệu
         });
     }
