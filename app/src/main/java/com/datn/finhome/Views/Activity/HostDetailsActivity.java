@@ -1,12 +1,21 @@
 package com.datn.finhome.Views.Activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.datn.finhome.Adapter.RoomAdapter;
@@ -28,6 +37,7 @@ public class HostDetailsActivity extends AppCompatActivity {
     private List<RoomModel> mRoomModel;
     private DatabaseReference referenceHost, referenceRoom;
     private Long id = Long.valueOf(10001); //id host
+    private String numberPhone = "0365601200"; //phone host
 
     @SuppressLint("CutPasteId")
     @Override
@@ -45,12 +55,27 @@ public class HostDetailsActivity extends AppCompatActivity {
         });
 
         binding.btnCall.setOnClickListener(v -> {
-            //call
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CALL_PHONE}, 100);
+            }else {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + numberPhone));
+                startActivity(intent);
+            }
         });
 
         initHost();
         initRoom();
-        binding.rcvHostDetails.setAdapter(roomAdapter);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100){
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:" + numberPhone));
+            startActivity(intent);
+        }
     }
 
     private void initHost(){
@@ -90,6 +115,8 @@ public class HostDetailsActivity extends AppCompatActivity {
                     if (Objects.equals(roomModel.getIdHost(), id)){
                         mRoomModel.add(roomModel);
                         roomAdapter = new RoomAdapter(HostDetailsActivity.this, mRoomModel);
+                        binding.rcvHostDetails.setAdapter(roomAdapter);
+                        binding.rcvHostDetails.setHasFixedSize(true);
                     }
                 }
             }
