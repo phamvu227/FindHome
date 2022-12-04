@@ -13,69 +13,39 @@
         <entry key="..\:/ThucTap/finhome/app/src/main/res/drawable/user.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_edit_room.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_host.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_host_details.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_host_details.xml" value="0.12409420289855072" />
         <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_info_accout.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_main_menu.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_register.xml" value="0.12409420289855072" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_setting_account.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_show_details.xml" value="0.12409420289855072" />
         <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_splash.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_user.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/fragment_acout_view.xml" value="0.1308876811594203" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/item_room_rent.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome/app/src/main/res/menu/main_menu.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/bg_alert_user.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/bg_button_host.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/custom_circle_green_room_detail.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_back.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_aircondition_100.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_avt_01_100.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_collapseandmore_100.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_comment_100.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_like_100.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/drawable/ic_svg_male_100.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_chi_tiet_room.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_host.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_lessor_details.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_login.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_register.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_room_detaild.xml" value="0.1" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_room_details.xml" value="0.14666666666666667" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/activity_user.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/comment_element_grid_room_detail_view.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/item_room_rent.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/rom_element_grid_view.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/rom_element_list_view.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/room_element_grid_view.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/Admin/Desktop/DuAnTotNghiep/finhome/app/src/main/res/layout/utility_element_grid_rom_detail_view.xml" value="0.14130434782608695" />
-        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/activity_account_info.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/activity_host.xml" value="0.16210739614994935" />
-        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/activity_host_details.xml" value="0.16210739614994935" />
-        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/activity_show_details.xml" value="0.16210739614994935" />
-        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/fragment_home.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/item_room.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/drawable/edit_text_border.xml" value="0.191" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/drawable/ic_location.xml" value="0.191" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_add_room.xml" value="0.264" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_edit_room.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_favorite.xml" value="0.15217391304347827" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_host.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_location_dialog.xml" value="0.25416666666666665" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_login.xml" value="0.2" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_main_menu.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_register.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_show_details.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_splash.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_user.xml" value="0.176" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/activity_viewhistory.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/done_location_dialog.xml" value="0.253125" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/item_detail_reviews.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/item_photo.xml" value="0.253125" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/item_reviews.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/item_room.xml" value="0.22826086956521738" />
-        <entry key="..\:/lab android/Duantotnghiep/finhome/app/src/main/res/layout/item_room_rent.xml" value="0.22826086956521738" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/activity_viewhistory.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/change_the_password.xml" value="0.12409420289855072" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/chat_item_left.xml" value="0.12409420289855072" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/chat_item_right.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/fragment_home.xml" value="0.12409420289855072" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/fragment_user.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome/app/src/main/res/layout/item_detail_reviews.xml" value="0.12409420289855072" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/edit_text_border.xml" value="0.1965" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/ic_favorite_false.xml" value="0.1965" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/ic_favorite_true.xml" value="0.1965" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/ic_location.xml" value="0.1965" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable/custom_button_delete_room.xml" value="0.1965" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable/ic_launcher_background.xml" value="0.231" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable/ic_star.xml" value="0.2345" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/activity_edit_room.xml" value="0.2" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/activity_show_details.xml" value="0.25" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/activity_viewhistory.xml" value="0.22" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/change_the_password.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/item_contact_reviews.xml" value="0.5" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/item_detail_review.xml" value="0.33" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/item_detail_reviews.xml" value="0.3061594202898551" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/item_reviews.xml" value="0.22" />
+        <entry key="..\:/Users/mha28/finhome/app/src/main/res/layout/item_room.xml" value="0.25" />
       </map>
     </option>
   </component>
