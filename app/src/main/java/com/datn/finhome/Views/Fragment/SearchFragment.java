@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -54,33 +55,63 @@ public class SearchFragment extends Fragment {
     }
 
     private void initView(View view) {
+        dbReference = FirebaseDatabase.getInstance().getReference().child("Room");
         searchView = view.findViewById(R.id.txt_search);
 
         recyclerSearch = view.findViewById(R.id.recycle_list_search);
 
-        dbReference = FirebaseDatabase.getInstance().getReference("Room");
+
     }
 
-    private void roomSearch() {
-        list = new ArrayList<>();
-        dbReference = FirebaseDatabase.getInstance().getReference("Room");
-        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
-                    list.add(roomModel);
-                    roomAdapter = new RoomAdapter(getContext(), list);
-                    recyclerSearch.setAdapter(roomAdapter);
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (dbReference != null) {
+            dbReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        list = new ArrayList<>();
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            list.add(ds.getValue(RoomModel.class));
+                        }
+                        RoomAdapter roomAdapter = new RoomAdapter(getContext(), list);
+                        recyclerSearch.setAdapter(roomAdapter);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("TAG", error.getMessage());
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    search(s);
+                    return false;
+                }
+            });
+        }
+    }
+
+    private void search(String s) {
+        List<RoomModel> myList = new ArrayList<>();
+        for (RoomModel model : list) {
+            if (model.getAddress().toLowerCase().contains(s.toLowerCase())) {
+                myList.add(model);
             }
-        });
+        }
+        RoomAdapter roomAdapter = new RoomAdapter(getContext(), myList);
+        recyclerSearch.setAdapter(roomAdapter);
 
     }
 }
