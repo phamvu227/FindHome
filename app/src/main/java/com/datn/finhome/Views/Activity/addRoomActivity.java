@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,15 +30,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.datn.finhome.Adapter.PhotoAdapter;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove{
@@ -48,6 +57,9 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
     private static final int Read_permission = 101;
     private static final int PICK_IMAGE = 1;
     ArrayList<Uri> uri = new ArrayList<>();
+    private Uri imageUri;
+    StorageReference storageReference;
+    FirebaseStorage firebaseStorage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +74,9 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         btnPost = findViewById(R.id.btn_post);
         recyclerImage = findViewById(R.id.recyclerImage);
         textView = findViewById(R.id.textTest);
+
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
         photoAdapter = new PhotoAdapter(uri, getApplicationContext(), this);
         recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
@@ -81,7 +96,8 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickPushData();
+                onClickPushData2();
+                uploadToFilebase();
 //                String title = edTitle.getText().toString().trim();
 //                String address = edLocation.getText().toString().trim();
 //                String image = edLocation.getText().toString().trim();
@@ -122,8 +138,9 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                 for (int i = 0; i < countOfImages; i++) {
 
                     if (uri.size() < 10) {
-                        Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                        imageUri = data.getClipData().getItemAt(i).getUri();
                         uri.add(imageUri);
+//                        uploadToFilebase();
                     } else {
                         Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
                     }
@@ -133,8 +150,9 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                 textView.setText("Photos (" + uri.size() + ") ");
             } else {
                 if (uri.size() < 10) {
-                    Uri imageUri = data.getData();
+                    imageUri = data.getData();
                     uri.add(imageUri);
+//                    uploadToFilebase();
                 } else {
                     Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
                 }
@@ -155,7 +173,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         RoomModel roomModel1 = new RoomModel(edTitle.getText().toString().trim(),
                 edLocation.getText().toString().trim(),
                 edSizeRoom.getText().toString().trim(),
-                edPrice.getText().toString().trim(),
+                Integer.parseInt(edPrice.getText().toString().trim()),
                 edDescription.getText().toString().trim()
                 );
 
@@ -166,7 +184,59 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             }
         });
     }
+    private void onClickPushData2(){
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        RoomModel roomModel2 = new RoomModel(edTitle.getText().toString().trim(),
+                edLocation.getText().toString().trim(),
+                edSizeRoom.getText().toString().trim(),
+                Integer.parseInt(edPrice.getText().toString().trim()),
+                edDescription.getText().toString().trim()
+        );
+        mDatabase.child("Room").push().setValue(roomModel2, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                //Problem with saving the data
+                if (databaseError != null) {
+                    Toast.makeText(addRoomActivity.this, "Lỗi: "+databaseError+"", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(addRoomActivity.this, "Đã đăng bài", Toast.LENGTH_SHORT).show();
+                }
 
+            }
+    });
+    }
+    public  void uploadToFilebase(){
+//        final String randomName = UUID.randomUUID().toString();
+//       storageReference = FirebaseStorage.getInstance().getReference().child("photo/"+randomName);
+//       storageReference.putFile(imageUri)
+//               .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                   @Override
+//                   public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                       Toast.makeText(addRoomActivity.this, "Đã tải ảnh lên", Toast.LENGTH_SHORT).show();
+//                   }
+//               })
+//               .addOnFailureListener(new OnFailureListener() {
+//                   @Override
+//                   public void onFailure(@NonNull Exception e) {
+//                       Toast.makeText(addRoomActivity.this, "Lỗi tải ảnh", Toast.LENGTH_SHORT).show();
+//                   }
+//               });
+        StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+        ref.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(addRoomActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(addRoomActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
     @Override
     public void clicked(int getSize) {
         textView.setText("Photos (" + uri.size() + ") ");

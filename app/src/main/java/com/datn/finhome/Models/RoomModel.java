@@ -14,7 +14,16 @@ public class RoomModel {
     String description;
 //    File image;
 
-    public RoomModel(String trim, String s, String trim1, String s1, String trim2) {
+    public RoomModel(){
+
+    }
+
+    public RoomModel(String title, String address, String sizeRoom, Integer price, String description) {
+        this.title = title;
+        this.address = address;
+        this.sizeRoom = sizeRoom;
+        this.price = price;
+        this.description = description;
     }
 
     public String getTitle() {
