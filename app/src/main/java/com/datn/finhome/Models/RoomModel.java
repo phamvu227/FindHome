@@ -12,7 +12,14 @@ public class RoomModel implements Serializable {
     String price;
     String sizeRoom;
 
-    public RoomModel() {
+    }
+
+    public RoomModel(String title, String address, String sizeRoom, Integer price, String description) {
+        this.title = title;
+        this.address = address;
+        this.sizeRoom = sizeRoom;
+        this.price = price;
+        this.description = description;
     }
 
     public RoomModel(String id, String address, String description, Long idHost, String img, String name, String price, String sizeRoom) {

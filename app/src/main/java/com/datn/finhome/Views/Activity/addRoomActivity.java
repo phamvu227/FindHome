@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -25,16 +28,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.datn.finhome.Adapter.PhotoAdapter;
+import com.datn.finhome.Models.Image;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class addRoomActivity extends AppCompatActivity {
     EditText edTitle, edLocation, edSizeRoom, edRent, edPriceRent;
@@ -44,6 +56,10 @@ public class addRoomActivity extends AppCompatActivity {
     private static final int Read_permission = 101;
     private static final int PICK_IMAGE = 1;
     ArrayList<Uri> uri = new ArrayList<>();
+    private Uri imageUri;
+    StorageReference storageReference;
+    FirebaseStorage firebaseStorage;
+    private int upload_count = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +74,10 @@ public class addRoomActivity extends AppCompatActivity {
         btnPost = findViewById(R.id.btn_post);
         recyclerImage = findViewById(R.id.recycle_add_img);
 
-        photoAdapter = new PhotoAdapter(uri, getApplicationContext());
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+
+        photoAdapter = new PhotoAdapter(uri, getApplicationContext(), this);
         recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
         recyclerImage.setAdapter(photoAdapter);
 //        if(ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -76,13 +95,15 @@ public class addRoomActivity extends AppCompatActivity {
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = edTitle.getText().toString().trim();
-                String address = edLocation.getText().toString().trim();
-                String image = edLocation.getText().toString().trim();
-                String description = edTitle.getText().toString().trim();
-                int price = Integer.parseInt(edTitle.getText().toString().trim());
-                String sizeRoom = edTitle.getText().toString().trim();
-//                onClickPushData();
+                onClickPushData2();
+                uploadToFirebase();
+//                String title = edTitle.getText().toString().trim();
+//                String address = edLocation.getText().toString().trim();
+//                String image = edLocation.getText().toString().trim();
+//                String description = edTitle.getText().toString().trim();
+//                int price = Integer.parseInt(edTitle.getText().toString().trim());
+//                String sizeRoom = edTitle.getText().toString().trim();
+
             }
         });
         btnAddImage.setOnClickListener(new View.OnClickListener() {
@@ -116,8 +137,9 @@ public class addRoomActivity extends AppCompatActivity {
                 for (int i = 0; i < countOfImages; i++) {
 
                     if (uri.size() < 10) {
-                        Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                        imageUri = data.getClipData().getItemAt(i).getUri();
                         uri.add(imageUri);
+//                        uploadToFirebase();
                     } else {
                         Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
                     }
@@ -127,8 +149,9 @@ public class addRoomActivity extends AppCompatActivity {
                // textView.setText("Photos (" + uri.size() + ") ");
             } else {
                 if (uri.size() < 10) {
-                    Uri imageUri = data.getData();
+                    imageUri = data.getData();
                     uri.add(imageUri);
+//                    uploadToFirebase();
                 } else {
                     Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
                 }
@@ -138,45 +161,90 @@ public class addRoomActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Bạn chưa chọn bức ảnh nào!", Toast.LENGTH_SHORT).show();
         }
-//        if(requestCode == 1 && resultCode == Activity.RESULT_OK && null != data){
-//            if(data.getClipData() != null){
-//                int x = data.getClipData().getItemCount();
-//                    for (int i =0; i<x; i++){
-//                        uri.add(data.getClipData().getItemAt(i).getUri());
-//                    }
-//                photoAdapter.notifyDataSetChanged();
-//                textView.setText("Photo ("+uri.size()+")");
-//
-//            }else if(data.getData() != null){
-//                String imageUrl = data.getData().getPath();
-//                uri.add(Uri.parse(imageUrl));
-//            }
-//        }
+
     }
-    //    private void requestPermissions() {
-//        PermissionListener permissionlistener = new PermissionListener() {
-//            @Override
-//            public void onPermissionGranted() {
-////                Toast.makeText(addRoomActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-//                selectImagesFromGallery();
-//            }
-//
-//            @Override
-//            public void onPermissionDenied(List<String> deniedPermissions) {
-//                Toast.makeText(addRoomActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        };
-//        TedPermission.create()
-//                .setPermissionListener(permissionlistener)
-//                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-//                .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-//                .check();
-//    }
 
 
-    private void onClickPushData(RoomModel roomModel) {
+    private void onClickPushData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("");
-        myRef.setValue(edTitle.getText().toString().trim());
+        DatabaseReference myRef = database.getReference("Room");
+//        myRef.setValue(edTitle.getText().toString().trim());
+        RoomModel roomModel1 = new RoomModel(edTitle.getText().toString().trim(),
+                edLocation.getText().toString().trim(),
+                edSizeRoom.getText().toString().trim(),
+                Integer.parseInt(edPrice.getText().toString().trim()),
+                edDescription.getText().toString().trim()
+        );
+
+        myRef.setValue(roomModel1, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(addRoomActivity.this, "đã thêm", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void onClickPushData2() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        RoomModel roomModel2 = new RoomModel(edTitle.getText().toString().trim(),
+                edLocation.getText().toString().trim(),
+                edSizeRoom.getText().toString().trim(),
+                Integer.parseInt(edPrice.getText().toString().trim()),
+                edDescription.getText().toString().trim()
+        );
+        mDatabase.child("Room").push().setValue(roomModel2, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                //Problem with saving the data
+                if (databaseError != null) {
+                    Toast.makeText(addRoomActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(addRoomActivity.this, "Đã đăng bài", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
+    public void uploadToFirebase() {
+//        StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+//        ref.putFile(imageUri)
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        Toast.makeText(addRoomActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(addRoomActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+        StorageReference imageFolder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
+
+        for (upload_count = 0; upload_count < uri.size(); upload_count++) {
+            Uri IndividualImage = uri.get(upload_count);
+            StorageReference ImageName = imageFolder.child("Image" + IndividualImage.getLastPathSegment());
+
+            ImageName.putFile(IndividualImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(addRoomActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(addRoomActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+    }
+
+    @Override
+    public void clicked(int getSize) {
+        textView.setText("Photos (" + uri.size() + ") ");
     }
 }

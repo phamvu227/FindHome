@@ -22,10 +22,12 @@ import java.util.List;
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
     private ArrayList<Uri> uriArrayList;
     private Context context;
+    CountOfImageWhenRemove countOfImageWhenRemove;
 
-    public PhotoAdapter(ArrayList<Uri> uriArrayList, Context context) {
+    public PhotoAdapter(ArrayList<Uri> uriArrayList, Context context, CountOfImageWhenRemove countOfImageWhenRemove) {
         this.uriArrayList = uriArrayList;
         this.context = context;
+        this.countOfImageWhenRemove = countOfImageWhenRemove;
     }
 
     @NonNull
@@ -34,7 +36,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.item_photo, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, countOfImageWhenRemove);
     }
 
     @Override
@@ -50,6 +52,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
                 uriArrayList.remove(uriArrayList.get(position));
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getItemCount());
+                countOfImageWhenRemove.clicked(uriArrayList.size());
             }
         });
     }
@@ -61,11 +64,16 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView, deleteImages;
-        public ViewHolder(@NonNull View itemView) {
+        CountOfImageWhenRemove countOfImageWhenRemove;
+        public ViewHolder(@NonNull View itemView, CountOfImageWhenRemove countOfImageWhenRemove) {
             super(itemView);
-
+            this.countOfImageWhenRemove = countOfImageWhenRemove;
             imageView = itemView.findViewById(R.id.imgAdd);
             deleteImages = itemView.findViewById(R.id.deleteImage);
         }
+    }
+    
+    public interface CountOfImageWhenRemove{
+        void clicked(int getSize);
     }
 }
