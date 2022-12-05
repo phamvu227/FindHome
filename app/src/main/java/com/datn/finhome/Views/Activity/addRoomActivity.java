@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.datn.finhome.Adapter.PhotoAdapter;
+import com.datn.finhome.Models.Image;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
 import com.google.android.gms.auth.api.signin.internal.Storage;
@@ -48,7 +49,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove{
+public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     Button btnAddImage, btnPost;
     RecyclerView recyclerImage;
@@ -60,6 +61,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
     private Uri imageUri;
     StorageReference storageReference;
     FirebaseStorage firebaseStorage;
+    private int upload_count = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,7 +99,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             @Override
             public void onClick(View view) {
                 onClickPushData2();
-                uploadToFilebase();
+                uploadToFirebase();
 //                String title = edTitle.getText().toString().trim();
 //                String address = edLocation.getText().toString().trim();
 //                String image = edLocation.getText().toString().trim();
@@ -140,7 +142,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                     if (uri.size() < 10) {
                         imageUri = data.getClipData().getItemAt(i).getUri();
                         uri.add(imageUri);
-//                        uploadToFilebase();
+//                        uploadToFirebase();
                     } else {
                         Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
                     }
@@ -152,7 +154,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                 if (uri.size() < 10) {
                     imageUri = data.getData();
                     uri.add(imageUri);
-//                    uploadToFilebase();
+//                    uploadToFirebase();
                 } else {
                     Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
                 }
@@ -175,7 +177,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                 edSizeRoom.getText().toString().trim(),
                 Integer.parseInt(edPrice.getText().toString().trim()),
                 edDescription.getText().toString().trim()
-                );
+        );
 
         myRef.setValue(roomModel1, new DatabaseReference.CompletionListener() {
             @Override
@@ -184,7 +186,8 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             }
         });
     }
-    private void onClickPushData2(){
+
+    private void onClickPushData2() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         RoomModel roomModel2 = new RoomModel(edTitle.getText().toString().trim(),
                 edLocation.getText().toString().trim(),
@@ -197,46 +200,52 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 //Problem with saving the data
                 if (databaseError != null) {
-                    Toast.makeText(addRoomActivity.this, "Lỗi: "+databaseError+"", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(addRoomActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(addRoomActivity.this, "Đã đăng bài", Toast.LENGTH_SHORT).show();
                 }
 
             }
-    });
+        });
     }
-    public  void uploadToFilebase(){
-//        final String randomName = UUID.randomUUID().toString();
-//       storageReference = FirebaseStorage.getInstance().getReference().child("photo/"+randomName);
-//       storageReference.putFile(imageUri)
-//               .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                   @Override
-//                   public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                       Toast.makeText(addRoomActivity.this, "Đã tải ảnh lên", Toast.LENGTH_SHORT).show();
-//                   }
-//               })
-//               .addOnFailureListener(new OnFailureListener() {
-//                   @Override
-//                   public void onFailure(@NonNull Exception e) {
-//                       Toast.makeText(addRoomActivity.this, "Lỗi tải ảnh", Toast.LENGTH_SHORT).show();
-//                   }
-//               });
-        StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-        ref.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(addRoomActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(addRoomActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+    public void uploadToFirebase() {
+//        StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+//        ref.putFile(imageUri)
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        Toast.makeText(addRoomActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(addRoomActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+        StorageReference imageFolder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
+
+        for (upload_count = 0; upload_count < uri.size(); upload_count++) {
+            Uri IndividualImage = uri.get(upload_count);
+            StorageReference ImageName = imageFolder.child("Image" + IndividualImage.getLastPathSegment());
+
+            ImageName.putFile(IndividualImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(addRoomActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(addRoomActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
 
     }
+
     @Override
     public void clicked(int getSize) {
         textView.setText("Photos (" + uri.size() + ") ");
