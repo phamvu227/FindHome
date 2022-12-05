@@ -2,47 +2,40 @@ package com.datn.finhome.Views.Activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
 import com.google.android.material.button.MaterialButton;
+import com.squareup.picasso.Picasso;
 
 public class ShowDetailActivity extends AppCompatActivity {
-    TextView tvTitleRoomReview,tvStarReview,tvAreaReview,tvPriceReview,tvNameContactReviews,
-            tvAddressContactReviews,tvDetailReviews;
-    ImageView imgContactReviews;
-    MaterialButton btnContactReviews;
-    String title,star,area,price,detailreview;
-    SharedPreferences preferences = getSharedPreferences("MyDetailRoom", MODE_PRIVATE);
+    TextView tvaddress,tvAreaReview,tvTitleRoomReview,tvPriceReview;
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
-        tvTitleRoomReview = findViewById(R.id.tvTitleRoomReview);
-        tvStarReview = findViewById(R.id.tvStarReview);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle == null){
+            return;
+        }
+        RoomModel roomModel = (RoomModel) bundle.get("Room");
         tvAreaReview = findViewById(R.id.tvAreaReview);
+        tvaddress = findViewById(R.id.tvDetailReviews);
+        tvTitleRoomReview = findViewById(R.id.tvTitleRoomReview);
         tvPriceReview = findViewById(R.id.tvPriceReview);
-        tvNameContactReviews = findViewById(R.id.tvNameContactReviews);
-        tvAddressContactReviews = findViewById(R.id.tvAddressContactReviews);
-        tvDetailReviews = findViewById(R.id.tvDetailReviews);
-        imgContactReviews = findViewById(R.id.imgContactReviews);
-        btnContactReviews = findViewById(R.id.btnContactReviews);
-        title = preferences.getString("title","");
-        star = preferences.getString("star","");
-        area = preferences.getString("area","");
-        price = preferences.getString("price","");
-        detailreview = preferences.getString("detailreview","");
-        getDetail();
-    }
+        imageView = findViewById(R.id.imgview);
 
-    void getDetail(){
-        tvTitleRoomReview.setText(title);
-        tvStarReview.setText(star);
-        tvAreaReview.setText(area);
-        tvPriceReview.setText(price);
-        tvDetailReviews.setText(detailreview);
+        Picasso.get().load(roomModel.getImg()).into(imageView);
+        tvPriceReview.setText(roomModel.getPrice());
+        tvTitleRoomReview.setText(roomModel.getDescription());
+        Log.d("aaa", String.valueOf(tvTitleRoomReview));
+        tvaddress.setText(roomModel.getAddress());
+        tvAreaReview.setText(roomModel.getSizeRoom());
     }
 }

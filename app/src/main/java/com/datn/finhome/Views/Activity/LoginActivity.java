@@ -277,7 +277,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                 //Load trang chủ
-                Intent intent = new Intent(getApplicationContext(), HostActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
                 startActivity(intent);
 
             }

@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -19,17 +20,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
-        tools:targetApi="31">
+        android:largeHeap="true"
+        tools:targetApi="31"
+        >
         <activity
             android:name=".Views.Activity.AccountInfoActivity"
             android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
         </activity>
-        <activity
-            android:name=".Views.Activity.SearchActivity"
-            android:exported="true" />
+
+        <activity android:name=".Views.Activity.MessageActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity android:name=".Views.Activity.HostActivity"
+            android:exported="false"/>
+
+        <activity android:name=".Views.Activity.ForgotPassActivity"
+            android:exported="false"/>
         <activity
             android:name=".Views.Activity.HostDetailsActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -40,32 +61,41 @@
         <activity
             android:name=".Views.Activity.SplashActivity"
             android:exported="true" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
 
         </activity>
         <activity
             android:name=".Views.Activity.MainMenuActivity"
-            android:exported="false" />
+            android:exported="false" >
+
+        </activity>
         <activity
             android:name=".Views.Activity.RegisterActivity"
             android:exported="true" />
         <activity
             android:name=".Views.Activity.UserActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Views.Activity.addRoomActivity"
             android:exported="true"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Views.Activity.LoginActivity"
             android:exported="true">
 
         </activity>
+
+        <activity
+            android:name=".Views.Activity.ShowDetailActivity"
+            android:exported="true">
+        </activity>
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

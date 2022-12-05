@@ -20,21 +20,21 @@ public class UserActivity extends AppCompatActivity {
         btnHistory = findViewById(R.id.btnHistory);
         btnSettingAccount = findViewById(R.id.btnSettingAccount);
         btnLogOut = findViewById(R.id.btnLogout);
-        btnFavorite.setOnClickListener(view -> {
-            Toast.makeText(UserActivity.this, "yêu thích", Toast.LENGTH_SHORT).show();
+//        btnFavorite.setOnClickListener(view -> {
+//            Toast.makeText(UserActivity.this, "yêu thích", Toast.LENGTH_SHORT).show();
 //            Intent i = new Intent(UserActivity.this, FavoriteActivity.class);
 //            startActivity(i);
-        });
+//        });
         btnHistory.setOnClickListener(view -> {
             Toast.makeText(UserActivity.this, "Lịch sử", Toast.LENGTH_SHORT).show();
 //            Intent i = new Intent(UserActivity.this, HistoryActivity.class);
 //            startActivity(i);
         });
-        btnSettingAccount.setOnClickListener(view -> {
-            Toast.makeText(UserActivity.this, "Cài đặt tài khoản", Toast.LENGTH_SHORT).show();
+//        btnSettingAccount.setOnClickListener(view -> {
+//            Toast.makeText(UserActivity.this, "Cài đặt tài khoản", Toast.LENGTH_SHORT).show();
 //            Intent i = new Intent(UserActivity.this, SettingAccountActivity.class);
 //            startActivity(i);
-        });
+//        });
         btnChangePass.setOnClickListener(view -> {
             Toast.makeText(UserActivity.this, "Đổi mật khẩu", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(UserActivity.this, ChangePassActivity.class);
