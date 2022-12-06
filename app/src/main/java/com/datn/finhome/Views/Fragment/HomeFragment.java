@@ -3,19 +3,36 @@ package com.datn.finhome.Views.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.datn.finhome.Adapter.RoomAdapter;
+import com.datn.finhome.IClickItemUserListener;
+import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
-import com.datn.finhome.Views.Activity.SearchActivity;
+import com.datn.finhome.Views.Activity.ShowDetailActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
-    AppCompatImageButton btnSearch;
+    private RecyclerView rcv;
+    private DatabaseReference reference;
+    private RoomAdapter roomAdapter;
+    private List<RoomModel> mRoomModel;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +42,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         return view;
     }
@@ -33,18 +49,37 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @androidx.annotation.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView(view);
-        setUpSearch();
-    }
+        mRoomModel = new ArrayList<>();
+        rcv = view.findViewById(R.id.rcvRoomMain);
+        reference = FirebaseDatabase.getInstance().getReference("Room");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mRoomModel.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
+                    mRoomModel.add(roomModel);
+                    roomAdapter = new RoomAdapter(getContext(), mRoomModel, new IClickItemUserListener() {
+                        @Override
+                        public void onClickItemRoom(RoomModel roomModel) {
+                            onClickGoToDetail(roomModel);
+                        }
+                    });
+                    rcv.setAdapter(roomAdapter);
+                }
+            }
 
-    private void initView(View view) {
-        btnSearch = view.findViewById(R.id.btnSearch);
-    }
-
-    private void setUpSearch() {
-        btnSearch.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), SearchActivity.class);
-            startActivity(intent);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("TAG", error.getMessage());
+            }
         });
+    }
+    private  void onClickGoToDetail(RoomModel roomModel){
+        Intent intent = new Intent(getActivity(), ShowDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Room", roomModel);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

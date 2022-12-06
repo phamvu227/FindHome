@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import com.datn.finhome.R;
 import com.datn.finhome.Views.Fragment.HomeFragment;
 import com.datn.finhome.Views.Fragment.AccountViewFragment;
+import com.datn.finhome.Views.Fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -20,7 +21,8 @@ public class MainMenuActivity extends AppCompatActivity {
     FrameLayout fragmentContainer;
 
     HomeFragment HomeView;
-//    accountView AccountView;
+    AccountViewFragment AccountView;
+    SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +49,18 @@ public class MainMenuActivity extends AppCompatActivity {
                 switch (id) {
                     case R.id.nav_home:
                         //Chuyển sang màn hình home
-                        //HomeView = new MainActivity();
+                        HomeView = new HomeFragment();
                         setFragment(HomeView);
                         return true;
                     case R.id.nav_account:
                         //Chuyển sang màn hình quản lý tài khoản
-//                        AccountView = new accountView();
-//                        setFragment(AccountView);
+                        AccountView = new AccountViewFragment();
+                        setFragment(AccountView);
+                        return true;
+
+                    case R.id.nav_search:
+                        searchFragment = new SearchFragment();
+                        setFragment(searchFragment);
                         return true;
 
                     default:

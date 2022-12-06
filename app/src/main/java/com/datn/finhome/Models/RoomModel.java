@@ -1,9 +1,7 @@
 package com.datn.finhome.Models;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import kotlin.jvm.internal.MagicApiIntrinsics;
@@ -14,7 +12,6 @@ public class RoomModel {
     String sizeRoom;
     Integer price;
     String description;
-
 //    File image;
 
     public RoomModel(){
@@ -27,9 +24,7 @@ public class RoomModel {
         this.sizeRoom = sizeRoom;
         this.price = price;
         this.description = description;
-
     }
-
 
     public String getTitle() {
         return title;

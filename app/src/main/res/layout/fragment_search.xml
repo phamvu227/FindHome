@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Views.Activity.SearchActivity">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/frameTop"
@@ -24,7 +23,7 @@
             android:src="@drawable/ic_back" />
 
         <SearchView
-            android:id="@+id/txtSearch"
+            android:id="@+id/txt_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -42,6 +41,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_list_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
