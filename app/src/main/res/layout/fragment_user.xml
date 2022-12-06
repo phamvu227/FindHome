@@ -14,17 +14,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvThongBao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/_158sdp"
-            android:background="@drawable/bg_alert_user"
-            android:gravity="center"
-            android:paddingBottom="8dp"
-            android:text="@string/alertUser"
-            android:textStyle="bold" />
+<!--        <androidx.appcompat.widget.AppCompatTextView-->
+<!--            android:id="@+id/tvThongBao"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginEnd="@dimen/_158sdp"-->
+<!--            android:background="@drawable/bg_alert_user"-->
+<!--            android:gravity="center"-->
+<!--            android:paddingBottom="8dp"-->
+<!--            android:text="@string/alertUser"-->
+<!--            android:textStyle="bold" />-->
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgUser"
