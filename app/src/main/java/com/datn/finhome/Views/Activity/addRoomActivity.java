@@ -51,11 +51,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class addRoomActivity extends AppCompatActivity {
-    EditText edTitle, edLocation, edSizeRoom, edRent, edPriceRent;
+public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove{
+    EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     Button btnAddImage, btnPost;
     RecyclerView recyclerImage;
     PhotoAdapter photoAdapter;
+    TextView textView;
     private static final int Read_permission = 101;
     private static final int PICK_IMAGE = 1;
     ArrayList<Uri> uri = new ArrayList<>();
@@ -69,19 +70,20 @@ public class addRoomActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
-        edTitle = findViewById(R.id.add_title);
-        edLocation = findViewById(R.id.add_location);
-        edSizeRoom = findViewById(R.id.add_size_room);
-        edRent = findViewById(R.id.add_rent);
-        edPriceRent = findViewById(R.id.add_price_rent);
+        edTitle = findViewById(R.id.edit_title);
+        edLocation = findViewById(R.id.edit_location);
+        edSizeRoom = findViewById(R.id.edit_size_room);
+        edPrice = findViewById(R.id.edit_price);
+        edDescription = findViewById(R.id.edit_description);
         btnAddImage = findViewById(R.id.btn_add_image);
         btnPost = findViewById(R.id.btn_post);
-        recyclerImage = findViewById(R.id.recycle_add_img);
+        recyclerImage = findViewById(R.id.recyclerImage);
+        textView = findViewById(R.id.textTest);
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
-        photoAdapter = new PhotoAdapter(uri, getApplicationContext(), this);
+        photoAdapter = new PhotoAdapter(uri, getApplicationContext(),this);
         recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
         recyclerImage.setAdapter(photoAdapter);
 //        if(ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -266,7 +268,6 @@ public class addRoomActivity extends AppCompatActivity {
 
     }
 
-    @Override
     public void clicked(int getSize) {
         textView.setText("Photos (" + uri.size() + ") ");
     }
