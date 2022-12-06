@@ -9,13 +9,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.datn.finhome.Adapter.RoomAdapter;
 import com.datn.finhome.Models.HostModel;
-import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.databinding.ActivityHostDetailsBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,13 +20,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class HostDetailsActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private ActivityHostDetailsBinding binding;
-    private RoomAdapter roomAdapter;
-    private ArrayList<RoomModel> roomModelArrayList;
+//    private RoomAdapter roomAdapter;
+//    private ArrayList<RoomModel> roomModelArrayList;
 
     @SuppressLint("CutPasteId")
     @Override

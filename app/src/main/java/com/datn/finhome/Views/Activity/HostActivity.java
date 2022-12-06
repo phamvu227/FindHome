@@ -2,13 +2,16 @@ package com.datn.finhome.Views.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
 import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,16 +21,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HostActivity extends AppCompatActivity {
+    private RecyclerView rv;
+//    private RoomAdapter roomAdapter;
+//    private List<RoomModel> roomModelList;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
     private String userId;
-
+    SharedPreferences sharedPreferences;
+    String UID;
     TextView  tvName,tvPhone;
     ImageView imgUser;
     @Override
@@ -37,6 +42,7 @@ public class HostActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvNameUser);
         tvPhone = findViewById(R.id.tvSdtUser);
         imgUser = findViewById(R.id.imgUser);
+        rv = findViewById(R.id.rvRoom);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         userId = firebaseUser.getUid();
@@ -62,4 +68,6 @@ public class HostActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

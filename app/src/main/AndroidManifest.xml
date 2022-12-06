@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FinHome"
+        android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
         <activity
             android:name=".Views.Activity.AccountInfoActivity"
@@ -54,7 +54,13 @@
             android:name=".Views.Activity.RegisterActivity"
             android:exported="true" />
         <activity
+            android:name=".Views.Activity.ForgotPassActivity"
+            android:exported="true" />
+        <activity
             android:name=".Views.Activity.ChangePassActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Views.Activity.HostActivity"
             android:exported="true" />
         <activity
             android:name=".Views.Activity.LoginActivity"

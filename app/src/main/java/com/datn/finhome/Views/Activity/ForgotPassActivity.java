@@ -3,6 +3,7 @@ package com.datn.finhome.Views.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -54,11 +55,13 @@ public class ForgotPassActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                        if(firebaseAuth.getCurrentUser().isEmailVerified()) {
+//                        if(firebaseAuth.getCurrentUser().isEmailVerified()) {
                             Toast.makeText(ForgotPassActivity.this, "Vui lòng kiểm tra emali của bạn!", Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(ForgotPassActivity.this, "Vui lòng Xác thực email của bạn", Toast.LENGTH_SHORT).show();
-                        }
+                            Intent intent = new Intent(ForgotPassActivity.this,LoginActivity.class);
+                            startActivity(intent);
+//                        }else {
+//                            Toast.makeText(ForgotPassActivity.this, "Vui lòng Xác thực email của bạn", Toast.LENGTH_SHORT).show();
+//                        }
                 }else {
                     Toast.makeText(ForgotPassActivity.this, "Email không tồn tại", Toast.LENGTH_SHORT).show();
                 }
