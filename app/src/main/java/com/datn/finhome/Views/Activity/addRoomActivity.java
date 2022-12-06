@@ -267,7 +267,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         childDatabase.push().setValue(hashMap);
 
     }
-
+    @Override
     public void clicked(int getSize) {
         textView.setText("Photos (" + uri.size() + ") ");
     }
