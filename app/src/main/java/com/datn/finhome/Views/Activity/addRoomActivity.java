@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,8 @@ import com.google.firebase.storage.UploadTask;
 import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove{
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
@@ -181,7 +184,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                 edTitle.getText().toString().trim(),
                 edLocation.getText().toString().trim(),
                 edSizeRoom.getText().toString().trim(),
-                Long.valueOf(edPriceRent.getText().toString().trim()),
+                Long.valueOf(edPrice.getText().toString().trim()),
                 edDescription.getText().toString().trim(),
                 idHost
         );

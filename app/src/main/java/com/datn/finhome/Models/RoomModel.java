@@ -1,19 +1,17 @@
 package com.datn.finhome.Models;
 
-import java.io.File;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import kotlin.jvm.internal.MagicApiIntrinsics;
-
-public class RoomModel {
+public class RoomModel implements Serializable {
     String title;
     String address;
     String description;
     Long idHost;
     String img;
     String name;
-    String price;
+    Long price;
     String sizeRoom;
 
     public RoomModel(String name, String address, String sizeRoom, Long price, String description, Long idHost) {
@@ -25,8 +23,12 @@ public class RoomModel {
         this.idHost = idHost;
     }
 
-    public RoomModel(String id, String address, String description, Long idHost, String img, String name, Long price, String sizeRoom) {
-        this.id = id;
+
+    public RoomModel() {
+    }
+
+    public RoomModel(String title, String address, String description, Long idHost, String img, String name, Long price, String sizeRoom) {
+        this.title = title;
         this.address = address;
         this.description = description;
         this.idHost = idHost;
@@ -36,7 +38,28 @@ public class RoomModel {
         this.sizeRoom = sizeRoom;
     }
 
-    public RoomModel() {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public String getSizeRoom() {
+        return sizeRoom;
+    }
+
+    public void setSizeRoom(String sizeRoom) {
+        this.sizeRoom = sizeRoom;
     }
 
     public String getImg() {
@@ -45,14 +68,6 @@ public class RoomModel {
 
     public void setImg(String img) {
         this.img = img;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getAddress() {
@@ -87,11 +102,7 @@ public class RoomModel {
         this.name = name;
     }
 
-    public Long getPrice() {
-        return price;
-    }
-
-    public Map<String, Object> toMap(){
+    public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("address", address);
         result.put("name", title);
@@ -100,16 +111,6 @@ public class RoomModel {
         result.put("description", description);
         result.put("sizeRoom", sizeRoom);
         return result;
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public String getSizeRoom() {
-        return sizeRoom;
-    }
-
-    public void setSizeRoom(String sizeRoom) {
-        this.sizeRoom = sizeRoom;
     }
 }
 
