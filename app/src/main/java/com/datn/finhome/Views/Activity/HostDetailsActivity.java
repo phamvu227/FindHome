@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,6 +49,8 @@ public class HostDetailsActivity extends AppCompatActivity implements OnMapReady
 
         binding.mapview.onCreate(savedInstanceState);
         binding.mapview.getMapAsync(this);
+
+        mRoomModel = new ArrayList<>();
 
         binding.btnBack.setOnClickListener(v -> {
             onBackPressed();
@@ -118,8 +121,9 @@ public class HostDetailsActivity extends AppCompatActivity implements OnMapReady
                     assert roomModel != null;
                     if (Objects.equals(roomModel.getIdHost(), id)) {
                         mRoomModel.add(roomModel);
+                        Log.e("TAG", "onDataChange: " + mRoomModel.size() );
                         roomAdapter = new RoomAdapter(HostDetailsActivity.this, mRoomModel, roomModel1 -> {
-
+                            onClickGoToDetail(roomModel1);
                         });
                         binding.rcvHostDetails.setAdapter(roomAdapter);
                         binding.rcvHostDetails.setHasFixedSize(true);
@@ -146,5 +150,13 @@ public class HostDetailsActivity extends AppCompatActivity implements OnMapReady
         map.setMyLocationEnabled(true);
 
         map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(43.1, -87.9)));
+    }
+
+    private  void onClickGoToDetail(RoomModel roomModel){
+        Intent intent = new Intent(this, ShowDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Room", roomModel);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

@@ -46,7 +46,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
     @Override
     public void onBindViewHolder(@NonNull RoomViewholder holder, int position) {
         RoomModel roomModel = list.get(position);
-        holder.tvName.setText(roomModel.getName());
+        holder.tvName.setText(roomModel.getTitle());
         if (roomModel.getPrice() != null){
             holder.tvPrice.setText(roomModel.getPrice().toString());
         }

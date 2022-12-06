@@ -57,6 +57,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         binding.tvTitleRoomReview.setText(roomModel.getDescription());
         binding.tvAddressContactReviews.setText(roomModel.getAddress());
         binding.tvAreaReview.setText(roomModel.getSizeRoom());
+        binding.tvDetailReviews.setText(roomModel.getDescription());
 
         referenceHost = FirebaseDatabase.getInstance().getReference("Host");
         referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
