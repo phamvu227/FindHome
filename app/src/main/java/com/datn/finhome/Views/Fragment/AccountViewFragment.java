@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Views.Activity.AccountInfoActivity;
 import com.datn.finhome.Views.Activity.ChangePassActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,16 +67,11 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         ImgAvt = layout.findViewById(R.id.imgUser);
         btnLogout.setOnClickListener(this);
 
+        btnChangePass.setOnClickListener(view -> startActivity(new Intent(getActivity(), ChangePassActivity.class)));
 
-        btnChangePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ChangePassActivity.class));
-            }
+        btnSettingAccount.setOnClickListener(v-> {
+            startActivity(new Intent(getActivity(), AccountInfoActivity.class));
         });
-
-
-
     }
 
     private void getInformationUser(){
@@ -126,7 +122,6 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
                 .setPositiveButton("CÓ", (dialog, which) -> {
                     firebaseAuth = FirebaseAuth.getInstance();
                     firebaseAuth.signOut();
-//                startActivity(new Intent(context,LoginActivity.class));
                     getActivity().finish();
                 })
                 .setNegativeButton("HỦY", (dialog, which) -> dialog.dismiss());
@@ -139,8 +134,6 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         switch (id) {
             case R.id.btnLogout:
                 signout();
-
-
         }
     }
 
