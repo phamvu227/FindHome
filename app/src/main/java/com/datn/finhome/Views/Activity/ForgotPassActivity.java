@@ -47,7 +47,7 @@ public class ForgotPassActivity extends AppCompatActivity {
             Toast.makeText(this, "Nhâp email của bạn", Toast.LENGTH_SHORT).show();
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(Email).matches()){
-            edtForgot.setError("please provide valid email!");
+            edtForgot.setError("vui lòng nhập email!");
             edtForgot.requestFocus();
             return;
         }
