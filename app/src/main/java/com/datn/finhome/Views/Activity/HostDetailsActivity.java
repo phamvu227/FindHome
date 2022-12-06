@@ -36,7 +36,7 @@ public class HostDetailsActivity extends AppCompatActivity implements OnMapReady
     private RoomAdapter roomAdapter;
     private List<RoomModel> mRoomModel;
     private DatabaseReference referenceHost, referenceRoom;
-    private Long id = Long.valueOf(10001); //id host
+    private Long id;
     private String numberPhone = "";
     GoogleMap map;
 
@@ -49,6 +49,8 @@ public class HostDetailsActivity extends AppCompatActivity implements OnMapReady
 
         binding.mapview.onCreate(savedInstanceState);
         binding.mapview.getMapAsync(this);
+
+        id = getIntent().getLongExtra("id", 0);
 
         mRoomModel = new ArrayList<>();
 

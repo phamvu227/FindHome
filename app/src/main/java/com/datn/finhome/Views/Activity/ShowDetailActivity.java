@@ -30,6 +30,7 @@ import java.util.Objects;
 public class ShowDetailActivity extends AppCompatActivity {
     private ActivityShowDetailsBinding binding;
     private DatabaseReference referenceHost;
+    private Long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,11 @@ public class ShowDetailActivity extends AppCompatActivity {
         RoomModel roomModel = (RoomModel) bundle.get("Room");
 
         binding.btnContactReviews.setOnClickListener(v -> {
-            startActivity(new Intent(this, HostDetailsActivity.class));
+            Intent intent = new Intent(this, HostDetailsActivity.class);
+            Bundle bundle1 = new Bundle();
+            bundle1.putLong("id", id);
+            intent.putExtras(bundle1);
+            startActivity(intent);
         });
 
         binding.btnBack.setOnClickListener(v -> {
@@ -66,6 +71,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     HostModel hostModel = dataSnapshot.getValue(HostModel.class);
                     assert hostModel != null;
+                    id = hostModel.getId();
                     if (Objects.equals(roomModel.getIdHost(), hostModel.getId())){
                         binding.tvNameContactReviews.setText(hostModel.getName());
                         binding.tvAddressContactReviews.setText(hostModel.getAddress());
