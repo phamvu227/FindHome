@@ -47,7 +47,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
     public void onBindViewHolder(@NonNull RoomViewholder holder, int position) {
         RoomModel roomModel = list.get(position);
         holder.tvName.setText(roomModel.getName());
-        holder.tvPrice.setText(roomModel.getPrice());
+        if (roomModel.getPrice() != null){
+            holder.tvPrice.setText(roomModel.getPrice().toString());
+        }
         holder.tvAddress.setText(roomModel.getAddress());
         Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
         holder.btnFavorite.setOnClickListener(v -> {
@@ -55,7 +57,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
         });
         holder.container.setOnClickListener(v -> {
             iClickItemUserListener.onClickItemRoom(roomModel);
-            // chuyển màn + truyền dữ liệu
         });
     }
 

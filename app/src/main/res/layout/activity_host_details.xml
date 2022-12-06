@@ -24,7 +24,6 @@
             android:layout_alignParentBottom="true"
             android:background="@null"
             android:src="@drawable/ic_back" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -88,10 +87,10 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnMess"
-        android:padding="@dimen/_5sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
+        android:padding="@dimen/_5sdp"
         android:src="@drawable/bg_btn_messages"
         app:layout_constraintEnd_toStartOf="@+id/btnCall"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,50 +100,69 @@
         android:id="@+id/btnCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_5sdp"
         android:background="@null"
+        android:padding="@dimen/_5sdp"
         android:src="@drawable/bg_btn_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/appCompatTextView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/c_th_thu"
-        android:textSize="@dimen/_15sdp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/appCompatTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/addressHost"
-        android:textSize="@dimen/_16sdp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCall" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvHostDetails"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_8sdp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"
-        tools:listitem="@layout/item_room" />
+        app:layout_constraintTop_toBottomOf="@id/btnCall">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/addressHost"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapview"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_500sdp"
+                    android:layout_margin="@dimen/_10sdp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/appCompatTextView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/c_th_thu"
+                    android:textSize="@dimen/_16sdp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvHostDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_room" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

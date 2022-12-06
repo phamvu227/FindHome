@@ -9,20 +9,19 @@ public class RoomModel implements Serializable {
     Long idHost;
     String img;
     String name;
-    String price;
+    Long price;
     String sizeRoom;
 
-    }
-
-    public RoomModel(String title, String address, String sizeRoom, Integer price, String description) {
-        this.title = title;
+    public RoomModel(String name, String address, String sizeRoom, Long price, String description, Long idHost) {
+        this.name = name;
         this.address = address;
         this.sizeRoom = sizeRoom;
         this.price = price;
         this.description = description;
+        this.idHost = idHost;
     }
 
-    public RoomModel(String id, String address, String description, Long idHost, String img, String name, String price, String sizeRoom) {
+    public RoomModel(String id, String address, String description, Long idHost, String img, String name, Long price, String sizeRoom) {
         this.id = id;
         this.address = address;
         this.description = description;
@@ -31,6 +30,9 @@ public class RoomModel implements Serializable {
         this.name = name;
         this.price = price;
         this.sizeRoom = sizeRoom;
+    }
+
+    public RoomModel() {
     }
 
     public String getImg() {
@@ -81,11 +83,11 @@ public class RoomModel implements Serializable {
         this.name = name;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
@@ -97,3 +99,4 @@ public class RoomModel implements Serializable {
         this.sizeRoom = sizeRoom;
     }
 }
+

@@ -17,7 +17,6 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_user);
         btnFavorite = findViewById(R.id.btnFavourite);
         btnChangePass = findViewById(R.id.btnChangePass);
-        btnHistory = findViewById(R.id.btnHistory);
         btnSettingAccount = findViewById(R.id.btnSettingAccount);
         btnLogOut = findViewById(R.id.btnLogout);
 //        btnFavorite.setOnClickListener(view -> {

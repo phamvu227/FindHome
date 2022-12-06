@@ -1,37 +1,27 @@
 package com.datn.finhome.Views.Activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import android.widget.TextView;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.datn.finhome.Adapter.PhotoAdapter;
-import com.datn.finhome.Models.Image;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
-import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
@@ -41,15 +31,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
-public class addRoomActivity extends AppCompatActivity {
-    EditText edTitle, edLocation, edSizeRoom, edRent, edPriceRent;
+public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove {
+    EditText edTitle, edLocation, edSizeRoom, edDescription, edPriceRent;
     Button btnAddImage, btnPost;
     RecyclerView recyclerImage;
     PhotoAdapter photoAdapter;
@@ -60,19 +45,20 @@ public class addRoomActivity extends AppCompatActivity {
     StorageReference storageReference;
     FirebaseStorage firebaseStorage;
     private int upload_count = 0;
+    Long idHost;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_room);
-        edTitle = findViewById(R.id.add_title);
-        edLocation = findViewById(R.id.add_location);
-        edSizeRoom = findViewById(R.id.add_size_room);
-        edRent = findViewById(R.id.add_rent);
-        edPriceRent = findViewById(R.id.add_price_rent);
+        edTitle = findViewById(R.id.edit_title);
+        edLocation = findViewById(R.id.edit_location);
+        edSizeRoom = findViewById(R.id.edit_size_room);
+        edPriceRent = findViewById(R.id.edit_price);
+        edDescription = findViewById(R.id.edit_description);
         btnAddImage = findViewById(R.id.btn_add_image);
         btnPost = findViewById(R.id.btn_post);
-        recyclerImage = findViewById(R.id.recycle_add_img);
+        recyclerImage = findViewById(R.id.recyclerImage);
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
@@ -146,7 +132,7 @@ public class addRoomActivity extends AppCompatActivity {
 
                 }
                 photoAdapter.notifyDataSetChanged();
-               // textView.setText("Photos (" + uri.size() + ") ");
+                // textView.setText("Photos (" + uri.size() + ") ");
             } else {
                 if (uri.size() < 10) {
                     imageUri = data.getData();
@@ -169,11 +155,13 @@ public class addRoomActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Room");
 //        myRef.setValue(edTitle.getText().toString().trim());
-        RoomModel roomModel1 = new RoomModel(edTitle.getText().toString().trim(),
+        RoomModel roomModel1 = new RoomModel(
+                edTitle.getText().toString().trim(),
                 edLocation.getText().toString().trim(),
                 edSizeRoom.getText().toString().trim(),
-                Integer.parseInt(edPrice.getText().toString().trim()),
-                edDescription.getText().toString().trim()
+                Long.valueOf(edPriceRent.getText().toString().trim()),
+                edDescription.getText().toString().trim(),
+                idHost
         );
 
         myRef.setValue(roomModel1, new DatabaseReference.CompletionListener() {
@@ -186,11 +174,13 @@ public class addRoomActivity extends AppCompatActivity {
 
     private void onClickPushData2() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        RoomModel roomModel2 = new RoomModel(edTitle.getText().toString().trim(),
+        RoomModel roomModel2 = new RoomModel(
+                edTitle.getText().toString().trim(),
                 edLocation.getText().toString().trim(),
                 edSizeRoom.getText().toString().trim(),
-                Integer.parseInt(edPrice.getText().toString().trim()),
-                edDescription.getText().toString().trim()
+                Long.valueOf(edPriceRent.getText().toString().trim()),
+                edDescription.getText().toString().trim(),
+                idHost
         );
         mDatabase.child("Room").push().setValue(roomModel2, new DatabaseReference.CompletionListener() {
             @Override
@@ -207,20 +197,6 @@ public class addRoomActivity extends AppCompatActivity {
     }
 
     public void uploadToFirebase() {
-//        StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
-//        ref.putFile(imageUri)
-//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                        Toast.makeText(addRoomActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(addRoomActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
         StorageReference imageFolder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
 
         for (upload_count = 0; upload_count < uri.size(); upload_count++) {
@@ -245,6 +221,11 @@ public class addRoomActivity extends AppCompatActivity {
 
     @Override
     public void clicked(int getSize) {
-        textView.setText("Photos (" + uri.size() + ") ");
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }

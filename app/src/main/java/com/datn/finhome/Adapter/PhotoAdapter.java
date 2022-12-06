@@ -43,15 +43,15 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull PhotoAdapter.ViewHolder holder, int position) {
 //        holder.imageView.setImageURI(uriArrayList.get(position));
         Glide.with(context)
-                .load(uriArrayList.get(position))
+                .load(uriArrayList.get(holder.getAdapterPosition()))
                 .into(holder.imageView);
 
         holder.deleteImages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uriArrayList.remove(uriArrayList.get(position));
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, getItemCount());
+                uriArrayList.remove(uriArrayList.get(holder.getAdapterPosition()));
+                notifyItemRemoved(holder.getAdapterPosition());
+                notifyItemRangeChanged(holder.getAdapterPosition(), getItemCount());
                 countOfImageWhenRemove.clicked(uriArrayList.size());
             }
         });
@@ -72,7 +72,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
             deleteImages = itemView.findViewById(R.id.deleteImage);
         }
     }
-    
+
     public interface CountOfImageWhenRemove{
         void clicked(int getSize);
     }

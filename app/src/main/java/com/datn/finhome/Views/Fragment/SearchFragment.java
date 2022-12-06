@@ -11,9 +11,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.viewmodel.CreationExtras;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.datn.finhome.Adapter.RoomAdapter;
+import com.datn.finhome.IClickItemUserListener;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -26,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements IClickItemUserListener {
     private SearchView searchView;
     private RecyclerView recyclerSearch;
     private List<RoomModel> list;
@@ -75,7 +77,9 @@ public class SearchFragment extends Fragment {
                         for (DataSnapshot ds : snapshot.getChildren()) {
                             list.add(ds.getValue(RoomModel.class));
                         }
-                        RoomAdapter roomAdapter = new RoomAdapter(getContext(), list);
+                        RoomAdapter roomAdapter = new RoomAdapter(getContext(), list, roomModel -> {
+
+                        });
                         recyclerSearch.setAdapter(roomAdapter);
                     }
                 }
@@ -110,8 +114,13 @@ public class SearchFragment extends Fragment {
                 myList.add(model);
             }
         }
-        RoomAdapter roomAdapter = new RoomAdapter(getContext(), myList);
+        RoomAdapter roomAdapter = new RoomAdapter(getContext(), myList, this);
         recyclerSearch.setAdapter(roomAdapter);
+
+    }
+
+    @Override
+    public void onClickItemRoom(RoomModel roomModel) {
 
     }
 }

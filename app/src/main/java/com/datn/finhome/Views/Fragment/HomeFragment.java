@@ -16,6 +16,7 @@ import com.datn.finhome.Adapter.RoomAdapter;
 import com.datn.finhome.IClickItemUserListener;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Utils.LoaderDialog;
 import com.datn.finhome.Views.Activity.ShowDetailActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,13 +26,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
     private RecyclerView rcv;
     private DatabaseReference reference;
     private RoomAdapter roomAdapter;
     private List<RoomModel> mRoomModel;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        LoaderDialog.createDialog(getActivity());
         return view;
     }
 
@@ -59,14 +61,10 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
                     mRoomModel.add(roomModel);
-                    roomAdapter = new RoomAdapter(getContext(), mRoomModel, new IClickItemUserListener() {
-                        @Override
-                        public void onClickItemRoom(RoomModel roomModel) {
-                            onClickGoToDetail(roomModel);
-                        }
-                    });
+                    roomAdapter = new RoomAdapter(getContext(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
                     rcv.setAdapter(roomAdapter);
                 }
+                LoaderDialog.dismiss();
             }
 
             @Override
