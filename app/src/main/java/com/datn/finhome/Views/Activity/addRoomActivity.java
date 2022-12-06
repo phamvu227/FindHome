@@ -30,14 +30,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
 
-public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove {
-    EditText edTitle, edLocation, edSizeRoom, edDescription, edPriceRent;
+public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove{
+    EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     Button btnAddImage, btnPost;
     RecyclerView recyclerImage;
     PhotoAdapter photoAdapter;
+    TextView textView;
     private static final int Read_permission = 101;
     private static final int PICK_IMAGE = 1;
     ArrayList<Uri> uri = new ArrayList<>();
@@ -45,6 +47,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
     StorageReference storageReference;
     FirebaseStorage firebaseStorage;
     private int upload_count = 0;
+    List<String> pictureLink;
     Long idHost;
 
     @Override
@@ -54,16 +57,17 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         edTitle = findViewById(R.id.edit_title);
         edLocation = findViewById(R.id.edit_location);
         edSizeRoom = findViewById(R.id.edit_size_room);
-        edPriceRent = findViewById(R.id.edit_price);
+        edPrice = findViewById(R.id.edit_price);
         edDescription = findViewById(R.id.edit_description);
         btnAddImage = findViewById(R.id.btn_add_image);
         btnPost = findViewById(R.id.btn_post);
         recyclerImage = findViewById(R.id.recyclerImage);
+        textView = findViewById(R.id.textTest);
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
-        photoAdapter = new PhotoAdapter(uri, getApplicationContext(), this);
+        photoAdapter = new PhotoAdapter(uri, getApplicationContext(),this);
         recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
         recyclerImage.setAdapter(photoAdapter);
 //        if(ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -151,26 +155,25 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
     }
 
 
-    private void onClickPushData() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Room");
-//        myRef.setValue(edTitle.getText().toString().trim());
-        RoomModel roomModel1 = new RoomModel(
-                edTitle.getText().toString().trim(),
-                edLocation.getText().toString().trim(),
-                edSizeRoom.getText().toString().trim(),
-                Long.valueOf(edPriceRent.getText().toString().trim()),
-                edDescription.getText().toString().trim(),
-                idHost
-        );
-
-        myRef.setValue(roomModel1, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(addRoomActivity.this, "đã thêm", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void onClickPushData() {
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("Room");
+////        myRef.setValue(edTitle.getText().toString().trim());
+//        RoomModel roomModel1 = new RoomModel(edTitle.getText().toString().trim(),
+//                edLocation.getText().toString().trim(),
+//                edSizeRoom.getText().toString().trim(),
+//                Integer.parseInt(edPrice.getText().toString().trim()),
+//                edDescription.getText().toString().trim(),
+//                url
+//        );
+//
+//        myRef.setValue(roomModel1, new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                Toast.makeText(addRoomActivity.this, "đã thêm", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void onClickPushData2() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -185,7 +188,6 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         mDatabase.child("Room").push().setValue(roomModel2, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                //Problem with saving the data
                 if (databaseError != null) {
                     Toast.makeText(addRoomActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
                 } else {
@@ -206,7 +208,13 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             ImageName.putFile(IndividualImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(addRoomActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            ImageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String url = String.valueOf(uri);
+                                    StoreLink(url);
+                                }
+                            });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -219,6 +227,17 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
 
     }
 
+    private void StoreLink(String url) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Room");
+
+        DatabaseReference childDatabase = databaseReference.child("Images");
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("Imglink",url);
+
+        childDatabase.push().setValue(hashMap);
+
+    }
     @Override
     public void clicked(int getSize) {
 

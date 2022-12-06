@@ -1,15 +1,19 @@
 package com.datn.finhome.Models;
 
-import java.io.Serializable;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
-public class RoomModel implements Serializable {
-    String id;
+import kotlin.jvm.internal.MagicApiIntrinsics;
+
+public class RoomModel {
+    String title;
     String address;
     String description;
     Long idHost;
     String img;
     String name;
-    Long price;
+    String price;
     String sizeRoom;
 
     public RoomModel(String name, String address, String sizeRoom, Long price, String description, Long idHost) {
@@ -87,6 +91,15 @@ public class RoomModel implements Serializable {
         return price;
     }
 
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("address", address);
+        result.put("name", title);
+//        result.put("img", image);
+        result.put("price", price);
+        result.put("description", description);
+        result.put("sizeRoom", sizeRoom);
+        return result;
     public void setPrice(Long price) {
         this.price = price;
     }

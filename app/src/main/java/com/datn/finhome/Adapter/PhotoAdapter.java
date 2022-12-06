@@ -1,5 +1,6 @@
 package com.datn.finhome.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -40,7 +41,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PhotoAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PhotoAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 //        holder.imageView.setImageURI(uriArrayList.get(position));
         Glide.with(context)
                 .load(uriArrayList.get(holder.getAdapterPosition()))
