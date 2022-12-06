@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -39,6 +40,7 @@ import java.util.List;
 
 public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove{
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
+    AppCompatImageButton btnBack;
     Button btnAddImage, btnPost;
     RecyclerView recyclerImage;
     PhotoAdapter photoAdapter;
@@ -66,9 +68,16 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         btnPost = findViewById(R.id.btn_post);
         recyclerImage = findViewById(R.id.recyclerImage);
         textView = findViewById(R.id.textTest);
+        btnBack = findViewById(R.id.btnBack);
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle == null){
+            return;
+        }
+        idHost = Long.valueOf((String) bundle.get("id"));
 
         photoAdapter = new PhotoAdapter(uri, getApplicationContext(),this);
         recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
@@ -84,6 +93,9 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             public void onClick(View view) {
                 Toast.makeText(addRoomActivity.this, "abc", Toast.LENGTH_SHORT).show();
             }
+        });
+        btnBack.setOnClickListener(v -> {
+            onBackPressed();
         });
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,6 +15,7 @@
     <string name="Name">Tên của bạn</string>
     <string name="alertUser">Bạn muốn cho thuê phòng ?</string>
     <string name="favourite">Yêu thích</string>
+    <string name="addRoom">Đăng bài</string>
     <string name="history">Lịch sử</string>
     <string name="settingAccount">Cài đặt tài khoản</string>
     <string name="changePass">Đổi mật khẩu</string>

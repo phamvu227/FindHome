@@ -23,6 +23,8 @@ import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Views.Activity.AccountInfoActivity;
 import com.datn.finhome.Views.Activity.ChangePassActivity;
+import com.datn.finhome.Views.Activity.addRoomActivity;
+import com.datn.finhome.databinding.ActivityAddRoomBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class AccountViewFragment extends Fragment implements View.OnClickListener {
-    private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount;
+    private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount, btnAdd;
     private TextView tvName,tvPhone,tvDiaChi;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
@@ -51,13 +53,16 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment_user, container, false);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        userId = firebaseUser.getUid();
         initControl();
         getInformationUser();
         getInformationGoogle();
         return layout;
     }
     private void initControl() {
-
+        btnAdd = layout.findViewById(R.id.btnAddRoom);
         btnLogout = layout.findViewById(R.id.btnLogout);
         btnChangePass = layout.findViewById(R.id.btnChangePass);
         btnFavorite = layout.findViewById(R.id.btnFavorite);
@@ -72,13 +77,17 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         btnSettingAccount.setOnClickListener(v-> {
             startActivity(new Intent(getActivity(), AccountInfoActivity.class));
         });
+
+        btnAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), addRoomActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("id", userId);
+            startActivity(intent);
+        });
     }
 
     private void getInformationUser(){
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        userId = firebaseUser.getUid();
-        databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
+      databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserModel userModel = snapshot.getValue(UserModel.class);

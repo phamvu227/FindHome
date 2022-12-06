@@ -42,6 +42,7 @@ public class AccountInfoActivity extends AppCompatActivity {
     private Button btnDelAcc;
     private Button btnSaveAcc;
     private Uri uri;
+    private AppCompatImageButton btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,7 @@ public class AccountInfoActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        btnBack = findViewById(R.id.btnBack);
         btnImageAcc = findViewById(R.id.imgAccInfo);
         txtNameAcc = findViewById(R.id.txt_name_acc);
         txtSdtAcc = findViewById(R.id.txt_sdt_acc);
@@ -118,6 +120,10 @@ public class AccountInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 onClickDelAccInfo();
             }
+        });
+
+        btnBack.setOnClickListener(v -> {
+            onBackPressed();
         });
     }
 
