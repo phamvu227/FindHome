@@ -78,9 +78,7 @@
         <activity
             android:name=".Views.Activity.RegisterActivity"
             android:exported="true" />
-        <activity
-            android:name=".Views.Activity.UserActivity"
-            android:exported="true" />
+
         <activity
             android:name=".Views.Activity.addRoomActivity"
             android:exported="true"

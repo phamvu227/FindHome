@@ -12,20 +12,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Views.Activity.ChangePassActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class AccountViewFragment extends Fragment implements View.OnClickListener {
-    private Button btnLogout,btnChangePass;
-    private TextView tvName,tvEmail;
+    private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount;
+    private TextView tvName,tvPhone,tvDiaChi;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
     ImageView ImgAvt;
+    private String userId;
     FirebaseAuth firebaseAuth;
     View layout;
     private Context mContext;
@@ -39,34 +50,69 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment_user, container, false);
-
         initControl();
-
+        getInformationUser();
+        getInformationGoogle();
         return layout;
     }
     private void initControl() {
 
         btnLogout = layout.findViewById(R.id.btnLogout);
         btnChangePass = layout.findViewById(R.id.btnChangePass);
+        btnFavorite = layout.findViewById(R.id.btnFavorite);
+        btnSettingAccount = layout.findViewById(R.id.btnSettingAccount);
         tvName = layout.findViewById(R.id.tvNameUser);
-        tvEmail = layout.findViewById(R.id.tvAddressUser);
+        tvPhone = layout.findViewById(R.id.tvSdtUser);
         ImgAvt = layout.findViewById(R.id.imgUser);
         btnLogout.setOnClickListener(this);
+
+
         btnChangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), ChangePassActivity.class));
             }
         });
+
+
+
+    }
+
+    private void getInformationUser(){
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        userId = firebaseUser.getUid();
+        databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserModel userModel = snapshot.getValue(UserModel.class);
+                if(userModel != null){
+                    String fullName = userModel.name;
+                    String Phone = userModel.phoneNumber;
+                    String avatar = userModel.avatar;
+
+                    tvName.setText(fullName);
+                    tvPhone.setText(Phone);
+                    Glide.with(mContext).load(avatar).into(ImgAvt);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(mContext, "That bai", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getInformationGoogle(){
         SharedPreferences preferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String userName = preferences.getString("username","");
         String userEmail = preferences.getString("useremail","");
         String userAvt = preferences.getString("userAvatar","");
 
         tvName.setText(userName);
-        tvEmail.setText(userEmail);
+        tvPhone.setText(userEmail);
         Glide.with(this).load(userAvt).into(ImgAvt);
-
     }
     @Override
     public void onAttach(@NonNull Context context) {
@@ -93,6 +139,7 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         switch (id) {
             case R.id.btnLogout:
                 signout();
+
 
         }
     }
