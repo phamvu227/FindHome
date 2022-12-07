@@ -33,12 +33,7 @@ public class ForgotPassActivity extends AppCompatActivity {
         edtForgot = findViewById(R.id.edtForgot_Email);
         btnForgot = findViewById(R.id.btn_ForgorPass);
         firebaseAuth = FirebaseAuth.getInstance();
-        btnForgot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetPass();
-            }
-        });
+        btnForgot.setOnClickListener(v -> resetPass());
     }
 
     private void resetPass() {
@@ -51,20 +46,17 @@ public class ForgotPassActivity extends AppCompatActivity {
             edtForgot.requestFocus();
             return;
         }
-        firebaseAuth.sendPasswordResetEmail(Email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
+        firebaseAuth.sendPasswordResetEmail(Email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()){
 //                        if(firebaseAuth.getCurrentUser().isEmailVerified()) {
-                            Toast.makeText(ForgotPassActivity.this, "Vui lòng kiểm tra emali của bạn!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(ForgotPassActivity.this,LoginActivity.class);
-                            startActivity(intent);
+                        Toast.makeText(ForgotPassActivity.this, "Vui lòng kiểm tra emali của bạn!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(ForgotPassActivity.this,LoginActivity.class);
+                        startActivity(intent);
 //                        }else {
 //                            Toast.makeText(ForgotPassActivity.this, "Vui lòng Xác thực email của bạn", Toast.LENGTH_SHORT).show();
 //                        }
-                }else {
-                    Toast.makeText(ForgotPassActivity.this, "Email không tồn tại", Toast.LENGTH_SHORT).show();
-                }
+            }else {
+                Toast.makeText(ForgotPassActivity.this, "Email không tồn tại", Toast.LENGTH_SHORT).show();
             }
         });
     }

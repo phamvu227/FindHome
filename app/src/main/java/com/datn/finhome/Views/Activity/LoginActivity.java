@@ -63,16 +63,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CallbackManager callbackManager;
     GoogleApiClient apiClient;
     FirebaseAuth firebaseAuth;
-
     Button btn_signUp;
     Button btn_login;
-
     EditText edt_username_login;
     EditText edt_password_login;
     TextView tvForgot;
-
     ImageView btnCheckPass;
-
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
     DatabaseReference nodeRoot;
@@ -82,22 +78,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
-        /*ClickForgotPassword();*/
         nodeRoot = FirebaseDatabase.getInstance().getReference();
     }
-
 
     @Override
     protected void onStart() {
         super.onStart();
-        // Thêm sự kiện listenerStateChange
         firebaseAuth.addAuthStateListener(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        //Xóa sự kiện ListenerStateChange
         firebaseAuth.removeAuthStateListener(this);
     }
 
@@ -105,7 +97,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void LoginFacebook() {
         btnLoginWithFacebook.setReadPermissions("email", "public_profile");
         btnLoginWithFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
 
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -123,7 +114,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Log.d(overUtils.TAG, "facebook:onError", error);
             }
         });
-
     }
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
@@ -139,43 +129,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    //Tạo client đăng nhập bằng google
     private void CreateClientLoginWithGoogle() {
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-        //Tạo ra sign client
         apiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
                 .build();
     }
-    //end Tạo client đăng nhập bằng google
 
-    //Đăng nhập vào tài khoản google
     private void LoginGoogle(GoogleApiClient apiClient) {
         //set code
         overUtils.CHECK_TYPE_PROVIDER_LOGIN = overUtils.CODE_PROVIDER_LOGIN_WITH_GOOGLE;
         Intent ILoginGoogle = Auth.GoogleSignInApi.getSignInIntent(apiClient);
-        //Hiển thị client google để đăng nhập
         startActivityForResult(ILoginGoogle, overUtils.REQUEST_CODE_LOGIN_WITH_GOOGLE);
     }
 
-    //end Đăng nhập vào tài khoản google
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-        //Kiểm tra nếu resultcode trả về là của client Login with google
         if (requestCode == overUtils.REQUEST_CODE_LOGIN_WITH_GOOGLE) {
             if (resultCode == RESULT_OK) {
-
                 GoogleSignInResult signInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-                //Lấy ra account google được đăng nhập
                 GoogleSignInAccount account = signInResult.getSignInAccount();
-                //Lấy ra token của account google
                 String tokenID = account.getIdToken();
                 SharedPreferences.Editor editor = getApplicationContext()
                         .getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -190,16 +170,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    //Lấy token id và đăng nhập vào firebase
     private void CheckLoginFirebase(String tokenID) {
         if (OverUtils.CHECK_TYPE_PROVIDER_LOGIN == OverUtils.CODE_PROVIDER_LOGIN_WITH_GOOGLE) {
             AuthCredential authCredential = GoogleAuthProvider.getCredential(tokenID, null);
-            //SignIn to firebase
             firebaseAuth.signInWithCredential(authCredential);
         }
     }
-    //end Lấy token id và đăng nhập vào firebase
-
 
     @Override
     public void onConnectionFailed(@android.support.annotation.NonNull ConnectionResult connectionResult) {
@@ -209,7 +185,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void login() {
         String username = edt_username_login.getText().toString();
         String password = edt_password_login.getText().toString();
-
 
         if (username.trim().length() == 0 || password.trim().length() == 0) {
             overUtils.makeToast(getApplicationContext(), overUtils.VALIDATE_TK_MK);
@@ -223,8 +198,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editor.putString("pass", password);
             editor.commit();
             Log.d("asssss", password);
-//            progressDialog.show(getApplicationContext(),"Vui Long cho","Dang dang nhap",true);
-//            progressDialog.setCancelable(true);
 
                 firebaseAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -247,36 +220,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             overUtils.makeToast(getApplicationContext(), overUtils.ERROR_MESSAGE_LOGIN);
                         }
                     }
-
                 });
-
-
         }
     }
 
     @Override
     public void onAuthStateChanged(@android.support.annotation.NonNull FirebaseAuth firebaseAuth) {
-
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null && user.isEmailVerified()) {
                     checkLogin(user.getUid());
                     progressDialog.dismiss();
                     overUtils.makeToast(getApplicationContext(), overUtils.LOGIN_successfully);
                 }
-
-
     }
 
     private void checkLogin(String UID) {
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@android.support.annotation.NonNull DataSnapshot dataSnapshot) {
-                // Lưu lại mã user đăng nhập vào app
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(OverUtils.SHARE_UID, UID);
 
-
-                //Load trang chủ
                 Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
                 startActivity(intent);
 
@@ -293,35 +257,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     private void initView() {
-        //Khởi tạo firebaseAuth
         firebaseAuth = FirebaseAuth.getInstance();
-        //Text Đăng xuất
         firebaseAuth.signOut();
-        // Lưu mã user đăng nhập vào app
         sharedPreferences = getSharedPreferences(OverUtils.PREFS_DATA_NAME, MODE_PRIVATE);
 
-        btnLoginWithGoogle = (ImageButton) findViewById(R.id.btnImg_google_login);
+        btnLoginWithGoogle = findViewById(R.id.btnImg_google_login);
         btnLoginWithFacebook = findViewById(R.id.login_button);
 
-        btn_signUp = (Button) findViewById(R.id.btn_signUp);
-        btn_login = (Button) findViewById(R.id.btn_login);
+        btn_signUp = findViewById(R.id.btn_signUp);
+        btn_login = findViewById(R.id.btn_login);
         FacebookSdk.sdkInitialize(getApplicationContext());
         FacebookSdk.setAutoInitEnabled(true);
         FacebookSdk.fullyInitialize();
         callbackManager = CallbackManager.Factory.create();
         tvForgot = findViewById(R.id.tvForgot);
-        tvForgot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,ForgotPassActivity.class);
-                startActivity(intent);
-            }
+        tvForgot.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this,ForgotPassActivity.class);
+            startActivity(intent);
         });
 
-        edt_username_login = (EditText) findViewById(R.id.edt_username_login);
-        edt_password_login = (EditText) findViewById(R.id.edt_password_login);
+        edt_username_login = findViewById(R.id.edt_username_login);
+        edt_password_login = findViewById(R.id.edt_password_login);
 
-        btnCheckPass = (ImageView) findViewById(R.id.checkPass);
+        btnCheckPass = findViewById(R.id.checkPass);
 
         progressDialog = new ProgressDialog(LoginActivity.this, R.style.MyProgessDialogStyle);
         btn_login.setOnClickListener(this);
@@ -337,7 +295,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.btnImg_google_login:
-//                signIn();
                 LoginGoogle(apiClient);
                 break;
             case R.id.login_button:
@@ -365,12 +322,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void setBtnCheckPass(View view) {
         if(edt_password_login.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
             ((ImageView)(view)).setImageResource(R.drawable.ic_visibility_off);
-            //Show Password
             edt_password_login.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         }
         else{
             ((ImageView)(view)).setImageResource(R.drawable.ic_visibility);
-            //Hide Password
             edt_password_login.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
     }

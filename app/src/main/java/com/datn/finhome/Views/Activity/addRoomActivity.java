@@ -6,11 +6,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -24,14 +22,11 @@ import com.datn.finhome.Adapter.PhotoAdapter;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Utils.LoaderDialog;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,22 +88,19 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             onBackPressed();
         });
 
-        btnAddImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(addRoomActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Read_permission);
+        btnAddImage.setOnClickListener(view -> {
+            if (ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(addRoomActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Read_permission);
 
-                    return;
-                }
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                }
-                startActivityForResult(intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                return;
             }
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            }
+            startActivityForResult(intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
         });
     }
 
@@ -152,16 +144,13 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                 edDescription.getText().toString().trim(),
                 idHost
         );
-        mDatabase.child("Room").push().setValue(roomModel2, new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                if (databaseError != null) {
-                    LoaderDialog.dismiss();
-                    Toast.makeText(addRoomActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
-                } else {
-                    LoaderDialog.dismiss();
-                    Toast.makeText(addRoomActivity.this, "Đã đăng bài", Toast.LENGTH_SHORT).show();
-                }
+        mDatabase.child("Room").push().setValue(roomModel2, (databaseError, databaseReference) -> {
+            if (databaseError != null) {
+                LoaderDialog.dismiss();
+                Toast.makeText(addRoomActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
+            } else {
+                LoaderDialog.dismiss();
+                Toast.makeText(addRoomActivity.this, "Đã đăng bài", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -173,25 +162,17 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             Uri IndividualImage = uri.get(upload_count);
             StorageReference ImageName = imageFolder.child("Image" + IndividualImage.getLastPathSegment());
 
-            ImageName.putFile(IndividualImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            ImageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String url = String.valueOf(uri);
-                                    StoreLink(url);
-                                    LoaderDialog.dismiss();
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            LoaderDialog.dismiss();
-                            Toast.makeText(addRoomActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+            ImageName.putFile(IndividualImage).addOnSuccessListener(taskSnapshot -> ImageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    String url = String.valueOf(uri);
+                    StoreLink(url);
+                    LoaderDialog.dismiss();
+                }
+            }))
+                    .addOnFailureListener(e -> {
+                        LoaderDialog.dismiss();
+                        Toast.makeText(addRoomActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         }
     }

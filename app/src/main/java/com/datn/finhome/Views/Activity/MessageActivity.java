@@ -57,7 +57,6 @@ public class MessageActivity extends AppCompatActivity {
     public static final String KEY = "GET";
     public static final String KEY_URL = "KEY_URL";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +75,8 @@ public class MessageActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toobar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//               startActivity(new Intent(MessageActivity.this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                finish();
-            }
+        toobar.setNavigationOnClickListener(view -> {
+            finish();
         });
 
         rvSend.setHasFixedSize(true);
@@ -93,18 +88,15 @@ public class MessageActivity extends AppCompatActivity {
         adapter = new MessageAdapter(MessageActivity.this, list, urlImageUser);
         rvSend.setAdapter(adapter);
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String msg = textSend.getText().toString();
-                if (msg.trim().length() == 0) {
-                    Toast.makeText(MessageActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
-                } else {
-                    sendMessage(firebaseUser.getUid(), userId, msg);
-                }
-
-                textSend.setText("");
+        btnSend.setOnClickListener(view -> {
+            String msg = textSend.getText().toString();
+            if (msg.trim().length() == 0) {
+                Toast.makeText(MessageActivity.this, "You can't send empty message", Toast.LENGTH_SHORT).show();
+            } else {
+                sendMessage(firebaseUser.getUid(), userId, msg);
             }
+
+            textSend.setText("");
         });
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);

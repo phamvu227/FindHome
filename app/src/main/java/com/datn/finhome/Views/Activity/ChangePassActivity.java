@@ -35,29 +35,26 @@ public class ChangePassActivity extends AppCompatActivity {
         edtNewPass = findViewById(R.id.edt_new_password);
         edtReNewPass = findViewById(R.id.edt_re_new_password);
         btnChangePass = findViewById(R.id.btn_change_pass);
-        btnChangePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newPass = edtNewPass.getText().toString().trim();
-                reNewPass = edtReNewPass.getText().toString().trim();
-                oldPass = edtOldPass.getText().toString().trim();
-                SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                pass = preferences.getString("pass","");
-                if(oldPass.isEmpty() || newPass.isEmpty() || reNewPass.isEmpty()){
-                    Toast.makeText(ChangePassActivity.this,"Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
-                }else {
-                    if(oldPass.equalsIgnoreCase(pass)){
-                        if(newPass.equalsIgnoreCase(reNewPass)){
-                            onClickChangePass();
-                            edtOldPass.setText("");
-                            edtNewPass.setText("");
-                            edtReNewPass.setText("");
-                        }else {
-                            Toast.makeText(ChangePassActivity.this,"Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
-                        }
+        btnChangePass.setOnClickListener(view -> {
+            newPass = edtNewPass.getText().toString().trim();
+            reNewPass = edtReNewPass.getText().toString().trim();
+            oldPass = edtOldPass.getText().toString().trim();
+            SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            pass = preferences.getString("pass","");
+            if(oldPass.isEmpty() || newPass.isEmpty() || reNewPass.isEmpty()){
+                Toast.makeText(ChangePassActivity.this,"Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+            }else {
+                if(oldPass.equalsIgnoreCase(pass)){
+                    if(newPass.equalsIgnoreCase(reNewPass)){
+                        onClickChangePass();
+                        edtOldPass.setText("");
+                        edtNewPass.setText("");
+                        edtReNewPass.setText("");
                     }else {
-                        Toast.makeText(ChangePassActivity.this,"Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangePassActivity.this,"Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
                     }
+                }else {
+                    Toast.makeText(ChangePassActivity.this,"Mật khẩu cũ không đúng", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -65,16 +62,13 @@ public class ChangePassActivity extends AppCompatActivity {
 
     private void onClickChangePass(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(ChangePassActivity.this,"Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ChangePassActivity.this,MainMenuActivity.class));
-                    Log.d("ssssss", pass);
-                }else {
-                    Toast.makeText(ChangePassActivity.this,"Đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
-                }
+        user.updatePassword(newPass).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Toast.makeText(ChangePassActivity.this,"Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ChangePassActivity.this,MainMenuActivity.class));
+                Log.d("ssssss", pass);
+            }else {
+                Toast.makeText(ChangePassActivity.this,"Đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
             }
         });
     }

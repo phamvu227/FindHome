@@ -28,14 +28,11 @@ public class SplashActivity extends AppCompatActivity {
         if (user != null) {
             startActivity(new Intent(SplashActivity.this, MainMenuActivity.class));
         }else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
-                    startActivity(intent);
+            new Handler().postDelayed(() -> {
+                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                startActivity(intent);
 
-                    finish();
-                }
+                finish();
             },SPLASH_TIME_OUT);
         }
     }

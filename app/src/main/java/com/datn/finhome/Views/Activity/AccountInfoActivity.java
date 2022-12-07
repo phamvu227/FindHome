@@ -103,24 +103,9 @@ public class AccountInfoActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        btnImageAcc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickRequestPermission();
-            }
-        });
-        btnSaveAcc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickUpdateAccInfo();
-            }
-        });
-        btnDelAcc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickDelAccInfo();
-            }
-        });
+        btnImageAcc.setOnClickListener(view -> onClickRequestPermission());
+        btnSaveAcc.setOnClickListener(view -> onClickUpdateAccInfo());
+        btnDelAcc.setOnClickListener(view -> onClickDelAccInfo());
 
         btnBack.setOnClickListener(v -> {
             onBackPressed();
@@ -159,23 +144,20 @@ public class AccountInfoActivity extends AppCompatActivity {
     }
 
     final private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent intent = result.getData();
-                        if (intent == null) {
-                            return;
-                        }
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent intent = result.getData();
+                    if (intent == null) {
+                        return;
+                    }
 
-                        Uri uri = intent.getData();
-                        setUri(uri);
-                        try {
-                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                            setBitmapImageView(bitmap);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    Uri uri = intent.getData();
+                    setUri(uri);
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        setBitmapImageView(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -201,13 +183,10 @@ public class AccountInfoActivity extends AppCompatActivity {
                 .build();
 
         user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(AccountInfoActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                            showAccInfo();
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(AccountInfoActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        showAccInfo();
                     }
                 });
     }
@@ -218,14 +197,10 @@ public class AccountInfoActivity extends AppCompatActivity {
             return;
         }
         user.delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(AccountInfoActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(AccountInfoActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 }

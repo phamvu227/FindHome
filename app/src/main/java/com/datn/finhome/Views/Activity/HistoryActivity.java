@@ -1,18 +1,13 @@
 package com.datn.finhome.Views.Activity;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.datn.finhome.R;
-
 
 public class HistoryActivity extends AppCompatActivity {
 
@@ -22,9 +17,6 @@ public class HistoryActivity extends AppCompatActivity {
     SharedPreferences preferences = getSharedPreferences("MyViewHistory", MODE_PRIVATE);
 
     @Override
-
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

@@ -41,14 +41,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initView() {
-        btn_signup = (Button) findViewById(R.id.btn_signUp);
-        edt_email_signUp = (EditText) findViewById(R.id.edt_email_signUp);
-        edt_password_signUp = (EditText) findViewById(R.id.edt_password_signUp);
-        edt_retype_password_signUp = (EditText) findViewById(R.id.edt_retype_password_signUp);
-        edt_name_signUp = (EditText) findViewById(R.id.edt_name_signUp);
-        edt_phone_signUp = (EditText) findViewById(R.id.edt_phone_signUp);
-        rad_gender_female_signUp = (RadioButton) findViewById(R.id.rad_gender_female_signUp);
-        rad_gender_male_signUp = (RadioButton) findViewById(R.id.rad_gender_male_signUp);
+        btn_signup = findViewById(R.id.btn_signUp);
+        edt_email_signUp = findViewById(R.id.edt_email_signUp);
+        edt_password_signUp = findViewById(R.id.edt_password_signUp);
+        edt_retype_password_signUp = findViewById(R.id.edt_retype_password_signUp);
+        edt_name_signUp = findViewById(R.id.edt_name_signUp);
+        edt_phone_signUp = findViewById(R.id.edt_phone_signUp);
+        rad_gender_female_signUp = findViewById(R.id.rad_gender_female_signUp);
+        rad_gender_male_signUp = findViewById(R.id.rad_gender_male_signUp);
         progressDialog = new ProgressDialog(RegisterActivity.this, R.style.MyProgessDialogStyle);
         userController = new UserController(this);
         btn_signup.setOnClickListener(this);
@@ -109,16 +109,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 userModel.setGender(genderUser);
                                 userModel.setOwner(owner);
                                 userModel.setPhoneNumber(phone);
-
                                 userController.addUser(userModel, uid);
-
                                 progressDialog.dismiss();
                                 overUtils.makeToast(getApplicationContext(),"Đăng ký thành công");
                                 Intent iSignin = new Intent(RegisterActivity.this, LoginActivity.class);
                                 startActivity(iSignin);
-
-
-
                     } else {
                         progressDialog.dismiss();
                         overUtils.makeToast(getApplicationContext(),overUtils.ERROR_SIGNIN);
