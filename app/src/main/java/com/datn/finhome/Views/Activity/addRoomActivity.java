@@ -35,7 +35,7 @@ import java.util.List;
 public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
-    AppCompatButton btnAddImage, btnPost2;
+    AppCompatButton btnPost2, btnTest;
     RecyclerView recyclerImage;
     PhotoAdapter photoAdapter;
     private static final int Read_permission = 101;
@@ -57,10 +57,25 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         edSizeRoom = findViewById(R.id.edit_size_room);
         edPrice = findViewById(R.id.edit_price);
         edDescription = findViewById(R.id.edit_description);
-        btnAddImage = findViewById(R.id.btnAddImage);
         recyclerImage = findViewById(R.id.recyclerImage);
         btnBack = findViewById(R.id.btnBack);
         btnPost2 = findViewById(R.id.btnPost2);
+        btnTest = findViewById(R.id.test);
+
+        btnTest.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(addRoomActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Read_permission);
+
+                return;
+            }
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            }
+            startActivityForResult(intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+        });
 
         btnPost2.setOnClickListener(v -> {
             LoaderDialog.createDialog(this);
@@ -86,21 +101,6 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
 
         btnBack.setOnClickListener(v -> {
             onBackPressed();
-        });
-
-        btnAddImage.setOnClickListener(view -> {
-            if (ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(addRoomActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Read_permission);
-
-                return;
-            }
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            }
-            startActivityForResult(intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
         });
     }
 
