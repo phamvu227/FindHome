@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove{
+public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
     Button btnAddImage, btnPost;
@@ -67,49 +67,31 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         btnAddImage = findViewById(R.id.btn_add_image);
         btnPost = findViewById(R.id.btn_post);
         recyclerImage = findViewById(R.id.recyclerImage);
-        textView = findViewById(R.id.textTest);
         btnBack = findViewById(R.id.btnBack);
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle == null){
+        if (bundle == null) {
             return;
         }
         idHost = Long.valueOf((String) bundle.get("id"));
 
-        photoAdapter = new PhotoAdapter(uri, getApplicationContext(),this);
+        photoAdapter = new PhotoAdapter(uri, getApplicationContext(), this);
         recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
         recyclerImage.setAdapter(photoAdapter);
-//        if(ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(addRoomActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, Read_permission);
-//        }
 
-
-        edLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(addRoomActivity.this, "abc", Toast.LENGTH_SHORT).show();
-            }
+        edLocation.setOnClickListener(v -> {
         });
+
         btnBack.setOnClickListener(v -> {
             onBackPressed();
         });
-        btnPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickPushData2();
-                uploadToFirebase();
-//                String title = edTitle.getText().toString().trim();
-//                String address = edLocation.getText().toString().trim();
-//                String image = edLocation.getText().toString().trim();
-//                String description = edTitle.getText().toString().trim();
-//                int price = Integer.parseInt(edTitle.getText().toString().trim());
-//                String sizeRoom = edTitle.getText().toString().trim();
 
-            }
+        btnPost.setOnClickListener(v -> {
+            onClickPushData2();
+            uploadToFirebase();
         });
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,9 +107,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 }
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-
             }
         });
     }
@@ -140,55 +120,27 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             if (data.getClipData() != null) {
                 int countOfImages = data.getClipData().getItemCount();
                 for (int i = 0; i < countOfImages; i++) {
-
                     if (uri.size() < 10) {
                         imageUri = data.getClipData().getItemAt(i).getUri();
                         uri.add(imageUri);
-//                        uploadToFirebase();
                     } else {
                         Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
                     }
-
                 }
                 photoAdapter.notifyDataSetChanged();
-                // textView.setText("Photos (" + uri.size() + ") ");
             } else {
                 if (uri.size() < 10) {
                     imageUri = data.getData();
                     uri.add(imageUri);
-//                    uploadToFirebase();
                 } else {
                     Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
                 }
             }
             photoAdapter.notifyDataSetChanged();
-            //textView.setText("Photos (" + uri.size() + ") ");
         } else {
             Toast.makeText(this, "Bạn chưa chọn bức ảnh nào!", Toast.LENGTH_SHORT).show();
         }
-
     }
-
-
-//    private void onClickPushData() {
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("Room");
-////        myRef.setValue(edTitle.getText().toString().trim());
-//        RoomModel roomModel1 = new RoomModel(edTitle.getText().toString().trim(),
-//                edLocation.getText().toString().trim(),
-//                edSizeRoom.getText().toString().trim(),
-//                Integer.parseInt(edPrice.getText().toString().trim()),
-//                edDescription.getText().toString().trim(),
-//                url
-//        );
-//
-//        myRef.setValue(roomModel1, new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//                Toast.makeText(addRoomActivity.this, "đã thêm", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
     private void onClickPushData2() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -208,7 +160,6 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                 } else {
                     Toast.makeText(addRoomActivity.this, "Đã đăng bài", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
@@ -239,7 +190,6 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                         }
                     });
         }
-
     }
 
     private void StoreLink(String url) {
@@ -248,11 +198,10 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         DatabaseReference childDatabase = databaseReference.child("Images");
 
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("Imglink",url);
-
+        hashMap.put("Imglink", url);
         childDatabase.push().setValue(hashMap);
-
     }
+
     @Override
     public void clicked(int getSize) {
 
