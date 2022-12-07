@@ -7,14 +7,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -24,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.datn.finhome.Adapter.PhotoAdapter;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Utils.LoaderDialog;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +32,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.protobuf.StringValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,10 +40,9 @@ import java.util.List;
 public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
-    Button btnAddImage, btnPost;
+    AppCompatButton btnAddImage, btnPost2;
     RecyclerView recyclerImage;
     PhotoAdapter photoAdapter;
-    TextView textView;
     private static final int Read_permission = 101;
     private static final int PICK_IMAGE = 1;
     ArrayList<Uri> uri = new ArrayList<>();
@@ -64,10 +62,16 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         edSizeRoom = findViewById(R.id.edit_size_room);
         edPrice = findViewById(R.id.edit_price);
         edDescription = findViewById(R.id.edit_description);
-        btnAddImage = findViewById(R.id.btn_add_image);
-        btnPost = findViewById(R.id.btn_post);
+        btnAddImage = findViewById(R.id.btnAddImage);
         recyclerImage = findViewById(R.id.recyclerImage);
         btnBack = findViewById(R.id.btnBack);
+        btnPost2 = findViewById(R.id.btnPost2);
+
+        btnPost2.setOnClickListener(v -> {
+            LoaderDialog.createDialog(this);
+            onClickPushData2();
+            uploadToFirebase();
+        });
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
@@ -89,10 +93,6 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             onBackPressed();
         });
 
-        btnPost.setOnClickListener(v -> {
-            onClickPushData2();
-            uploadToFirebase();
-        });
         btnAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,8 +156,10 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError != null) {
+                    LoaderDialog.dismiss();
                     Toast.makeText(addRoomActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
                 } else {
+                    LoaderDialog.dismiss();
                     Toast.makeText(addRoomActivity.this, "Đã đăng bài", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -179,6 +181,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                                 public void onSuccess(Uri uri) {
                                     String url = String.valueOf(uri);
                                     StoreLink(url);
+                                    LoaderDialog.dismiss();
                                 }
                             });
                         }
@@ -186,6 +189,7 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            LoaderDialog.dismiss();
                             Toast.makeText(addRoomActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });

@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginHorizontal="@dimen/_24sdp"
-                android:layout_marginTop="@dimen/_82sdp"
+                android:layout_marginTop="@dimen/_52sdp"
                 android:background="@drawable/edit_text_border"
                 android:ems="10"
                 android:hint="Tiêu đề"
@@ -113,8 +113,8 @@
                 android:textColorHint="@color/black"
                 tools:ignore="RtlSymmetry" />
 
-            <Button
-                android:id="@+id/btn_add_image"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAddImage"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_52sdp"
                 android:layout_marginHorizontal="@dimen/_24sdp"
@@ -128,12 +128,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:scrollbarStyle="outsideInset"
                 android:scrollbars="vertical" />
 
-            <Button
-                android:id="@+id/btn_post"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPost2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_52sdp"
                 android:layout_marginHorizontal="@dimen/_24sdp"
