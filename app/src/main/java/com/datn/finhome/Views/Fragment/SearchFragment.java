@@ -142,7 +142,7 @@ public class SearchFragment extends Fragment implements IClickItemUserListener {
     private  void onClickGoToDetail(RoomModel roomModel){
         Intent intent = new Intent(getActivity(), ShowDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Room", roomModel);
+        bundle.putParcelable("Room", roomModel);
         intent.putExtras(bundle);
         startActivity(intent);
     }

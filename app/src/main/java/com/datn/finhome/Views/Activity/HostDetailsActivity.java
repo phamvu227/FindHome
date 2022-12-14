@@ -157,7 +157,7 @@ public class HostDetailsActivity extends AppCompatActivity implements OnMapReady
     private  void onClickGoToDetail(RoomModel roomModel){
         Intent intent = new Intent(this, ShowDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Room", roomModel);
+        bundle.putParcelable("Room", roomModel);
         intent.putExtras(bundle);
         startActivity(intent);
     }

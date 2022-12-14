@@ -329,10 +329,12 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvBinhLuan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:itemCount="10"
-                tools:listitem="@layout/item_reviews" />
+                tools:listitem="@layout/item_reviews"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         </LinearLayout>
     </ScrollView>
 
