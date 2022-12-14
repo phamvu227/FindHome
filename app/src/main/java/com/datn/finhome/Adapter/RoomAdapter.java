@@ -4,23 +4,28 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.datn.finhome.IClickItemUserListener;
+import com.datn.finhome.Interfaces.IClickItemUserListener;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder> {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder> implements Filterable {
     Context context;
+    private List<RoomModel> listFull;
     private List<RoomModel> list;
     private IClickItemUserListener iClickItemUserListener;
 
@@ -28,12 +33,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
         this.context = context;
         this.list = list;
         this.iClickItemUserListener = listener;
+        listFull = new ArrayList<>(list);
     }
 
-    public void setList(List<RoomModel> list){
-        this.list=list;
-        this.notifyDataSetChanged();
-    }
+
 
     @NonNull
     @Override
@@ -46,6 +49,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
     @Override
     public void onBindViewHolder(@NonNull RoomViewholder holder, int position) {
         RoomModel roomModel = list.get(position);
+        if (roomModel == null) {
+            return;
+        }
         holder.tvName.setText(roomModel.getTitle());
         if (roomModel.getPrice() != null){
             holder.tvPrice.setText(roomModel.getPrice().toString());
@@ -67,6 +73,41 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
         else
             return 0;
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    private Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<RoomModel> filterlist =new ArrayList<>();
+            String pattrn = constraint.toString();
+            if(pattrn == null || pattrn.isEmpty()){
+                filterlist.addAll(listFull);
+            }
+            else{
+                for(RoomModel roomModel : listFull){
+                    if(roomModel.getAddress().toLowerCase().contains(pattrn.toLowerCase())){
+                        filterlist.add(roomModel);
+                    }
+                }
+                list = filterlist;
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values= filterlist;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list = (List<RoomModel>) results.values;
+            notifyDataSetChanged();
+        }
+    };
+
 
     public class RoomViewholder extends RecyclerView.ViewHolder {
         private ConstraintLayout container;

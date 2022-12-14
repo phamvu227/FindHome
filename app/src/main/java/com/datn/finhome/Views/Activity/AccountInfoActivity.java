@@ -1,5 +1,6 @@
 package com.datn.finhome.Views.Activity;
 
+import static android.content.ContentValues.TAG;
 import static com.datn.finhome.Utils.OverUtils.MY_REQUEST_CODE;
 
 import androidx.activity.result.ActivityResult;
@@ -20,29 +21,46 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Magnifier;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.datn.finhome.Models.Image;
+import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Utils.OverUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 
 public class AccountInfoActivity extends AppCompatActivity {
+    OverUtils overUtils;
+
     private AppCompatImageButton btnImageAcc;
     private EditText txtNameAcc, txtSdtAcc, txtMailAcc, txtAddressAcc;
     private Button btnDelAcc;
     private Button btnSaveAcc;
     private Uri uri;
     private AppCompatImageButton btnBack;
+
+    private DatabaseReference reference;
+    private FirebaseUser firebaseUser;
+
+    String userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,42 +82,34 @@ public class AccountInfoActivity extends AppCompatActivity {
     }
 
     private void setAccInfo(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            return;
-        }
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userId = firebaseUser.getUid();
 
-        txtNameAcc.setText(user.getDisplayName());
-        txtSdtAcc.setText(user.getPhoneNumber());
-        txtMailAcc.setText(user.getEmail());
-        Glide.with(getApplication()).load(user.getPhotoUrl()).error(R.drawable.img_user).into(btnImageAcc);
-    }
+        reference.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserModel userModel = snapshot.getValue(UserModel.class);
+                if(userModel != null){
+                    String fullName = userModel.name;
+                    String phone = userModel.phoneNumber;
+                    String avatar = userModel.avatar;
+                    String email = userModel.email;
+                    String address = userModel.address;
 
-    public void showAccInfo() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            return;
-        }
+                    txtNameAcc.setText(fullName);
+                    txtSdtAcc.setText(phone);
+                    Glide.with(getApplicationContext()).load(avatar).into(btnImageAcc);
+                    txtMailAcc.setText(email);
+                    txtAddressAcc.setText(address);
+                }
+            }
 
-        String name = user.getDisplayName();
-        String sdt = user.getPhoneNumber();
-        String mail = user.getEmail();
-        Uri photoUrl = user.getPhotoUrl();
-
-        if (name == null || sdt == null || mail == null) {
-            txtNameAcc.setVisibility(View.GONE);
-            txtSdtAcc.setVisibility(View.GONE);
-            txtMailAcc.setVisibility(View.GONE);
-        } else {
-            txtNameAcc.setVisibility(View.VISIBLE);
-            txtNameAcc.setText(name);
-            txtSdtAcc.setVisibility(View.VISIBLE);
-            txtSdtAcc.setText(sdt);
-            txtMailAcc.setVisibility(View.VISIBLE);
-            txtMailAcc.setText(mail);
-        }
-
-        Glide.with(this).load(photoUrl).error(R.drawable.img_user).into(btnImageAcc);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(AccountInfoActivity.this, "Show", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initListener() {
@@ -112,12 +122,57 @@ public class AccountInfoActivity extends AppCompatActivity {
         });
     }
 
+    private void onClickUpdateAccInfo() {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userId = firebaseUser.getUid();
+
+        String newName = txtNameAcc.getText().toString().trim();
+        String newPhone = txtSdtAcc.getText().toString().trim();
+        String newMail = txtMailAcc.getText().toString().trim();
+        String newAddress = txtAddressAcc.getText().toString().trim();
+
+        if(newName.isEmpty() || newPhone.isEmpty() || newMail.isEmpty()){
+            Toast.makeText(AccountInfoActivity.this,"Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+        }else if(newMail.trim().length() == 0) {
+            overUtils.makeToast(getApplicationContext(),overUtils.ERROR_EMAIL);
+        }else if (newName.length() <= 5) {
+            OverUtils.makeToast(getApplicationContext(), OverUtils.VALIDATE_NAME);
+        }else if(!newPhone.trim().matches("^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$")){
+            overUtils.makeToast(getApplicationContext(),overUtils.VALIDATE_PHONE);
+        } else {
+            reference.child(userId).child("name").setValue(newName);
+            reference.child(userId).child("phoneNumber").setValue(newPhone);
+            reference.child(userId).child("email").setValue(newMail);
+            reference.child(userId).child("address").setValue(newAddress);
+            Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
+    }
+
+    private void onClickDelAccInfo() {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userId = firebaseUser.getUid();
+        reference.child(userId).removeValue();
+        firebaseUser.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(AccountInfoActivity.this, "Đã xóa tài khoản", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AccountInfoActivity.this, LoginActivity.class));
+                        }
+                    }
+                });
+
+    }
+
     private void onClickRequestPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             openGallery();
             return;
         }
-
         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             openGallery();
         } else {
@@ -171,36 +226,4 @@ public class AccountInfoActivity extends AppCompatActivity {
         this.uri = uri;
     }
 
-    private void onClickUpdateAccInfo() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            return;
-        }
-        String strFullName = txtNameAcc.getText().toString().trim();
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(strFullName)
-                .setPhotoUri(uri)
-                .build();
-
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(AccountInfoActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                        showAccInfo();
-                    }
-                });
-    }
-
-    private void onClickDelAccInfo() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user == null) {
-            return;
-        }
-        user.delete()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(AccountInfoActivity.this, "Xóa thành công", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 }
