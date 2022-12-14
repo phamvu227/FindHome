@@ -303,20 +303,38 @@
                 android:background="#B1B1B1"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"/>
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Đánh giá"
-                android:textSize="16dp"
-                android:fontFamily="@font/roboto"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/cardview_dark_background"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:text="Đánh giá"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/cardview_dark_background"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Để lại bình luận ?"
+                    android:onClick="reviews"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="@color/cardview_dark_background"/>
+            </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvBinhLuan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:itemCount="10"
-                tools:listitem="@layout/item_reviews" />
+                tools:listitem="@layout/item_reviews"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         </LinearLayout>
     </ScrollView>
 

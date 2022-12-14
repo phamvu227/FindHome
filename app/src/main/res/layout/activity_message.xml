@@ -55,31 +55,35 @@
         android:background="#fff"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_height="wrap_content">
+            android:weightSum="2">
+
             <EditText
-                android:background="@android:color/transparent"
                 android:id="@+id/text_send"
-                android:layout_gravity="center"
-                android:hint="Nhắn tin ..."
-                android:layout_weight="2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:hint="Nhắn tin ..." />
+
             <ImageButton
-                android:background="@drawable/ic_baseline_image_24"
                 android:id="@+id/btn_image"
                 android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:layout_height="40dp"/>
+                android:background="@drawable/ic_baseline_image_24" />
+
             <ImageButton
-                android:background="@drawable/ic_baseline_send_24"
                 android:id="@+id/btn_send"
                 android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:layout_height="40dp"/>
+                android:background="@drawable/ic_baseline_send_24" />
         </LinearLayout>
 
     </RelativeLayout>
