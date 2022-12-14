@@ -22,20 +22,7 @@ public class RoomModel implements Serializable {
         this.description = description;
         this.idHost = idHost;
     }
-
-
     public RoomModel() {
-    }
-
-    public RoomModel(String title, String address, String description, Long idHost, String img, String name, Long price, String sizeRoom) {
-        this.title = title;
-        this.address = address;
-        this.description = description;
-        this.idHost = idHost;
-        this.img = img;
-        this.name = name;
-        this.price = price;
-        this.sizeRoom = sizeRoom;
     }
 
     public String getTitle() {
