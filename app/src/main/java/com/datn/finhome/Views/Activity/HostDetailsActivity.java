@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HostDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class HostDetailsActivity extends AppCompatActivity {
     private ActivityHostDetailsBinding binding;
     private RoomAdapter roomAdapter;
     private List<RoomModel> mRoomModel;
@@ -47,8 +47,8 @@ public class HostDetailsActivity extends AppCompatActivity implements OnMapReady
         binding = ActivityHostDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.mapview.onCreate(savedInstanceState);
-        binding.mapview.getMapAsync(this);
+        //binding.mapview.onCreate(savedInstanceState);
+        //binding.mapview.getMapAsync(this);
 
         id = getIntent().getLongExtra("id", 0);
 
@@ -140,19 +140,17 @@ public class HostDetailsActivity extends AppCompatActivity implements OnMapReady
         });
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        map.getUiSettings().setMyLocationButtonEnabled(false);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            return;
-        }
-        map.setMyLocationEnabled(true);
-
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(43.1, -87.9)));
-    }
+//    @Override
+//    public void onMapReady(GoogleMap googleMap) {
+//        map = googleMap;
+//        map.getUiSettings().setMyLocationButtonEnabled(false);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            return;
+//        }
+//        map.setMyLocationEnabled(true);
+//
+//        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(43.1, -87.9)));
+//    }
 
     private  void onClickGoToDetail(RoomModel roomModel){
         Intent intent = new Intent(this, ShowDetailActivity.class);

@@ -27,7 +27,7 @@
 
     </RelativeLayout>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -336,6 +336,6 @@
                 tools:listitem="@layout/item_reviews"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         </LinearLayout>
-    </ScrollView>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
