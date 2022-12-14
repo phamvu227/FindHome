@@ -69,6 +69,7 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         btnSettingAccount = layout.findViewById(R.id.btnSettingAccount);
         tvName = layout.findViewById(R.id.tvNameUser);
         tvPhone = layout.findViewById(R.id.tvSdtUser);
+        tvDiaChi = layout.findViewById(R.id.tvAddressUser);
         ImgAvt = layout.findViewById(R.id.imgUser);
         btnLogout.setOnClickListener(this);
 
@@ -95,10 +96,12 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
                     String fullName = userModel.name;
                     String Phone = userModel.phoneNumber;
                     String avatar = userModel.avatar;
+                    String address = userModel.address;
 
                     tvName.setText(fullName);
                     tvPhone.setText(Phone);
                     Glide.with(mContext).load(avatar).into(ImgAvt);
+                    tvDiaChi.setText(address);
                 }
             }
 

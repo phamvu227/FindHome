@@ -21,6 +21,7 @@ public class UserModel implements Parcelable {
    public String name;
    public String email;
    public String phoneNumber;
+   public String address;
     boolean owner, gender;
     private List<Image> mListImage;
 
@@ -34,6 +35,7 @@ public class UserModel implements Parcelable {
         name = in.readString();
         email = in.readString();
         phoneNumber = in.readString();
+        address = in.readString();
         owner = in.readByte() != 0;
         gender = in.readByte() != 0;
         userID = in.readString();
@@ -116,6 +118,14 @@ public class UserModel implements Parcelable {
         this.compressionImageFit = compressionImageFit;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     //Biến lưu root của firebase, lưu ý để biến là private
     private DatabaseReference nodeRoot;
 
@@ -135,6 +145,7 @@ public class UserModel implements Parcelable {
         dest.writeString(name);
         dest.writeString(email);
         dest.writeString(phoneNumber);
+        dest.writeString(address);
         dest.writeByte((byte) (owner ? 1 : 0));
         dest.writeByte((byte) (gender ? 1 : 0));
         dest.writeString(userID);
