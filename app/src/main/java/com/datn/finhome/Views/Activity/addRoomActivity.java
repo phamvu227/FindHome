@@ -107,7 +107,6 @@ public class addRoomActivity extends AppCompatActivity {
 
     private void setUpSaveRoom() {
         btnPost2.setOnClickListener(v -> {
-            Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
             check(new IAfterGetAllObject() {
                 @Override
                 public void iAfterGetAllObject(Object obj) {
@@ -148,30 +147,12 @@ public class addRoomActivity extends AppCompatActivity {
     }
 
 
-//    private void getListBook(){
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference reference = database.getReference("book");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    RoomModel  room  = dataSnapshot.getValue(RoomModel.class);
-//                    RoomList.add(room);
-//                }
-//                bookAdapter.notifyDataSetChanged();
-//            }
 
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(MainActivity.this, "THat bai", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
 
 
     private void insertRoom(RoomModel roomModel) {
-        String key = FirebaseDatabase.getInstance().getReference("book").push().getKey();
+        String key = FirebaseDatabase.getInstance().getReference("Room").push().getKey();
         roomModel.setId(key);
         RoomController.getInstance().insertProduct(roomModel, new IAfterInsertObject() {
             @Override
