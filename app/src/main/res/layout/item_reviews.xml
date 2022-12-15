@@ -41,4 +41,5 @@
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/imgUserReview"
         app:layout_constraintStart_toStartOf="@+id/tvUserNameReview" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

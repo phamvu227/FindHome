@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.datn.finhome.Adapter.DescriptionAdapter;
@@ -33,19 +34,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class ShowDetailActivity extends AppCompatActivity {
     private ActivityShowDetailsBinding binding;
     private DatabaseReference referenceHost;
     private String id;
+    RecyclerView recyclerView;
     private FirebaseUser user;
     private RoomModel roomModel;
     private DescriptionAdapter descriptionAdapter;
     private List<ReviewModel> mListDescription;
-    private List<UserModel> mListUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +63,9 @@ public class ShowDetailActivity extends AppCompatActivity {
         }
         roomModel = (RoomModel) bundle.get("Room");
 
-        mListDescription = new ArrayList<>();
-        mListUser = new ArrayList<>();
+//        mListDescription = new ArrayList<>();
+//        mListUser = new ArrayList<>();
+        recyclerView = binding.rcvBinhLuan;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
@@ -119,42 +125,63 @@ public class ShowDetailActivity extends AppCompatActivity {
 
 
     private void initRcvReview(){
-        referenceHost = FirebaseDatabase.getInstance().getReference("Users");
-        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                    assert userModel != null;
-                    mListUser.add(userModel);
-                }
-            }
+        mListDescription = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Room");
+        reference.child(roomModel.getId()).child("Reviews")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        mListDescription.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            ReviewModel reviewModel = dataSnapshot.getValue(ReviewModel.class);
+                            mListDescription.add(reviewModel);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("TAG", "onCancelled: " + error.getMessage());
-            }
-        });
+                        }
+                        descriptionAdapter = new DescriptionAdapter(getApplicationContext(),mListDescription);
+                        recyclerView.setAdapter(descriptionAdapter);
+                    }
 
-
-        referenceHost = FirebaseDatabase.getInstance().getReference("Reviews");
-        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ReviewModel reviewModel = dataSnapshot.getValue(ReviewModel.class);
-                    assert reviewModel != null;
-                    mListDescription.add(reviewModel);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("TAG", "onCancelled: " + error.getMessage());
-            }
-        });
-        descriptionAdapter = new DescriptionAdapter(this,mListDescription,mListUser);
-        binding.rcvBinhLuan.setAdapter(descriptionAdapter);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(ShowDetailActivity.this, "Looxi", Toast.LENGTH_SHORT).show();
+                    }
+                });
+//        referenceHost = FirebaseDatabase.getInstance().getReference("Users");
+//        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    UserModel userModel = dataSnapshot. getValue(UserModel.class);
+//                    assert userModel != null;
+//                    mListUser.add(userModel);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("TAG", "onCancelled: " + error.getMessage());
+//            }
+//        });
+//
+//
+//        referenceHost = FirebaseDatabase.getInstance().getReference("Reviews");
+//        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    ReviewModel reviewModel = dataSnapshot.getValue(ReviewModel.class);
+//                    assert reviewModel != null;
+//                    mListDescription.add(reviewModel);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("TAG", "onCancelled: " + error.getMessage());
+//            }
+//        });
+//        descriptionAdapter = new DescriptionAdapter(this,mListDescription,mListUser);
+//        binding.rcvBinhLuan.setAdapter(descriptionAdapter);
     }
 
     private  void openDialog(){
@@ -189,19 +216,28 @@ public class ShowDetailActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-//                ReviewModel reviewModel = new ReviewModel(
-//                        user.getUid().toString(),
-//                        edtReviews.getText().toString().trim()
-////                        roomModel.getIdRoom()
-////                );
-//                mDatabase.child("Reviews").push().setValue(reviewModel, (databaseError, databaseReference) -> {
-//                    if (databaseError != null) {
-//                        Toast.makeText(ShowDetailActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(ShowDetailActivity.this, "Đã gửi bình luận", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Room");
+                String key = FirebaseDatabase.getInstance().getReference("Reviews").push().getKey();
+//                Locale locale = new Locale("fr", "FR");
+//                DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+//                String date = dateFormat.format(new Date());
+                String pattern = "HH:mm:ss MM/dd/yyyy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                String date = simpleDateFormat.format(new Date());
+                ReviewModel reviewModel = new ReviewModel(
+                        user.getUid().toString(),
+                        edtReviews.getText().toString().trim(),
+                        roomModel.getId()
+                );
+                reviewModel.setIdComment(key);
+                reviewModel.setTime(date);
+                mDatabase.child(roomModel.getId()).child("Reviews").push().setValue(reviewModel, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        Toast.makeText(ShowDetailActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ShowDetailActivity.this, "Đã gửi bình luận", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 dialog.dismiss();
             }
         });

@@ -1,17 +1,37 @@
 package com.datn.finhome.Models;
 
 public class ReviewModel {
+    String idComment;
     String idUser;
     String reviews;
-    Long idRoom;
+    String idRoom;
+    String time;
 
-    public ReviewModel(String idUser, String reviews, Long idRoom) {
+    public ReviewModel() {
+    }
+
+    public ReviewModel(String idUser, String reviews, String idRoom) {
         this.idUser = idUser;
         this.reviews = reviews;
         this.idRoom = idRoom;
     }
 
-    public ReviewModel() {
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+    //    public ReviewModel(String idUser, String trim, String id) {
+//    }
+
+    public String getIdComment() {
+        return idComment;
+    }
+
+    public void setIdComment(String idComment) {
+        this.idComment = idComment;
     }
 
     public String getIdUser() {
@@ -30,11 +50,11 @@ public class ReviewModel {
         this.reviews = reviews;
     }
 
-    public Long getIdRoom() {
+    public String getIdRoom() {
         return idRoom;
     }
 
-    public void setIdRoom(Long idRoom) {
+    public void setIdRoom(String idRoom) {
         this.idRoom = idRoom;
     }
 }
