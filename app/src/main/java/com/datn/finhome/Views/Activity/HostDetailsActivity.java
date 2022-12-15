@@ -14,8 +14,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
 import com.datn.finhome.Adapter.RoomAdapter;
-import com.datn.finhome.Models.HostModel;
 import com.datn.finhome.Models.RoomModel;
+import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.databinding.ActivityHostDetailsBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,7 +36,7 @@ public class HostDetailsActivity extends AppCompatActivity {
     private RoomAdapter roomAdapter;
     private List<RoomModel> mRoomModel;
     private DatabaseReference referenceHost, referenceRoom;
-    private Long id;
+    private String id;
     private String numberPhone = "";
     GoogleMap map;
 
@@ -50,7 +50,7 @@ public class HostDetailsActivity extends AppCompatActivity {
         //binding.mapview.onCreate(savedInstanceState);
         //binding.mapview.getMapAsync(this);
 
-        id = getIntent().getLongExtra("id", 0);
+        id = getIntent().getStringExtra("id");
 
         mRoomModel = new ArrayList<>();
 
@@ -87,17 +87,16 @@ public class HostDetailsActivity extends AppCompatActivity {
     }
 
     private void initHost() {
-        referenceHost = FirebaseDatabase.getInstance().getReference("Host");
+        referenceHost = FirebaseDatabase.getInstance().getReference("Users");
         referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    HostModel hostModel = dataSnapshot.getValue(HostModel.class);
+                    UserModel hostModel = dataSnapshot.getValue(UserModel.class);
                     assert hostModel != null;
-                    if (Objects.equals(id, hostModel.getId())) {
-                        numberPhone = String.valueOf(hostModel.getNumber_phone());
+                    if (Objects.equals(id, hostModel.getUserID())) {
                         binding.tvNameHost.setText(hostModel.getName());
-                        binding.tvSdtHost.setText(hostModel.getNumber_phone().toString());
+                        binding.tvSdtHost.setText(hostModel.getPhoneNumber().toString());
                         binding.tvAddressHost.setText(hostModel.getAddress());
                         Glide.with(binding.getRoot())
                                 .load(hostModel.getAvatar())
@@ -121,7 +120,7 @@ public class HostDetailsActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
                     assert roomModel != null;
-                    if (Objects.equals(roomModel.getIdHost(), id)) {
+                    if (Objects.equals(roomModel.getUid(), id)) {
                         mRoomModel.add(roomModel);
                         Log.e("TAG", "onDataChange: " + mRoomModel.size() );
                         roomAdapter = new RoomAdapter(HostDetailsActivity.this, mRoomModel, roomModel1 -> {
@@ -155,7 +154,7 @@ public class HostDetailsActivity extends AppCompatActivity {
     private  void onClickGoToDetail(RoomModel roomModel){
         Intent intent = new Intent(this, ShowDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Room", roomModel);
+        bundle.putSerializable("Room", roomModel);
         intent.putExtras(bundle);
         startActivity(intent);
     }

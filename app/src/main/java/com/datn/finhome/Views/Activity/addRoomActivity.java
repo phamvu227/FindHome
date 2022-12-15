@@ -6,9 +6,14 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -16,15 +21,24 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.datn.finhome.Adapter.PhotoAdapter;
+import com.datn.finhome.Controllers.RoomController;
+import com.datn.finhome.Interfaces.IAfterGetAllObject;
+import com.datn.finhome.Interfaces.IAfterInsertObject;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Utils.ImgUri;
 import com.datn.finhome.Utils.LoaderDialog;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -32,21 +46,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.CountOfImageWhenRemove {
+public class addRoomActivity extends AppCompatActivity {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
     AppCompatButton btnPost2, btnTest;
     RecyclerView recyclerImage;
-    PhotoAdapter photoAdapter;
-    private static final int Read_permission = 101;
-    private static final int PICK_IMAGE = 1;
-    ArrayList<Uri> uri = new ArrayList<>();
-    private Uri imageUri;
+    ImageView imageView;
     StorageReference storageReference;
     FirebaseStorage firebaseStorage;
-    private int upload_count = 0;
-    List<String> pictureLink;
-    Long idHost;
+    FirebaseAuth firebaseAuth;
+    private Uri imgUri;
+    String uid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,47 +64,26 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         setContentView(R.layout.activity_add_room);
         edTitle = findViewById(R.id.edit_title);
         edLocation = findViewById(R.id.edit_location);
+        imageView = findViewById(R.id.dgAdd_add);
         edSizeRoom = findViewById(R.id.edit_size_room);
         edPrice = findViewById(R.id.edit_price);
         edDescription = findViewById(R.id.edit_description);
         recyclerImage = findViewById(R.id.recyclerImage);
         btnBack = findViewById(R.id.btnBack);
         btnPost2 = findViewById(R.id.btnPost2);
-        btnTest = findViewById(R.id.test);
+        firebaseAuth =FirebaseAuth.getInstance();
+        uid = firebaseAuth.getUid();
+        setUpSaveRoom();
+        setUpGetImg();
 
-        btnTest.setOnClickListener(v -> {
-            if (ContextCompat.checkSelfPermission(addRoomActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(addRoomActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Read_permission);
 
-                return;
-            }
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            }
-            startActivityForResult(intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-        });
-
-        btnPost2.setOnClickListener(v -> {
-            LoaderDialog.createDialog(this);
-            onClickPushData2();
-            uploadToFirebase();
-        });
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle == null) {
-            return;
-        }
-        idHost = Long.valueOf((String) bundle.get("id"));
-
-        photoAdapter = new PhotoAdapter(uri, getApplicationContext(), this);
-        recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
-        recyclerImage.setAdapter(photoAdapter);
+//        photoAdapter = new PhotoAdapter(uri, getApplicationContext(), this);
+//        recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
+//        recyclerImage.setAdapter(photoAdapter);
 
         edLocation.setOnClickListener(v -> {
         });
@@ -104,96 +93,135 @@ public class addRoomActivity extends AppCompatActivity implements PhotoAdapter.C
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && null != data) {
-            if (data.getClipData() != null) {
-                int countOfImages = data.getClipData().getItemCount();
-                for (int i = 0; i < countOfImages; i++) {
-                    if (uri.size() < 10) {
-                        imageUri = data.getClipData().getItemAt(i).getUri();
-                        uri.add(imageUri);
-                    } else {
-                        Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
-                    }
+    private final ActivityResultLauncher<String> getImg = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null) {
+                    imageView.setImageURI(uri);
+                    imgUri = uri;
                 }
-                photoAdapter.notifyDataSetChanged();
-            } else {
-                if (uri.size() < 10) {
-                    imageUri = data.getData();
-                    uri.add(imageUri);
-                } else {
-                    Toast.makeText(this, "Bạn chỉ được chọn 10 bức ảnh!", Toast.LENGTH_SHORT).show();
-                }
-            }
-            photoAdapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(this, "Bạn chưa chọn bức ảnh nào!", Toast.LENGTH_SHORT).show();
-        }
+            });
+    private void setUpGetImg() {
+        imageView.setOnClickListener(v -> getImg.launch("image/*"));
     }
 
-    private void onClickPushData2() {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        RoomModel roomModel2 = new RoomModel(
-                edTitle.getText().toString().trim(),
-                edLocation.getText().toString().trim(),
-                edSizeRoom.getText().toString().trim(),
-                Long.valueOf(edPrice.getText().toString().trim()),
-                edDescription.getText().toString().trim(),
-                idHost
-        );
-        mDatabase.child("Room").push().setValue(roomModel2, (databaseError, databaseReference) -> {
-            if (databaseError != null) {
-                LoaderDialog.dismiss();
-                Toast.makeText(addRoomActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
-            } else {
-                LoaderDialog.dismiss();
-                Toast.makeText(addRoomActivity.this, "Đã đăng bài", Toast.LENGTH_SHORT).show();
+
+    private void setUpSaveRoom() {
+        btnPost2.setOnClickListener(v -> {
+            Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+            check(new IAfterGetAllObject() {
+                @Override
+                public void iAfterGetAllObject(Object obj) {
+                    if (obj != null) {
+                        RoomModel roomModel = (RoomModel) obj;
+//                        progressDialog.show();
+                        getProductImg(new IAfterGetAllObject() {
+                            @Override
+                            public void iAfterGetAllObject(Object obj) {
+                                if(obj != null) {
+                                    Uri uri = (Uri) obj;
+                                    String imgLink = String.valueOf(uri);
+                                    roomModel.setImg(imgLink);
+                                    insertRoom(roomModel);
+                                } else {
+                                    Toast.makeText(addRoomActivity.this, " Luu anh that bai", Toast.LENGTH_SHORT).show();
+//                                    progressDialog.cancel();
+                                }
+                            }
+
+                            @Override
+                            public void onError(DatabaseError error) {
+                                Toast.makeText(addRoomActivity.this, "LOI", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
+
+
+                @Override
+                public void onError(DatabaseError error) {
+                    Toast.makeText(addRoomActivity.this, "loi", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        });
+    }
+
+
+//    private void getListBook(){
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference reference = database.getReference("book");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    RoomModel  room  = dataSnapshot.getValue(RoomModel.class);
+//                    RoomList.add(room);
+//                }
+//                bookAdapter.notifyDataSetChanged();
+//            }
+
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(MainActivity.this, "THat bai", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
+
+
+    private void insertRoom(RoomModel roomModel) {
+        String key = FirebaseDatabase.getInstance().getReference("book").push().getKey();
+        roomModel.setId(key);
+        RoomController.getInstance().insertProduct(roomModel, new IAfterInsertObject() {
+            @Override
+            public void onSuccess(Object obj) {
+                Toast.makeText(addRoomActivity.this, "thanh cong", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(DatabaseError exception) {
+                Toast.makeText(addRoomActivity.this, "that bai", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void uploadToFirebase() {
-        StorageReference imageFolder = FirebaseStorage.getInstance().getReference().child("ImageFolder");
+    private void getProductImg(IAfterGetAllObject iAfterGetAllObject) {
+        StorageReference fileRef =
+                FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + ImgUri.getExtensionFile(getApplicationContext(), imgUri));
+        fileRef.putFile(imgUri).addOnSuccessListener(taskSnapshot ->
+                        fileRef.getDownloadUrl()
+                                .addOnSuccessListener(iAfterGetAllObject::iAfterGetAllObject))
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "That bai", Toast.LENGTH_SHORT).show();
+                    iAfterGetAllObject.iAfterGetAllObject(null);
+                });
+    }
 
-        for (upload_count = 0; upload_count < uri.size(); upload_count++) {
-            Uri IndividualImage = uri.get(upload_count);
-            StorageReference ImageName = imageFolder.child("Image" + IndividualImage.getLastPathSegment());
 
-            ImageName.putFile(IndividualImage).addOnSuccessListener(taskSnapshot -> ImageName.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    String url = String.valueOf(uri);
-                    StoreLink(url);
-                    LoaderDialog.dismiss();
-                }
-            }))
-                    .addOnFailureListener(e -> {
-                        LoaderDialog.dismiss();
-                        Toast.makeText(addRoomActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+    private void check(IAfterGetAllObject iAfterGetAllObject){
+        RoomModel room = new RoomModel();
+        String name = edTitle.getText().toString().trim();
+        String MoTa = edDescription.getText().toString().trim();
+        String size = edSizeRoom.getText().toString().trim();
+        String Asdress = edLocation.getText().toString().trim();
+        String Price = edPrice.getText().toString().trim();
+        if (name.isEmpty()) {
+            Toast.makeText(this, "vui long nhap", Toast.LENGTH_SHORT).show();
+            return;
         }
-    }
 
-    private void StoreLink(String url) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Room");
+        room.setName(name);
+        room.setAddress(Asdress);
+        room.setDescription(MoTa);
+        room.setSizeRoom(size);
+        room.setPrice(Price);
+        room.setUid(uid);
+        iAfterGetAllObject.iAfterGetAllObject(room);
 
-        DatabaseReference childDatabase = databaseReference.child("Images");
 
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("Imglink", url);
-        childDatabase.push().setValue(hashMap);
-    }
-
-    @Override
-    public void clicked(int getSize) {
 
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-    }
+
 }

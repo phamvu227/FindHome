@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.datn.finhome.Adapter.DescriptionAdapter;
-import com.datn.finhome.Models.HostModel;
 import com.datn.finhome.Models.ReviewModel;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.Models.UserModel;
@@ -41,7 +40,7 @@ import java.util.Objects;
 public class ShowDetailActivity extends AppCompatActivity {
     private ActivityShowDetailsBinding binding;
     private DatabaseReference referenceHost;
-    private Long id;
+    private String id;
     private FirebaseUser user;
     private RoomModel roomModel;
     private DescriptionAdapter descriptionAdapter;
@@ -54,7 +53,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         binding = ActivityShowDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Bundle bundle = getIntent().getExtras();
-        if(bundle == null){
+        if (bundle == null) {
             return;
         }
         roomModel = (RoomModel) bundle.get("Room");
@@ -70,7 +69,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         binding.btnContactReviews.setOnClickListener(v -> {
             Intent intent = new Intent(this, HostDetailsActivity.class);
             Bundle bundle1 = new Bundle();
-            bundle1.putLong("id", id);
+            bundle1.putString("id", id);
             intent.putExtras(bundle1);
             startActivity(intent);
         });
@@ -80,7 +79,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         });
 
         Picasso.get().load(roomModel.getImg()).into(binding.imgview);
-        if (roomModel.getPrice() != null){
+        if (roomModel.getPrice() != null) {
             binding.tvPriceReview.setText(roomModel.getPrice().toString());
         }
         binding.tvTitleRoomReview.setText(roomModel.getDescription());
@@ -88,15 +87,15 @@ public class ShowDetailActivity extends AppCompatActivity {
         binding.tvAreaReview.setText(roomModel.getSizeRoom());
         binding.tvDetailReviews.setText(roomModel.getDescription());
 
-        referenceHost = FirebaseDatabase.getInstance().getReference("Host");
+        referenceHost = FirebaseDatabase.getInstance().getReference("Users");
         referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    HostModel hostModel = dataSnapshot.getValue(HostModel.class);
+                    UserModel hostModel = dataSnapshot.getValue(UserModel.class);
                     assert hostModel != null;
-                    id = hostModel.getId();
-                    if (Objects.equals(roomModel.getIdHost(), hostModel.getId())){
+                    id = hostModel.getUserID();
+                    if (Objects.equals(roomModel.getUid(), hostModel.getUserID())) {
                         binding.tvNameContactReviews.setText(hostModel.getName());
                         binding.tvAddressContactReviews.setText(hostModel.getAddress());
                         Glide.with(getApplicationContext())
@@ -108,12 +107,16 @@ public class ShowDetailActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("TAG", "onCancelled: " + error.getMessage());
-            }
-        });
 
+            }
+
+
+        });
         initRcvReview();
     }
+
+
+
 
     private void initRcvReview(){
         referenceHost = FirebaseDatabase.getInstance().getReference("Users");
@@ -187,18 +190,18 @@ public class ShowDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                ReviewModel reviewModel = new ReviewModel(
-                        user.getUid().toString(),
-                        edtReviews.getText().toString().trim(),
-                        roomModel.getIdRoom()
-                );
-                mDatabase.child("Reviews").push().setValue(reviewModel, (databaseError, databaseReference) -> {
-                    if (databaseError != null) {
-                        Toast.makeText(ShowDetailActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(ShowDetailActivity.this, "Đã gửi bình luận", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                ReviewModel reviewModel = new ReviewModel(
+//                        user.getUid().toString(),
+//                        edtReviews.getText().toString().trim()
+////                        roomModel.getIdRoom()
+////                );
+//                mDatabase.child("Reviews").push().setValue(reviewModel, (databaseError, databaseReference) -> {
+//                    if (databaseError != null) {
+//                        Toast.makeText(ShowDetailActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(ShowDetailActivity.this, "Đã gửi bình luận", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
                 dialog.dismiss();
             }
         });
