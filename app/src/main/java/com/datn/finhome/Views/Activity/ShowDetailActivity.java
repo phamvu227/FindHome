@@ -1,6 +1,7 @@
 package com.datn.finhome.Views.Activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,12 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.datn.finhome.Adapter.AdapterFavorite;
 import com.datn.finhome.Adapter.DescriptionAdapter;
 import com.datn.finhome.Models.ReviewModel;
 import com.datn.finhome.Models.RoomModel;
-import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.datn.finhome.databinding.ActivityShowDetailsBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,21 +38,23 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 public class ShowDetailActivity extends AppCompatActivity {
+
     private ActivityShowDetailsBinding binding;
     private DatabaseReference referenceHost;
-    private String id;
+    boolean isInMyFavorite = false;
+    FirebaseAuth firebaseAuth;
+           String uid;
+    ImageView imageView;
     RecyclerView recyclerView;
     private FirebaseUser user;
-    private RoomModel roomModel;
+    RoomModel roomModel;
     private DescriptionAdapter descriptionAdapter;
     private List<ReviewModel> mListDescription;
 
@@ -66,6 +72,27 @@ public class ShowDetailActivity extends AppCompatActivity {
 //        mListDescription = new ArrayList<>();
 //        mListUser = new ArrayList<>();
         recyclerView = binding.rcvBinhLuan;
+        imageView = binding.btnFavoriteReview;
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (firebaseAuth.getCurrentUser() == null){
+
+                }
+                else {
+                    if (isInMyFavorite){
+                        removeFavorite(getApplicationContext(),roomModel.getId());
+                    }else {
+                        addToFavorite(getApplicationContext(),roomModel.getId());
+                    }
+                }
+            }
+        });
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() != null){
+            checkIsFavorite();
+        }
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
@@ -75,7 +102,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         binding.btnContactReviews.setOnClickListener(v -> {
             Intent intent = new Intent(this, HostDetailsActivity.class);
             Bundle bundle1 = new Bundle();
-            bundle1.putString("id", id);
+            bundle.putSerializable("id", uid);
             intent.putExtras(bundle1);
             startActivity(intent);
         });
@@ -89,30 +116,29 @@ public class ShowDetailActivity extends AppCompatActivity {
             binding.tvPriceReview.setText(roomModel.getPrice().toString());
         }
         binding.tvTitleRoomReview.setText(roomModel.getDescription());
-        binding.tvAddressContactReviews.setText(roomModel.getAddress());
+//        binding.tvAddressContactReviews.setText(roomModel.getAddress());
         binding.tvAreaReview.setText(roomModel.getSizeRoom());
         binding.tvDetailReviews.setText(roomModel.getDescription());
-
+        String uid = roomModel.getUid();
         referenceHost = FirebaseDatabase.getInstance().getReference("Users");
-        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
+        referenceHost.child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    UserModel hostModel = dataSnapshot.getValue(UserModel.class);
-                    assert hostModel != null;
-                    id = hostModel.getUserID();
-                    if (Objects.equals(roomModel.getUid(), hostModel.getUserID())) {
-                        binding.tvNameContactReviews.setText(hostModel.getName());
-                        binding.tvAddressContactReviews.setText(hostModel.getAddress());
-                        Glide.with(getApplicationContext())
-                                .load(hostModel.getAvatar())
-                                .into(binding.imgContactReviews);
-                    }
-                }
+                String name = ""+snapshot.child("name").getValue();
+                String address = ""+snapshot.child("address").getValue();
+                String img = ""+snapshot.child("avatar").getValue();
+                binding.tvNameContactReviews.setText(name);
+                binding.tvAddressContactReviews.setText(address);
+                Glide.with(getApplicationContext())
+                        .load(img)
+                        .into(binding.imgContactReviews);
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("",error.getMessage());
 
             }
 
@@ -146,42 +172,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                         Toast.makeText(ShowDetailActivity.this, "Looxi", Toast.LENGTH_SHORT).show();
                     }
                 });
-//        referenceHost = FirebaseDatabase.getInstance().getReference("Users");
-//        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    UserModel userModel = dataSnapshot. getValue(UserModel.class);
-//                    assert userModel != null;
-//                    mListUser.add(userModel);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("TAG", "onCancelled: " + error.getMessage());
-//            }
-//        });
-//
-//
-//        referenceHost = FirebaseDatabase.getInstance().getReference("Reviews");
-//        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    ReviewModel reviewModel = dataSnapshot.getValue(ReviewModel.class);
-//                    assert reviewModel != null;
-//                    mListDescription.add(reviewModel);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("TAG", "onCancelled: " + error.getMessage());
-//            }
-//        });
-//        descriptionAdapter = new DescriptionAdapter(this,mListDescription,mListUser);
-//        binding.rcvBinhLuan.setAdapter(descriptionAdapter);
+
     }
 
     private  void openDialog(){
@@ -246,5 +237,77 @@ public class ShowDetailActivity extends AppCompatActivity {
     }
     public void reviews(View view) {
         openDialog();
+    }
+
+
+    public  void checkIsFavorite(){
+      DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+      reference.child(firebaseAuth.getUid()).child("favorites").child(roomModel.getId())
+              .addValueEventListener(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot snapshot) {
+                      isInMyFavorite = snapshot.exists();
+                      if (isInMyFavorite){
+//                          imageView.setCompoun
+//                          imageView.setT
+                      }
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError error) {
+
+                  }
+              });
+    }
+
+
+
+    public void addToFavorite(Context context, String roomId){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null){
+            Toast.makeText(context, "vui long dang nhap", Toast.LENGTH_SHORT).show();
+        }else {
+            HashMap<String,Object> hashMap = new HashMap<>();
+            hashMap.put("roomId",""+roomId);
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+            reference.child(firebaseAuth.getUid()).child("favorites").child(roomId).setValue(hashMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(context, "Da them vao danh sach yeu thich", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "That bai", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+
+    }
+
+    public static void removeFavorite(Context context,String roomId){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null){
+            Toast.makeText(context, "vui long dang nhap", Toast.LENGTH_SHORT).show();
+        }else {
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+            reference.child(firebaseAuth.getUid()).child("favorites").child(roomId).removeValue()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(context, "Bo yeu thich", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "That bai", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 }

@@ -52,7 +52,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
         if (roomModel == null) {
             return;
         }
-        holder.tvName.setText(roomModel.getTitle());
+        holder.tvName.setText(roomModel.getName());
         if (roomModel.getPrice() != null){
             holder.tvPrice.setText(roomModel.getPrice().toString());
         }

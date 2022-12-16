@@ -1,5 +1,4 @@
 package com.datn.finhome.Views.Activity;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -35,24 +34,28 @@ public class HostDetailsActivity extends AppCompatActivity {
     private ActivityHostDetailsBinding binding;
     private RoomAdapter roomAdapter;
     private List<RoomModel> mRoomModel;
+    String id;
+    RoomModel roomModel;
     private DatabaseReference referenceHost, referenceRoom;
-    private String id;
     private String numberPhone = "";
     GoogleMap map;
-
-    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHostDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null) {
+            return;
+        }
+        roomModel = (RoomModel) bundle.get("id");
 
         //binding.mapview.onCreate(savedInstanceState);
         //binding.mapview.getMapAsync(this);
 
-        id = getIntent().getStringExtra("id");
+//        id = getIntent().getStringExtra("id");
 
-        mRoomModel = new ArrayList<>();
+
 
         binding.btnBack.setOnClickListener(v -> {
             onBackPressed();
@@ -87,29 +90,56 @@ public class HostDetailsActivity extends AppCompatActivity {
     }
 
     private void initHost() {
+        String uid2 = roomModel.getUid();
         referenceHost = FirebaseDatabase.getInstance().getReference("Users");
-        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
+        referenceHost.child(uid2).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    UserModel hostModel = dataSnapshot.getValue(UserModel.class);
-                    assert hostModel != null;
-                    if (Objects.equals(id, hostModel.getUserID())) {
-                        binding.tvNameHost.setText(hostModel.getName());
-                        binding.tvSdtHost.setText(hostModel.getPhoneNumber().toString());
-                        binding.tvAddressHost.setText(hostModel.getAddress());
-                        Glide.with(binding.getRoot())
-                                .load(hostModel.getAvatar())
-                                .into(binding.imgHost);
-                    }
-                }
+                String name = ""+snapshot.child("name").getValue();
+                String address = ""+snapshot.child("address").getValue();
+                String img = ""+snapshot.child("avatar").getValue();
+                binding.tvNameHost.setText(name);
+                binding.tvSdtHost.setText(address);
+//                binding.tvAddressHost.setText(i);
+                Glide.with(binding.getRoot())
+                        .load(img)
+                        .into(binding.imgHost);
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("TAG", "onCancelled: " + error.getMessage());
+                Log.d("",error.getMessage());
+
             }
+
+
         });
+
+//        referenceHost = FirebaseDatabase.getInstance().getReference("Users");
+//        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    UserModel hostModel = dataSnapshot.getValue(UserModel.class);
+//                    assert hostModel != null;
+//                    if (Objects.equals(id, hostModel.getUserID())) {
+//                        binding.tvNameHost.setText(hostModel.getName());
+//                        binding.tvSdtHost.setText(hostModel.getPhoneNumber().toString());
+//                        binding.tvAddressHost.setText(hostModel.getAddress());
+//                        Glide.with(binding.getRoot())
+//                                .load(hostModel.getAvatar())
+//                                .into(binding.imgHost);
+//                    }
+//                }
+//            }
+
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("TAG", "onCancelled: " + error.getMessage());
+//            }
+//        });
     }
 
     private void initRoom() {

@@ -17,6 +17,15 @@ public class RoomModel  implements Serializable{
     String price;
     String sizeRoom;
     String uid;
+    boolean favorite;
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 
     public String getUid() {
         return uid;
@@ -30,7 +39,7 @@ public class RoomModel  implements Serializable{
     }
 
 
-    public RoomModel(String id, String title, String address, String description, String img, String name, String price, String sizeRoom) {
+    public RoomModel(String id, String title, String address, String description, String img, String name, String price, String sizeRoom, String uid, boolean favorite) {
         this.id = id;
         this.title = title;
         this.address = address;
@@ -39,6 +48,8 @@ public class RoomModel  implements Serializable{
         this.name = name;
         this.price = price;
         this.sizeRoom = sizeRoom;
+        this.uid = uid;
+        this.favorite = favorite;
     }
 
     public String getId() {

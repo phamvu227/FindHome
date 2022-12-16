@@ -23,6 +23,7 @@ import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Views.Activity.AccountInfoActivity;
 import com.datn.finhome.Views.Activity.ChangePassActivity;
+import com.datn.finhome.Views.Activity.FavoriteActivity;
 import com.datn.finhome.Views.Activity.addRoomActivity;
 import com.datn.finhome.databinding.ActivityAddRoomBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -76,7 +77,8 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         btnChangePass.setOnClickListener(view -> startActivity(new Intent(getActivity(), ChangePassActivity.class)));
 
         btnSettingAccount.setOnClickListener(v-> {
-            startActivity(new Intent(getActivity(), AccountInfoActivity.class));
+            startActivity(new Intent(getActivity(), FavoriteActivity.class));
+
         });
 
         btnAdd.setOnClickListener(v -> {

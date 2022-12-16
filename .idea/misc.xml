@@ -37,10 +37,15 @@
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/drawable/custom_button_login.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/drawable/ic_add.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/activity_add_room.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/activity_favorite.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/activity_favorite2.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/activity_popup_choose_location.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/activity_show_details.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/fragment_like_product.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/item_reviews.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/item_room.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/item_room2.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/item_roomFavorite.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/item_user.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/loader_dialog.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome3/app/src/main/res/layout/post_room_step_1_view.xml" value="0.1308876811594203" />
