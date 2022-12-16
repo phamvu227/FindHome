@@ -41,7 +41,7 @@
             <ImageView
                 android:id="@+id/imgview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_marginTop="59dp"
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:src="@drawable/banner"/>
@@ -320,6 +320,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Để lại bình luận ?"
+                    android:textStyle="bold"
                     android:onClick="reviews"
                     android:textSize="14dp"
                     android:layout_marginLeft="10dp"

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:orientation="horizontal"
     android:layout_height="wrap_content"
     android:padding="5dp">
     <androidx.appcompat.widget.AppCompatImageView
@@ -12,34 +13,51 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:src="@drawable/person_reviews"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.003" />
+        />
 
-    <TextView
-        android:id="@+id/tvUserNameReview"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvUserNameReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:text="Tuan"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/tvAddressRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+
+            android:layout_marginBottom="5dp"
+            android:text="Nhà trọ rộng rãi, sạch sẽ, đáng thuê"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            />
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_marginStart="24dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:textStyle="bold"
+            android:text="Time"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:text="Tuan"
-        android:textColor="@color/cardview_dark_background"
-        android:textSize="16dp"
-        app:layout_constraintStart_toEndOf="@+id/imgUserReview"
-        app:layout_constraintTop_toTopOf="@+id/imgUserReview" />
+        android:id="@+id/imgDlt"
+        android:src="@drawable/ic_add" />
 
-    <TextView
-        android:id="@+id/tvAddressRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="Nhà trọ rộng rãi, sạch sẽ, đáng thuê"
-        android:textColor="@color/black"
-        android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imgUserReview"
-        app:layout_constraintStart_toStartOf="@+id/tvUserNameReview" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

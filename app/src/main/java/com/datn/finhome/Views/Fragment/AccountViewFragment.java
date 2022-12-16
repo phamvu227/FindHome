@@ -66,18 +66,24 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         btnAdd = layout.findViewById(R.id.btnAddRoom);
         btnLogout = layout.findViewById(R.id.btnLogout);
         btnChangePass = layout.findViewById(R.id.btnChangePass);
-        btnFavorite = layout.findViewById(R.id.btnFavorite);
+        btnFavorite = layout.findViewById(R.id.btnFavourite3);
         btnSettingAccount = layout.findViewById(R.id.btnSettingAccount);
         tvName = layout.findViewById(R.id.tvNameUser);
         tvPhone = layout.findViewById(R.id.tvSdtUser);
         tvDiaChi = layout.findViewById(R.id.tvAddressUser);
         ImgAvt = layout.findViewById(R.id.imgUser);
         btnLogout.setOnClickListener(this);
-
+//        btnFavorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getActivity(), FavoriteActivity.class));
+//            }
+//        });
         btnChangePass.setOnClickListener(view -> startActivity(new Intent(getActivity(), ChangePassActivity.class)));
+        btnFavorite.setOnClickListener(view -> startActivity(new Intent(getActivity(), FavoriteActivity.class)));
 
         btnSettingAccount.setOnClickListener(v-> {
-            startActivity(new Intent(getActivity(), FavoriteActivity.class));
+            startActivity(new Intent(getActivity(), AccountInfoActivity.class));
 
         });
 

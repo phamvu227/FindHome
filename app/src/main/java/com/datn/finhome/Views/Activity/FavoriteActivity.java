@@ -59,7 +59,6 @@ public class FavoriteActivity extends AppCompatActivity {
                             RoomModel roomModel = new RoomModel();
                             roomModel.setId(roomId);
                             roomModels.add(roomModel);
-                            Log.d("tag", "" + roomModels);
                         }
                         adapterFavorite = new AdapterFavorite(FavoriteActivity.this, roomModels);
                         rvRoomFv.setAdapter(adapterFavorite);

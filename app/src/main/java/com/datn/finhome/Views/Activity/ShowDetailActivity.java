@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -50,7 +51,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     private DatabaseReference referenceHost;
     boolean isInMyFavorite = false;
     FirebaseAuth firebaseAuth;
-           String uid;
+    String uid;
     ImageView imageView;
     RecyclerView recyclerView;
     private FirebaseUser user;
@@ -249,7 +250,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                       isInMyFavorite = snapshot.exists();
                       if (isInMyFavorite){
 //                          imageView.setCompoun
-//                          imageView.setT
+//                          imageView.setImageDrawable(Drawable.);
                       }
                   }
 

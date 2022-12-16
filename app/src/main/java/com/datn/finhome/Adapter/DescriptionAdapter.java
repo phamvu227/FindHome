@@ -68,19 +68,19 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
 //            Glide.with(context).load(userModel.getAvatar()).into(holder.imgUser);
 //        }
 
-//        holder.tvDescription.setText(description.getReviews());
-        holder.tvDescription.setText(time);
+        holder.tvDescription.setText(description.getReviews());
+        holder.tvTime.setText("Bình luận lúc: "+time);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (firebaseAuth.getCurrentUser() != null && uid.equals(firebaseAuth.getUid())){
-                    deleteComment(description,holder);
+                    deleteComment(description);
                 }
             }
         });
     }
 
-    private void deleteComment(ReviewModel description, ViewHolder holder) {
+    private void deleteComment(ReviewModel description) {
         AlertDialog.Builder  builder =new AlertDialog.Builder(context);
         builder.setTitle("Delete comment")
                 .setMessage("Bạn có muốn xóa bifnhb luận này không")
@@ -133,13 +133,15 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView tvNameUser, tvDescription;
-        AppCompatImageView imgUser;
+        TextView tvNameUser, tvDescription,tvTime;
+        AppCompatImageView imgUser,imgdlt;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNameUser = itemView.findViewById(R.id.tvUserNameReview);
             tvDescription = itemView.findViewById(R.id.tvAddressRoom);
+            tvTime = itemView.findViewById(R.id.tvTime);
             imgUser = itemView.findViewById(R.id.imgUserReview);
+            imgdlt = itemView.findViewById(R.id.imgDlt);
         }
     }
 }
