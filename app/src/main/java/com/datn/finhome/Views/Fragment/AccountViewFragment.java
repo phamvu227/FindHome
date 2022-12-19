@@ -89,8 +89,6 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
 
         btnAdd.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), addRoomActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("id", userId);
             startActivity(intent);
         });
     }

@@ -96,7 +96,7 @@ public class AdapterFavorite extends RecyclerView.Adapter<AdapterFavorite.Holder
                         String uid = ""+snapshot.child("uid").getValue();
 
 
-                        roomModel.setFavorite(true);
+//                        roomModel.setFavorite(true);
                         roomModel.setTitle(roomAdr);
                         roomModel.setName(roomTitle);
                         roomModel.setImg(roomImg);

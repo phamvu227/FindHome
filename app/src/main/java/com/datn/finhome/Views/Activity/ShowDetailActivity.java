@@ -103,7 +103,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         binding.btnContactReviews.setOnClickListener(v -> {
             Intent intent = new Intent(this, HostDetailsActivity.class);
             Bundle bundle1 = new Bundle();
-            bundle.putSerializable("id", uid);
+            bundle1.putString("id", roomModel.getUid());
             intent.putExtras(bundle1);
             startActivity(intent);
         });

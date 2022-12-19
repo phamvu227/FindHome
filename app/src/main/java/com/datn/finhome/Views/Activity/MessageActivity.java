@@ -81,7 +81,7 @@ public class MessageActivity extends AppCompatActivity {
 
         rvSend.setHasFixedSize(true);
         intent = getIntent();
-        userId = intent.getStringExtra(KEY);
+        userId = intent.getStringExtra("id");
         urlImageUser = intent.getStringExtra(KEY_URL);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 

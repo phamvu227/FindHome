@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
+import com.datn.finhome.Adapter.AdapterFavorite;
 import com.datn.finhome.Adapter.RoomAdapter;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.Models.UserModel;
@@ -35,34 +36,25 @@ public class HostDetailsActivity extends AppCompatActivity {
     private RoomAdapter roomAdapter;
     private List<RoomModel> mRoomModel;
     String id;
-    RoomModel roomModel;
     private DatabaseReference referenceHost, referenceRoom;
-    private String numberPhone = "";
+    private String numberPhone = "0343745085";
     GoogleMap map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHostDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Bundle bundle = getIntent().getExtras();
-        if (bundle == null) {
-            return;
-        }
-        roomModel = (RoomModel) bundle.get("id");
-
-        //binding.mapview.onCreate(savedInstanceState);
-        //binding.mapview.getMapAsync(this);
-
-//        id = getIntent().getStringExtra("id");
-
-
-
+        id = getIntent().getStringExtra("id");
         binding.btnBack.setOnClickListener(v -> {
             onBackPressed();
         });
 
         binding.btnMess.setOnClickListener(v -> {
-            startActivity(new Intent(this, MessageActivity.class));
+            Intent intent = new Intent(this, MessageActivity.class);
+            Bundle bundle2 = new Bundle();
+            bundle2.putString("id", id);
+            intent.putExtras(bundle2);
+            startActivity(intent);
         });
 
         initHost();
@@ -90,17 +82,18 @@ public class HostDetailsActivity extends AppCompatActivity {
     }
 
     private void initHost() {
-        String uid2 = roomModel.getUid();
+
         referenceHost = FirebaseDatabase.getInstance().getReference("Users");
-        referenceHost.child(uid2).addValueEventListener(new ValueEventListener() {
+        referenceHost.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = ""+snapshot.child("name").getValue();
-                String address = ""+snapshot.child("address").getValue();
+                String phone = ""+snapshot.child("phoneNumber").getValue();
+                String adrss = ""+snapshot.child("address").getValue();
                 String img = ""+snapshot.child("avatar").getValue();
                 binding.tvNameHost.setText(name);
-                binding.tvSdtHost.setText(address);
-//                binding.tvAddressHost.setText(i);
+                binding.tvSdtHost.setText(phone);
+                binding.tvAddressHost.setText(adrss);
                 Glide.with(binding.getRoot())
                         .load(img)
                         .into(binding.imgHost);
@@ -117,32 +110,12 @@ public class HostDetailsActivity extends AppCompatActivity {
 
         });
 
-//        referenceHost = FirebaseDatabase.getInstance().getReference("Users");
-//        referenceHost.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    UserModel hostModel = dataSnapshot.getValue(UserModel.class);
-//                    assert hostModel != null;
-//                    if (Objects.equals(id, hostModel.getUserID())) {
-//                        binding.tvNameHost.setText(hostModel.getName());
-//                        binding.tvSdtHost.setText(hostModel.getPhoneNumber().toString());
-//                        binding.tvAddressHost.setText(hostModel.getAddress());
-//                        Glide.with(binding.getRoot())
-//                                .load(hostModel.getAvatar())
-//                                .into(binding.imgHost);
-//                    }
-//                }
-//            }
 
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("TAG", "onCancelled: " + error.getMessage());
-//            }
-//        });
     }
 
     private void initRoom() {
+
+        mRoomModel = new ArrayList<>();
         referenceRoom = FirebaseDatabase.getInstance().getReference("Room");
         referenceRoom.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
