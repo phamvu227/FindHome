@@ -18,7 +18,7 @@ public class RoomController {
     }
 
     public void insertProduct(RoomModel room, IAfterInsertObject iAfterInsertObject) {
-        FirebaseDatabase.getInstance().getReference().child("Room")
+        FirebaseDatabase.getInstance().getReference().child("Room").child(room.getId())
                 .setValue(room, (error, ref) -> {
                     if (error == null) {
                         iAfterInsertObject.onSuccess(room);
