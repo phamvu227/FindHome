@@ -26,6 +26,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:text="Tuan"
+            android:textStyle="bold"
             android:textColor="@color/cardview_dark_background"
             android:textSize="16dp" />
 
@@ -34,7 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-
             android:layout_marginBottom="5dp"
             android:text="Nhà trọ rộng rãi, sạch sẽ, đáng thuê"
             android:textColor="@color/black"
@@ -47,7 +47,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:textStyle="bold"
             android:text="Time"
             android:textColor="@color/black"
             android:textSize="15dp" />

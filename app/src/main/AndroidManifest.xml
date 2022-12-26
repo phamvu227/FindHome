@@ -56,9 +56,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Views.Activity.FaceActivity"
-            android:exported="true" />
-        <activity
             android:name=".Views.Activity.SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -76,18 +73,6 @@
         <activity
             android:name=".Views.Activity.RegisterActivity"
             android:exported="true" />
-        <activity
-            android:name=".Views.Activity.addRoomActivity"
-            android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-
-        </activity>
         <activity
             android:name=".Views.Activity.LoginActivity"
             android:exported="true" />

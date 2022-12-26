@@ -24,8 +24,6 @@ import com.datn.finhome.R;
 import com.datn.finhome.Views.Activity.AccountInfoActivity;
 import com.datn.finhome.Views.Activity.ChangePassActivity;
 import com.datn.finhome.Views.Activity.FavoriteActivity;
-import com.datn.finhome.Views.Activity.addRoomActivity;
-import com.datn.finhome.databinding.ActivityAddRoomBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class AccountViewFragment extends Fragment implements View.OnClickListener {
-    private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount, btnAdd;
+    private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount;
     private TextView tvName,tvPhone,tvDiaChi;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
@@ -63,7 +61,6 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         return layout;
     }
     private void initControl() {
-        btnAdd = layout.findViewById(R.id.btnAddRoom);
         btnLogout = layout.findViewById(R.id.btnLogout);
         btnChangePass = layout.findViewById(R.id.btnChangePass);
         btnFavorite = layout.findViewById(R.id.btnFavourite3);
@@ -87,10 +84,6 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
 
         });
 
-        btnAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), addRoomActivity.class);
-            startActivity(intent);
-        });
     }
 
     private void getInformationUser(){

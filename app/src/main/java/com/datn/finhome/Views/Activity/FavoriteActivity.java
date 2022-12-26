@@ -1,13 +1,18 @@
 package com.datn.finhome.Views.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+
 import com.datn.finhome.Adapter.AdapterFavorite;
 import com.datn.finhome.Models.RoomModel;
+import com.datn.finhome.R;
 import com.datn.finhome.databinding.ActivityFavoriteBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +30,7 @@ public class FavoriteActivity extends AppCompatActivity {
     private AdapterFavorite adapterFavorite;
     RecyclerView rvRoomFv;
 
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +41,27 @@ public class FavoriteActivity extends AppCompatActivity {
 
         loadFavorite();
 
+        toolbar = binding.toobarFavorite;
+        toolbar = findViewById(R.id.toobar_favorite);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Yêu thích");
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadFavorite() {

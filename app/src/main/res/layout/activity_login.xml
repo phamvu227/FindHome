@@ -31,7 +31,7 @@
             android:hint="Tên tài khoản"
             android:paddingLeft="10dp"
             android:textColor="@android:color/black"
-            android:textColorHint="@android:color/black"
+            android:textColorHint="@color/grey"
             android:textSize="14dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +50,7 @@
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
                 android:textColor="@android:color/black"
-                android:textColorHint="@android:color/black"
+                android:textColorHint="@color/grey"
                 android:textSize="14dp"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp"

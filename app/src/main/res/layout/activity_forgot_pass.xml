@@ -24,8 +24,8 @@
         android:hint="Nhập email của bạn"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/black"
+        android:textColor="@color/grey"
+        android:textColorHint="@color/grey"
         android:textSize="14dp" />
 
     <Button

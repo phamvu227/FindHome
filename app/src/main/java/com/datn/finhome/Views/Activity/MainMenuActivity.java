@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import com.datn.finhome.R;
 import com.datn.finhome.Views.Fragment.HomeFragment;
 import com.datn.finhome.Views.Fragment.AccountViewFragment;
+import com.datn.finhome.Views.Fragment.PostRoomFragment;
 import com.datn.finhome.Views.Fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,6 +22,7 @@ public class MainMenuActivity extends AppCompatActivity {
     FrameLayout fragmentContainer;
     HomeFragment HomeView;
     AccountViewFragment AccountView;
+    PostRoomFragment postRoomFragment;
     SearchFragment searchFragment;
 
     @Override
@@ -49,6 +51,11 @@ public class MainMenuActivity extends AppCompatActivity {
                 case R.id.nav_account:
                     AccountView = new AccountViewFragment();
                     setFragment(AccountView);
+                    return true;
+
+                case R.id.nav_post:
+                    postRoomFragment = new PostRoomFragment();
+                    setFragment(postRoomFragment);
                     return true;
 
                 case R.id.nav_search:

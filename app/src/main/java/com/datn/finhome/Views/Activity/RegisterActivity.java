@@ -47,8 +47,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         edt_retype_password_signUp = findViewById(R.id.edt_retype_password_signUp);
         edt_name_signUp = findViewById(R.id.edt_name_signUp);
         edt_phone_signUp = findViewById(R.id.edt_phone_signUp);
-        rad_gender_female_signUp = findViewById(R.id.rad_gender_female_signUp);
-        rad_gender_male_signUp = findViewById(R.id.rad_gender_male_signUp);
         progressDialog = new ProgressDialog(RegisterActivity.this, R.style.MyProgessDialogStyle);
         userController = new UserController(this);
         btn_signup.setOnClickListener(this);
@@ -130,12 +128,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (id) {
             case R.id.btn_signUp:
                 signUp();
-                break;
-            case R.id.rad_gender_female_signUp:
-                rad_gender_male_signUp.setChecked(false);
-                break;
-            case R.id.rad_gender_male_signUp:
-                rad_gender_female_signUp.setChecked(false);
                 break;
         }
     }

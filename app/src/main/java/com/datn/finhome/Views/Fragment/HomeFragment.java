@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +33,7 @@ public class HomeFragment extends Fragment {
     private DatabaseReference reference;
     private RoomAdapter roomAdapter;
     private List<RoomModel> mRoomModel;
+    private Toolbar toolbar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +52,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @androidx.annotation.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        toolbar = view.findViewById(R.id.toobar_home);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+
         mRoomModel = new ArrayList<>();
         rcv = view.findViewById(R.id.rcvRoomMain);
         reference = FirebaseDatabase.getInstance().getReference("Room");

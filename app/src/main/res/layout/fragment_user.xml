@@ -89,30 +89,16 @@
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAddRoom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:background="@color/white"
-        android:gravity="left|center_vertical"
-        android:paddingStart="@dimen/_18sdp"
-        android:text="@string/addRoom"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFavourite3"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSettingAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/white"
         android:gravity="left|center_vertical"
         android:paddingStart="@dimen/_18sdp"
         android:text="@string/settingAccount"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddRoom"
+        app:layout_constraintTop_toBottomOf="@+id/btnFavourite3"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton

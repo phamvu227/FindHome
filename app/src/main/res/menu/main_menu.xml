@@ -9,6 +9,11 @@
         android:icon="@drawable/ic_search"
         android:title="Tìm Kiếm"/>
 
+    <item
+        android:id="@+id/nav_post"
+        android:icon="@drawable/ic_post_add"
+        android:title="Đăng Bài"/>
+
     <item android:id="@+id/nav_account"
         android:icon="@drawable/ic_person"
         android:title="Tôi"/>

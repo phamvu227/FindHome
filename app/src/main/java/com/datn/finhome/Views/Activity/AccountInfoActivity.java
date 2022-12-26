@@ -9,19 +9,28 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.Toolbar;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,9 +39,11 @@ import android.widget.Magnifier;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.datn.finhome.Interfaces.IAfterGetAllObject;
 import com.datn.finhome.Models.Image;
 import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Utils.ImgUri;
 import com.datn.finhome.Utils.OverUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -44,18 +55,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AccountInfoActivity extends AppCompatActivity {
     OverUtils overUtils;
 
-    private AppCompatImageButton btnImageAcc;
+    private AppCompatImageView imageView;
     private EditText txtNameAcc, txtSdtAcc, txtMailAcc, txtAddressAcc;
     private Button btnDelAcc;
-    private Button btnSaveAcc;
-    private Uri uri;
-    private AppCompatImageButton btnBack;
+    private Toolbar toolbar;
+    private Uri imgUri;
+
+    ArrayList<String> filepath = new ArrayList<>();
 
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
@@ -71,14 +86,48 @@ public class AccountInfoActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        btnBack = findViewById(R.id.btnBack);
-        btnImageAcc = findViewById(R.id.imgAccInfo);
+        toolbar = findViewById(R.id.toobar_acc);
+        imageView = findViewById(R.id.imgAccInfo);
         txtNameAcc = findViewById(R.id.txt_name_acc);
         txtSdtAcc = findViewById(R.id.txt_sdt_acc);
         txtMailAcc = findViewById(R.id.txt_mail_acc);
         txtAddressAcc = findViewById(R.id.txt_address_acc);
         btnDelAcc = findViewById(R.id.btn_del_acc);
-        btnSaveAcc = findViewById(R.id.btn_save_acc);
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toobar_menu, menu);
+
+        int i = 0;
+        MenuItem item = menu.getItem(i);
+        SpannableString s = new SpannableString("Lưu");
+        s.setSpan(new ForegroundColorSpan(Color.WHITE), 0, s.length(), 0);
+        item.setTitle(s);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.toobar_btnSave:
+                onClickUpdateAccInfo();
+                break;
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void setAccInfo(){
@@ -99,7 +148,7 @@ public class AccountInfoActivity extends AppCompatActivity {
 
                     txtNameAcc.setText(fullName);
                     txtSdtAcc.setText(phone);
-                    Glide.with(getApplicationContext()).load(avatar).into(btnImageAcc);
+                    Glide.with(getApplicationContext()).load(avatar).into(imageView);
                     txtMailAcc.setText(email);
                     txtAddressAcc.setText(address);
                 }
@@ -113,14 +162,10 @@ public class AccountInfoActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        btnImageAcc.setOnClickListener(view -> onClickRequestPermission());
-        btnSaveAcc.setOnClickListener(view -> onClickUpdateAccInfo());
+//        btnImageAcc.setOnClickListener(view -> onClickAddImage());
         btnDelAcc.setOnClickListener(view -> onClickDelAccInfo());
-
-        btnBack.setOnClickListener(v -> {
-            onBackPressed();
-        });
     }
+
 
     private void onClickUpdateAccInfo() {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -148,7 +193,9 @@ public class AccountInfoActivity extends AppCompatActivity {
             Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
             onBackPressed();
         }
+
     }
+
 
     private void onClickDelAccInfo() {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -168,62 +215,7 @@ public class AccountInfoActivity extends AppCompatActivity {
 
     }
 
-    private void onClickRequestPermission() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            openGallery();
-            return;
-        }
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            openGallery();
-        } else {
-            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-            requestPermissions(permissions, MY_REQUEST_CODE);
-        }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery();
-            }
-        }
-    }
 
-    public void openGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        activityResultLauncher.launch(Intent.createChooser(intent, "Select Picture"));
-    }
-
-    final private ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    Intent intent = result.getData();
-                    if (intent == null) {
-                        return;
-                    }
-
-                    Uri uri = intent.getData();
-                    setUri(uri);
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        setBitmapImageView(bitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-    );
-
-    public void setBitmapImageView(Bitmap bitmapImageView) {
-        btnImageAcc.setImageBitmap(bitmapImageView);
-    }
-
-    public void setUri(Uri uri) {
-        this.uri = uri;
-    }
 
 }

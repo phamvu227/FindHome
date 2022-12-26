@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/frameTop"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_46sdp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/bg_user_top"
         tools:ignore="MissingConstraints">
         <SearchView

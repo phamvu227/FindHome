@@ -1,12 +1,11 @@
-package com.datn.finhome.Views.Activity;
+package com.datn.finhome.Views.Fragment;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -14,44 +13,33 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.datn.finhome.Adapter.PhotoAdapter;
 import com.datn.finhome.Controllers.RoomController;
 import com.datn.finhome.Interfaces.IAfterGetAllObject;
 import com.datn.finhome.Interfaces.IAfterInsertObject;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Utils.ImgUri;
-import com.datn.finhome.Utils.LoaderDialog;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-public class addRoomActivity extends AppCompatActivity {
+public class PostRoomFragment extends Fragment {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
     AppCompatButton btnPost2, btnTest;
     RecyclerView recyclerImage;
     ImageView imageView;
+
+    Toolbar toolbar;
     StorageReference storageReference;
     FirebaseStorage firebaseStorage;
     FirebaseAuth firebaseAuth;
@@ -59,23 +47,28 @@ public class addRoomActivity extends AppCompatActivity {
     String uid;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_room);
-        edTitle = findViewById(R.id.edit_title);
-        edLocation = findViewById(R.id.edit_location);
-        imageView = findViewById(R.id.dgAdd_add);
-        edSizeRoom = findViewById(R.id.edit_size_room);
-        edPrice = findViewById(R.id.edit_price);
-        edDescription = findViewById(R.id.edit_description);
-        recyclerImage = findViewById(R.id.recyclerImage);
-        btnBack = findViewById(R.id.btnBack);
-        btnPost2 = findViewById(R.id.btnPost2);
-        firebaseAuth =FirebaseAuth.getInstance();
-        uid = firebaseAuth.getUid();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_add_room, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @androidx.annotation.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView(view);
         setUpSaveRoom();
         setUpGetImg();
 
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setTitle("Đăng Bài");
 
 
         firebaseStorage = FirebaseStorage.getInstance();
@@ -87,10 +80,24 @@ public class addRoomActivity extends AppCompatActivity {
 
         edLocation.setOnClickListener(v -> {
         });
+    }
 
-        btnBack.setOnClickListener(v -> {
-            onBackPressed();
-        });
+    private void initView(View view) {
+        edTitle = view.findViewById(R.id.edit_title);
+        edLocation = view.findViewById(R.id.edit_location);
+        imageView = view.findViewById(R.id.dgAdd_add);
+        edSizeRoom = view.findViewById(R.id.edit_size_room);
+        edPrice = view.findViewById(R.id.edit_price);
+        edDescription = view.findViewById(R.id.edit_description);
+        recyclerImage = view.findViewById(R.id.recyclerImage);
+        btnBack = view.findViewById(R.id.btnBack);
+        btnPost2 = view.findViewById(R.id.btnPost2);
+
+        toolbar = (Toolbar) view.findViewById(R.id.toobar_post);
+
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        uid = firebaseAuth.getUid();
     }
 
     private final ActivityResultLauncher<String> getImg = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -122,14 +129,14 @@ public class addRoomActivity extends AppCompatActivity {
                                     roomModel.setImg(imgLink);
                                     insertRoom(roomModel);
                                 } else {
-                                    Toast.makeText(addRoomActivity.this, " Luu anh that bai", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), " Luu anh that bai", Toast.LENGTH_SHORT).show();
 //                                    progressDialog.cancel();
                                 }
                             }
 
                             @Override
                             public void onError(DatabaseError error) {
-                                Toast.makeText(addRoomActivity.this, "LOI", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "LOI", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -139,7 +146,7 @@ public class addRoomActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(DatabaseError error) {
-                    Toast.makeText(addRoomActivity.this, "loi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "loi", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -157,24 +164,24 @@ public class addRoomActivity extends AppCompatActivity {
         RoomController.getInstance().insertProduct(roomModel, new IAfterInsertObject() {
             @Override
             public void onSuccess(Object obj) {
-                Toast.makeText(addRoomActivity.this, "thanh cong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "thanh cong", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(DatabaseError exception) {
-                Toast.makeText(addRoomActivity.this, "that bai", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "that bai", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void getProductImg(IAfterGetAllObject iAfterGetAllObject) {
         StorageReference fileRef =
-                FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + ImgUri.getExtensionFile(getApplicationContext(), imgUri));
+                FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + ImgUri.getExtensionFile(getContext(), imgUri));
         fileRef.putFile(imgUri).addOnSuccessListener(taskSnapshot ->
                         fileRef.getDownloadUrl()
                                 .addOnSuccessListener(iAfterGetAllObject::iAfterGetAllObject))
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "That bai", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "That bai", Toast.LENGTH_SHORT).show();
                     iAfterGetAllObject.iAfterGetAllObject(null);
                 });
     }
@@ -188,7 +195,7 @@ public class addRoomActivity extends AppCompatActivity {
         String Asdress = edLocation.getText().toString().trim();
         String Price = edPrice.getText().toString().trim();
         if (name.isEmpty()) {
-            Toast.makeText(this, "vui long nhap", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "vui long nhap", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -203,6 +210,5 @@ public class addRoomActivity extends AppCompatActivity {
 
 
     }
-
 
 }

@@ -5,16 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/frameTop"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toobar_home"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_46sdp"
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@color/white"
         android:background="@color/bg_user_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/imgBanner"
@@ -24,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameTop" />
+        app:layout_constraintTop_toBottomOf="@+id/toobar_home" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvRoomMain"
