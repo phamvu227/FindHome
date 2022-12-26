@@ -24,6 +24,7 @@ import com.datn.finhome.R;
 import com.datn.finhome.Views.Activity.AccountInfoActivity;
 import com.datn.finhome.Views.Activity.ChangePassActivity;
 import com.datn.finhome.Views.Activity.FavoriteActivity;
+import com.datn.finhome.Views.Activity.HostActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class AccountViewFragment extends Fragment implements View.OnClickListener {
-    private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount;
+    private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount, btnMyRoom;
     private TextView tvName,tvPhone,tvDiaChi;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
@@ -62,6 +63,7 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
     }
     private void initControl() {
         btnLogout = layout.findViewById(R.id.btnLogout);
+        btnMyRoom = layout.findViewById(R.id.btn_myroom);
         btnChangePass = layout.findViewById(R.id.btnChangePass);
         btnFavorite = layout.findViewById(R.id.btnFavourite3);
         btnSettingAccount = layout.findViewById(R.id.btnSettingAccount);
@@ -69,21 +71,12 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         tvPhone = layout.findViewById(R.id.tvSdtUser);
         tvDiaChi = layout.findViewById(R.id.tvAddressUser);
         ImgAvt = layout.findViewById(R.id.imgUser);
-        btnLogout.setOnClickListener(this);
-//        btnFavorite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), FavoriteActivity.class));
-//            }
-//        });
-        btnChangePass.setOnClickListener(view -> startActivity(new Intent(getActivity(), ChangePassActivity.class)));
+
+        btnMyRoom.setOnClickListener(v -> startActivity(new Intent(getActivity(), HostActivity.class)));
         btnFavorite.setOnClickListener(view -> startActivity(new Intent(getActivity(), FavoriteActivity.class)));
-
-        btnSettingAccount.setOnClickListener(v-> {
-            startActivity(new Intent(getActivity(), AccountInfoActivity.class));
-
-        });
-
+        btnSettingAccount.setOnClickListener(v-> {startActivity(new Intent(getActivity(), AccountInfoActivity.class));});
+        btnChangePass.setOnClickListener(view -> startActivity(new Intent(getActivity(), ChangePassActivity.class)));
+        btnLogout.setOnClickListener(this);
     }
 
     private void getInformationUser(){

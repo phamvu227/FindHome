@@ -4,14 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import com.datn.finhome.Adapter.RoomHostAdapter;
+import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,17 +26,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HostActivity extends AppCompatActivity {
     private RecyclerView rv;
-//    private RoomAdapter roomAdapter;
-//    private List<RoomModel> roomModelList;
+    private RoomHostAdapter roomAdapter;
+    private List<RoomModel> roomModelList;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
     private String userId;
-    SharedPreferences sharedPreferences;
-    String UID;
+    RoomModel roomModel;
     TextView  tvName,tvPhone;
     ImageView imgUser;
     @Override
@@ -43,6 +48,7 @@ public class HostActivity extends AppCompatActivity {
         tvPhone = findViewById(R.id.tvSdtUser);
         imgUser = findViewById(R.id.imgUser);
         rv = findViewById(R.id.rvRoom);
+        roomModel = new RoomModel();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         userId = firebaseUser.getUid();
@@ -66,7 +72,43 @@ public class HostActivity extends AppCompatActivity {
                 Toast.makeText(HostActivity.this, "That bai", Toast.LENGTH_SHORT).show();
             }
         });
+        initRoom();
 
+    }
+    private void initRoom() {
+
+        roomModelList = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Room");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
+                    assert roomModel != null;
+                    if (Objects.equals(roomModel.getUid(),userId)) {
+                        roomModelList.add(roomModel);
+                        roomAdapter = new RoomHostAdapter(HostActivity.this, roomModelList, roomModel1 -> {
+                            onClickGoToDetail(roomModel1);
+                        });
+                        rv.setAdapter(roomAdapter);
+                        rv.setHasFixedSize(true);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("TAG", "onCancelled: " + error.getMessage());
+            }
+        });
+    }
+    private  void onClickGoToDetail(RoomModel roomModel){
+        Intent intent = new Intent(this, ShowDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Room", roomModel);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 

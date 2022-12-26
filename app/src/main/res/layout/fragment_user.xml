@@ -26,24 +26,31 @@
 <!--            android:text="@string/alertUser"-->
 <!--            android:textStyle="bold" />-->
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgUser"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_imgUser"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            app:cardCornerRadius="@dimen/_100sdp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:src="@drawable/img_user" />
+            android:layout_marginStart="@dimen/_20sdp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgUser"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:src="@drawable/img_user" />
+        </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvNameUser"
             style="@style/text_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imgUser"
+            android:layout_alignTop="@+id/cv_imgUser"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="0dp"
-            android:layout_toEndOf="@+id/imgUser"
+            android:layout_toEndOf="@+id/cv_imgUser"
             android:text="Pham Lam Vu"
             android:textSize="@dimen/_15sdp"
             android:textStyle="bold" />
@@ -74,10 +81,25 @@
     </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnFavourite3"
+        android:id="@+id/btn_myroom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
+        android:background="@color/white"
+        android:gravity="left|center_vertical"
+        android:paddingStart="@dimen/_18sdp"
+        android:text="Phòng của bạn"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnFavourite3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@color/white"
         android:gravity="left|center_vertical"
         android:paddingStart="@dimen/_18sdp"
@@ -85,7 +107,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+        app:layout_constraintTop_toBottomOf="@+id/btn_myroom"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton

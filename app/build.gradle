@@ -51,6 +51,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.3.0')
     implementation 'com.firebaseui:firebase-ui-database:8.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:cardview-v7:27.1.0'
     //font size
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'

@@ -38,12 +38,18 @@
                 android:layout_height="@dimen/_165sdp"
                 android:background="@color/bg_user">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgAccInfo"
+                <androidx.cardview.widget.CardView
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_80sdp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/img_user" />
+                    app:cardCornerRadius="@dimen/_100sdp"
+                    android:layout_centerInParent="true">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgAccInfo"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:src="@drawable/img_user" />
+                </androidx.cardview.widget.CardView>
+
             </RelativeLayout>
 
             <EditText
