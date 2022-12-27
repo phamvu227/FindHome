@@ -2,6 +2,7 @@ package com.datn.finhome.Views.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.datn.finhome.Adapter.PhotoViewPageAdapter;
 import com.datn.finhome.Adapter.RoomAdapter;
+import com.datn.finhome.Adapter.RoomAdapterHome;
 import com.datn.finhome.Models.RoomModel;
+import com.datn.finhome.Models.photoViewPage;
 import com.datn.finhome.R;
 import com.datn.finhome.Utils.LoaderDialog;
 import com.datn.finhome.Views.Activity.ShowDetailActivity;
@@ -28,13 +34,28 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.relex.circleindicator.CircleIndicator;
+
 public class HomeFragment extends Fragment {
+    private ViewPager mViewPager;
+    private CircleIndicator circleIndicator;
     private RecyclerView rcv;
     private DatabaseReference reference;
-    private RoomAdapter roomAdapter;
+    private RoomAdapterHome roomAdapter;
     private List<RoomModel> mRoomModel;
-    private Toolbar toolbar;
+    private List<photoViewPage> list;
 
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mViewPager.getCurrentItem() == list.size() -1){
+                mViewPager.setCurrentItem(0);
+            }else {
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem() +1);
+            }
+        }
+    };
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +73,36 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @androidx.annotation.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        toolbar = view.findViewById(R.id.toobar_home);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
+
 
         mRoomModel = new ArrayList<>();
+        mViewPager = view.findViewById(R.id.viewPage);
+        circleIndicator = view.findViewById(R.id.cir);
+        list = getLisphoto();
+        PhotoViewPageAdapter photoViewPageAdapter = new PhotoViewPageAdapter(list);
+        mViewPager.setAdapter(photoViewPageAdapter);
+        circleIndicator.setViewPager(mViewPager);
+        handler.postDelayed(runnable,3000);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+              handler.removeCallbacks(runnable);
+              handler.postDelayed(runnable,3000);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         rcv = view.findViewById(R.id.rcvRoomMain);
+//        rcv.setNestedScrollingEnabled(false);
         reference = FirebaseDatabase.getInstance().getReference("Room");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -67,8 +111,11 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
                     mRoomModel.add(roomModel);
-                    roomAdapter = new RoomAdapter(getContext(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
+                    roomAdapter = new RoomAdapterHome(getContext(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
+                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+                    rcv.setLayoutManager(mLayoutManager);
                     rcv.setAdapter(roomAdapter);
+
                 }
                 LoaderDialog.dismiss();
             }
@@ -85,5 +132,25 @@ public class HomeFragment extends Fragment {
         bundle.putSerializable("Room", roomModel);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private List<photoViewPage> getLisphoto(){
+        List<photoViewPage> list = new ArrayList<>();
+        list.add(new photoViewPage(R.drawable.banner));
+        list.add(new photoViewPage(R.drawable.banner));
+        list.add(new photoViewPage(R.drawable.banner));
+        return  list;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable,3000);
     }
 }

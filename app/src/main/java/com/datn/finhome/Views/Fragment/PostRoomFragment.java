@@ -32,6 +32,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PostRoomFragment extends Fragment {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
@@ -194,6 +197,9 @@ public class PostRoomFragment extends Fragment {
         String size = edSizeRoom.getText().toString().trim();
         String Asdress = edLocation.getText().toString().trim();
         String Price = edPrice.getText().toString().trim();
+        String pattern = "dd/MM/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
         if (name.isEmpty()) {
             Toast.makeText(getContext(), "vui long nhap", Toast.LENGTH_SHORT).show();
             return;
@@ -205,6 +211,7 @@ public class PostRoomFragment extends Fragment {
         room.setSizeRoom(size);
         room.setPrice(Price);
         room.setUid(uid);
+        room.setTime(date);
         iAfterGetAllObject.iAfterGetAllObject(room);
 
 

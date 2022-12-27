@@ -22,7 +22,7 @@
             android:layout_marginEnd="@dimen/_15sdp"
             android:background="@drawable/card_background"
             android:iconifiedByDefault="false"
-            android:queryHint="Nhập tên sản phẩm"
+            android:queryHint="Nhập tên quận thành phố"
             android:searchHintIcon="@null" />
     </RelativeLayout>
 

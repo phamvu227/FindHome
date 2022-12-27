@@ -17,6 +17,15 @@ public class RoomModel  implements Serializable{
     String price;
     String sizeRoom;
     String uid;
+    String Time;
+
+    public String getTime() {
+        return Time;
+    }
+
+    public void setTime(String time) {
+        Time = time;
+    }
 
     public String getUid() {
         return uid;
