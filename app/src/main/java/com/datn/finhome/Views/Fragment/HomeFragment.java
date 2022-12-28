@@ -136,9 +136,10 @@ public class HomeFragment extends Fragment {
 
     private List<photoViewPage> getLisphoto(){
         List<photoViewPage> list = new ArrayList<>();
-        list.add(new photoViewPage(R.drawable.banner));
-        list.add(new photoViewPage(R.drawable.banner));
-        list.add(new photoViewPage(R.drawable.banner));
+        list.add(new photoViewPage(R.drawable.a1));
+        list.add(new photoViewPage(R.drawable.a2));
+        list.add(new photoViewPage(R.drawable.a3));
+        list.add(new photoViewPage(R.drawable.a4));
         return  list;
     }
 

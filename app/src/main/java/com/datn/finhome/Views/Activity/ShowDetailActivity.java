@@ -2,6 +2,7 @@ package com.datn.finhome.Views.Activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -70,8 +71,6 @@ public class ShowDetailActivity extends AppCompatActivity {
         }
         roomModel = (RoomModel) bundle.get("Room");
 
-//        mListDescription = new ArrayList<>();
-//        mListUser = new ArrayList<>();
         recyclerView = binding.rcvBinhLuan;
         imageView = binding.btnFavoriteReview;
 
@@ -114,11 +113,11 @@ public class ShowDetailActivity extends AppCompatActivity {
 
         Picasso.get().load(roomModel.getImg()).into(binding.imgview);
         if (roomModel.getPrice() != null) {
-            binding.tvPriceReview.setText(roomModel.getPrice().toString());
+            binding.tvPriceReview.setText(roomModel.getPrice().toString()+"VND/phòng");
         }
-        binding.tvTitleRoomReview.setText(roomModel.getDescription());
+        binding.tvTitleRoomReview.setText(roomModel.getName());
 //        binding.tvAddressContactReviews.setText(roomModel.getAddress());
-        binding.tvAreaReview.setText(roomModel.getSizeRoom());
+        binding.tvAreaReview.setText(roomModel.getSizeRoom()+"m2");
         binding.tvDetailReviews.setText(roomModel.getDescription());
         String uid = roomModel.getUid();
         referenceHost = FirebaseDatabase.getInstance().getReference("Users");
@@ -201,7 +200,9 @@ public class ShowDetailActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.dismiss();
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         });
 
@@ -210,9 +211,6 @@ public class ShowDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Room");
                 String key = FirebaseDatabase.getInstance().getReference("Reviews").push().getKey();
-//                Locale locale = new Locale("fr", "FR");
-//                DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
-//                String date = dateFormat.format(new Date());
                 String pattern = "HH:mm:ss MM/dd/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 String date = simpleDateFormat.format(new Date());
@@ -230,7 +228,14 @@ public class ShowDetailActivity extends AppCompatActivity {
                         Toast.makeText(ShowDetailActivity.this, "Đã gửi bình luận", Toast.LENGTH_SHORT).show();
                     }
                 });
-                dialog.dismiss();
+                if (dialog != null && dialog.isShowing()) {
+                   dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                       @Override
+                       public void onDismiss(DialogInterface dialog) {
+                           dialog.dismiss();
+                       }
+                   });
+                }
             }
         });
 

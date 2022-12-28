@@ -61,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final String name = edt_name_signUp.getText().toString();
         final String avatar = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
         final Boolean owner = false;
-        final String phone = "+84" +edt_phone_signUp.getText().toString();
+        final String phone =  edt_phone_signUp.getText().toString();
         Boolean gender = true;
         if(rad_gender_female_signUp.isChecked()) {
             gender = false;

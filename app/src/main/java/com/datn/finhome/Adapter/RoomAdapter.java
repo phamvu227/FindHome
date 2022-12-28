@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,9 +59,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
         }
         holder.tvAddress.setText(roomModel.getAddress());
         Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
-        holder.btnFavorite.setOnClickListener(v -> {
-            //add favorite | xóa favorite
-        });
         holder.container.setOnClickListener(v -> {
             iClickItemUserListener.onClickItemRoom(roomModel);
         });
@@ -110,17 +108,17 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
 
 
     public class RoomViewholder extends RecyclerView.ViewHolder {
-        private ConstraintLayout container;
+        private LinearLayout container;
         private AppCompatImageView imgRoom;
         private TextView tvName, tvPrice, tvAddress;
-        private AppCompatCheckBox btnFavorite;
+//        private AppCompatCheckBox btnFavorite;
         public RoomViewholder(@NonNull View itemView) {
             super(itemView);
             imgRoom = itemView.findViewById(R.id.imgRoom);
             tvAddress = itemView.findViewById(R.id.tvAddressRoom);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvName = itemView.findViewById(R.id.tvNameRoom);
-            btnFavorite = itemView.findViewById(R.id.btnFavorite);
+//            btnFavorite = itemView.findViewById(R.id.btnFavorite);
             container = itemView.findViewById(R.id.containerRoom);
         }
     }

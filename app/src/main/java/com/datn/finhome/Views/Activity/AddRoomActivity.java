@@ -1,24 +1,19 @@
-package com.datn.finhome.Views.Fragment;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+package com.datn.finhome.Views.Activity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.datn.finhome.Controllers.RoomController;
 import com.datn.finhome.Interfaces.IAfterGetAllObject;
@@ -35,7 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PostRoomFragment extends Fragment {
+public class AddRoomActivity extends AppCompatActivity {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
     AppCompatButton btnPost2, btnTest;
@@ -48,55 +43,27 @@ public class PostRoomFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     private Uri imgUri;
     String uid;
-
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_room, container, false);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @androidx.annotation.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initView(view);
-        setUpSaveRoom();
-        setUpGetImg();
-
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setTitle("Đăng Bài");
-
-
+        setContentView(R.layout.activity_add);
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
-
-//        photoAdapter = new PhotoAdapter(uri, getApplicationContext(), this);
-//        recyclerImage.setLayoutManager(new GridLayoutManager(addRoomActivity.this, 3));
-//        recyclerImage.setAdapter(photoAdapter);
-
-        edLocation.setOnClickListener(v -> {
-        });
+        initView();
+        setUpSaveRoom();
+        setUpGetImg();
     }
+    private void initView() {
+        edTitle = findViewById(R.id.edit_title);
+        edLocation =findViewById(R.id.edit_location);
+        imageView = findViewById(R.id.dgAdd_add);
+        edSizeRoom = findViewById(R.id.edit_size_room);
+        edPrice = findViewById(R.id.edit_price);
+        edDescription = findViewById(R.id.edit_description);
+        recyclerImage = findViewById(R.id.recyclerImage);
+        btnBack = findViewById(R.id.btnBack);
+        btnPost2 = findViewById(R.id.btnPost2);
 
-    private void initView(View view) {
-        edTitle = view.findViewById(R.id.edit_title);
-        edLocation = view.findViewById(R.id.edit_location);
-        imageView = view.findViewById(R.id.dgAdd_add);
-        edSizeRoom = view.findViewById(R.id.edit_size_room);
-        edPrice = view.findViewById(R.id.edit_price);
-        edDescription = view.findViewById(R.id.edit_description);
-        recyclerImage = view.findViewById(R.id.recyclerImage);
-        btnBack = view.findViewById(R.id.btnBack);
-        btnPost2 = view.findViewById(R.id.btnPost2);
-
-        toolbar = (Toolbar) view.findViewById(R.id.toobar_post);
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -132,14 +99,14 @@ public class PostRoomFragment extends Fragment {
                                     roomModel.setImg(imgLink);
                                     insertRoom(roomModel);
                                 } else {
-                                    Toast.makeText(getContext(), " Luu anh that bai", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), " Luu anh that bai", Toast.LENGTH_SHORT).show();
 //                                    progressDialog.cancel();
                                 }
                             }
 
                             @Override
                             public void onError(DatabaseError error) {
-                                Toast.makeText(getContext(), "LOI", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "LOI", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -149,7 +116,7 @@ public class PostRoomFragment extends Fragment {
 
                 @Override
                 public void onError(DatabaseError error) {
-                    Toast.makeText(getContext(), "loi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "loi", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -167,24 +134,24 @@ public class PostRoomFragment extends Fragment {
         RoomController.getInstance().insertProduct(roomModel, new IAfterInsertObject() {
             @Override
             public void onSuccess(Object obj) {
-                Toast.makeText(getContext(), "thanh cong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "thanh cong", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(DatabaseError exception) {
-                Toast.makeText(getContext(), "that bai", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "that bai", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void getProductImg(IAfterGetAllObject iAfterGetAllObject) {
         StorageReference fileRef =
-                FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + ImgUri.getExtensionFile(getContext(), imgUri));
+                FirebaseStorage.getInstance().getReference().child(System.currentTimeMillis() + "." + ImgUri.getExtensionFile(getApplicationContext(), imgUri));
         fileRef.putFile(imgUri).addOnSuccessListener(taskSnapshot ->
                         fileRef.getDownloadUrl()
                                 .addOnSuccessListener(iAfterGetAllObject::iAfterGetAllObject))
                 .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "That bai", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "That bai", Toast.LENGTH_SHORT).show();
                     iAfterGetAllObject.iAfterGetAllObject(null);
                 });
     }
@@ -201,7 +168,7 @@ public class PostRoomFragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
         if (name.isEmpty()) {
-            Toast.makeText(getContext(), "vui long nhap", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "vui long nhap", Toast.LENGTH_SHORT).show();
             return;
         }
 

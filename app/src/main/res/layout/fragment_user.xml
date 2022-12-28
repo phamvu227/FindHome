@@ -38,6 +38,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgUser"
                 android:layout_width="@dimen/_80sdp"
+                android:scaleType="fitXY"
                 android:layout_height="@dimen/_80sdp"
                 android:src="@drawable/img_user" />
         </androidx.cardview.widget.CardView>

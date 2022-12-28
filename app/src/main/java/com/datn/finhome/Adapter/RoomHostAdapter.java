@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,7 +80,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
     }
     private void deleteRoom(RoomModel roomModel) {
         AlertDialog.Builder  builder =new AlertDialog.Builder(context);
-        builder.setTitle("Delete comment")
+        builder.setTitle("Delete Room")
                 .setMessage("Bạn Chắc chắn Muốn Xóa Phòng trọ này chứ")
                 .setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
                     @Override
@@ -131,7 +132,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private ConstraintLayout container;
+        private LinearLayout container;
         private AppCompatImageView imgRoom;
         private TextView tvName, tvPrice, tvAddress;
         private AppCompatCheckBox btnFavorite;

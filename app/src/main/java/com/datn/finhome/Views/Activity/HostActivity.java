@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +42,7 @@ public class HostActivity extends AppCompatActivity {
     RoomModel roomModel;
     TextView  tvName,tvPhone;
     ImageView imgUser;
+    ImageButton btnback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,13 @@ public class HostActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvNameUser);
         tvPhone = findViewById(R.id.tvSdtUser);
         imgUser = findViewById(R.id.imgUser);
+        btnback = findViewById(R.id.btnBack);
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         rv = findViewById(R.id.rvRoom);
         roomModel = new RoomModel();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
