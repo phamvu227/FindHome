@@ -70,7 +70,7 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
 
         holder.tvDescription.setText(description.getReviews());
         holder.tvTime.setText("Bình luận lúc: "+time);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.imgdlt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (firebaseAuth.getCurrentUser() != null && uid.equals(firebaseAuth.getUid())){
@@ -104,8 +104,7 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                })
-                .show();
+                }).show();
     }
 
     private void loaduser(ReviewModel description, ViewHolder holder) {
@@ -141,7 +140,7 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
             tvDescription = itemView.findViewById(R.id.tvAddressRoom);
             tvTime = itemView.findViewById(R.id.tvTime);
             imgUser = itemView.findViewById(R.id.imgUserReview);
-            imgdlt = itemView.findViewById(R.id.imgDlt);
+            imgdlt = itemView.findViewById(R.id.imgdlt);
         }
     }
 }

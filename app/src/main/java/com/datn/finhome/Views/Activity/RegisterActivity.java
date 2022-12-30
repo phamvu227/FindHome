@@ -47,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         edt_retype_password_signUp = findViewById(R.id.edt_retype_password_signUp);
         edt_name_signUp = findViewById(R.id.edt_name_signUp);
         edt_phone_signUp = findViewById(R.id.edt_phone_signUp);
+        rad_gender_female_signUp = findViewById(R.id.rad_gender_female_signUp);
+        rad_gender_male_signUp = findViewById(R.id.rad_gender_male_signUp);
         progressDialog = new ProgressDialog(RegisterActivity.this, R.style.MyProgessDialogStyle);
         userController = new UserController(this);
         btn_signup.setOnClickListener(this);
@@ -72,8 +74,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             overUtils.makeToast(getApplicationContext(),overUtils.ERROR_EMAIL);
         }else if (name.length() <= 5) {
             OverUtils.makeToast(getApplicationContext(), OverUtils.VALIDATE_NAME);
-        }else if(!phone.trim().matches("^\\+84\\d{10}$")){
-            overUtils.makeToast(getApplicationContext(),overUtils.VALIDATE_PHONE);
         }
         else if (password.trim().length() == 0) {
             overUtils.makeToast(getApplicationContext(),overUtils.ERROR_PASS);

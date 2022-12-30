@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:onClick="register"
+            android:id="@+id/tvDk"
             android:text="BẠN CHƯA CÓ TÀI KHOẢN?"
             android:textColor="@color/black"
             android:textStyle="bold" />

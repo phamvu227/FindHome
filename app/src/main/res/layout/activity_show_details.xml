@@ -188,6 +188,7 @@
                    android:padding="@dimen/_3sdp">
                    <androidx.appcompat.widget.AppCompatImageView
                        android:id="@+id/imgContactReviews"
+                       android:scaleType="fitXY"
                        android:layout_width="30pt"
                        android:layout_height="30pt"
                        android:layout_marginStart="5dp"
@@ -216,17 +217,27 @@
                        app:layout_constraintTop_toTopOf="parent"
                        app:layout_constraintVertical_bias="0.242" />
 
-                   <TextView
-                       android:id="@+id/tvAddressContactReviews"
-                       android:layout_width="@dimen/_120sdp"
+                   <LinearLayout
+                       android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text="Hà Nội"
-                       android:textSize="@dimen/_12sdp"
                        app:layout_constraintBottom_toBottomOf="parent"
                        app:layout_constraintStart_toEndOf="@+id/imgContactReviews"
                        android:layout_marginStart="@dimen/_10sdp"
-                       app:layout_constraintTop_toBottomOf="@+id/tvNameContactReviews"
-                       />
+                       app:layout_constraintTop_toBottomOf="@+id/tvNameContactReviews">
+                       <ImageView
+                           android:layout_width="15dp"
+                           android:layout_height="15dp"
+                           android:background="@drawable/ic_location"/>
+                       <TextView
+                           android:id="@+id/tvAddressContactReviews"
+                           android:layout_width="@dimen/_120sdp"
+                           android:layout_height="wrap_content"
+                           android:text="Hà Nội"
+                           android:textSize="13dp"
+                           />
+
+                   </LinearLayout>
+
 
                    <com.google.android.material.button.MaterialButton
                        android:id="@+id/btnContactReviews"
@@ -284,6 +295,7 @@
                        app:layout_constraintBottom_toBottomOf="parent"
                        app:layout_constraintEnd_toEndOf="parent"
                        app:layout_constraintStart_toStartOf="parent" />
+
                </androidx.constraintlayout.widget.ConstraintLayout>
                <View
                    android:background="#B1B1B1"
@@ -302,17 +314,33 @@
                        android:layout_marginLeft="10dp"
                        android:layout_marginTop="10dp"
                        android:textColor="@color/cardview_dark_background"/>
-                   <TextView
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_marginTop="10dp"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginBottom="20dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:weightSum="2">
+
+                   <EditText
+                       android:id="@+id/text_send"
                        android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="Để lại bình luận ?"
-                       android:textStyle="bold"
-                       android:onClick="reviews"
-                       android:textSize="14dp"
-                       android:layout_marginLeft="10dp"
-                       android:layout_marginTop="10dp"
-                       android:fontFamily="@font/roboto"
-                       android:textColor="@color/cardview_dark_background"/>
+                       android:layout_height="40dp"
+                       android:layout_gravity="center"
+                       android:paddingStart="10dp"
+                       android:layout_weight="2"
+                       android:background="@drawable/edit_text_border"
+                       android:hint="Bình luận ..." />
+
+                   <ImageButton
+                       android:id="@+id/btn_send"
+                       android:layout_width="40dp"
+                       android:layout_height="40dp"
+                       android:layout_weight="1"
+                       android:background="@drawable/ic_baseline_send_24" />
                </LinearLayout>
 
                <androidx.recyclerview.widget.RecyclerView
@@ -324,6 +352,28 @@
                    android:nestedScrollingEnabled="false"
                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                    />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="20dp"
+                   android:layout_marginBottom="15dp"
+                   android:text="Phòng trọ khác"
+                   android:textStyle="bold"
+                   android:textSize="20dp"/>
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rcvXemThem"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toBottomOf="@+id/imgBanner"
+                   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                   android:nestedScrollingEnabled="false"
+                   tools:listitem="@layout/item_room" />
            </LinearLayout>
        </FrameLayout>
    </LinearLayout>

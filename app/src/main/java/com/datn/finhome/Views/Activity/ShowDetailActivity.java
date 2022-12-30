@@ -15,19 +15,23 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.datn.finhome.Adapter.AdapterFavorite;
 import com.datn.finhome.Adapter.DescriptionAdapter;
+import com.datn.finhome.Adapter.RoomAdapterHome;
 import com.datn.finhome.Models.ReviewModel;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Utils.LoaderDialog;
 import com.datn.finhome.databinding.ActivityShowDetailsBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,12 +63,40 @@ public class ShowDetailActivity extends AppCompatActivity {
     RoomModel roomModel;
     private DescriptionAdapter descriptionAdapter;
     private List<ReviewModel> mListDescription;
+    private RecyclerView rcv;
+    private DatabaseReference reference;
+    private List<RoomModel> mRoomModel;
+    private RoomAdapterHome roomAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityShowDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        mRoomModel = new ArrayList<>();
+        rcv = findViewById(R.id.rcvXemThem);
+        reference = FirebaseDatabase.getInstance().getReference("Room");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mRoomModel.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
+                    mRoomModel.add(roomModel);
+                    roomAdapter = new RoomAdapterHome(getApplicationContext(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
+                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+                    rcv.setLayoutManager(mLayoutManager);
+                    rcv.setAdapter(roomAdapter);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("TAG", error.getMessage());
+            }
+        });
+
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
             return;
@@ -73,6 +105,7 @@ public class ShowDetailActivity extends AppCompatActivity {
 
         recyclerView = binding.rcvBinhLuan;
         imageView = binding.btnFavoriteReview;
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +178,7 @@ public class ShowDetailActivity extends AppCompatActivity {
 
         });
         initRcvReview();
+        Comment();
     }
 
 
@@ -175,43 +209,15 @@ public class ShowDetailActivity extends AppCompatActivity {
 
     }
 
-    private  void openDialog(){
-        final Dialog dialog = new Dialog(this);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(R.layout.review_dialog);
-
-        Window window = dialog.getWindow();
-        if(window == null){
-            return;
-        }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        //window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams windowatribute = window.getAttributes();
-        windowatribute.gravity = Gravity.CENTER;
-        window.setAttributes(windowatribute);
-
-        EditText edtReviews = dialog.findViewById(R.id.edtReviews);
-        Button btnCancel = dialog.findViewById(R.id.btnCancel);
-        Button btnSend = dialog.findViewById(R.id.btnSend);
-
-
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (dialog != null && dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        btnSend.setOnClickListener(new View.OnClickListener() {
+    private void Comment(){
+        EditText edtReviews = findViewById(R.id.text_send);
+        ImageButton btnsend = findViewById(R.id.btn_send);
+        btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Room");
                 String key = FirebaseDatabase.getInstance().getReference("Reviews").push().getKey();
-                String pattern = "HH:mm:ss MM/dd/yyyy";
+                String pattern = "HH:mm MM/dd/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 String date = simpleDateFormat.format(new Date());
                 ReviewModel reviewModel = new ReviewModel(
@@ -226,24 +232,13 @@ public class ShowDetailActivity extends AppCompatActivity {
                         Toast.makeText(ShowDetailActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(ShowDetailActivity.this, "Đã gửi bình luận", Toast.LENGTH_SHORT).show();
+                        edtReviews.setText("");
                     }
                 });
-                if (dialog != null && dialog.isShowing()) {
-                   dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                       @Override
-                       public void onDismiss(DialogInterface dialog) {
-                           dialog.dismiss();
-                       }
-                   });
-                }
             }
         });
+    }
 
-        dialog.show();
-    }
-    public void reviews(View view) {
-        openDialog();
-    }
 
 
     public  void checkIsFavorite(){
@@ -315,5 +310,13 @@ public class ShowDetailActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private  void onClickGoToDetail(RoomModel roomModel){
+        Intent intent = new Intent(ShowDetailActivity.this, ShowDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Room", roomModel);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

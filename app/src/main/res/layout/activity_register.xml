@@ -97,6 +97,47 @@
                 android:paddingLeft="10dp"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/grey" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                >
+
+                <TextView
+                    android:layout_width="95dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="Gioi tinh:"
+                    android:textSize="18dp"
+                    android:textColor="@android:color/black"
+                    />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/rad_gender_female_signUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Nam"
+                        android:textColor="@android:color/black"
+                        android:buttonTint="@android:color/black"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rad_gender_male_signUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:buttonTint="@android:color/black"
+                        android:text="Nu"
+                        android:textColor="@android:color/black" />
+                </RadioGroup>
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/btn_signUp"

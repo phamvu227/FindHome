@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button btn_login;
     EditText edt_username_login;
     EditText edt_password_login;
-    TextView tvForgot;
+    TextView tvForgot,tvDk;
     ImageView btnCheckPass;
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
@@ -278,11 +278,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         edt_username_login = findViewById(R.id.edt_username_login);
         edt_password_login = findViewById(R.id.edt_password_login);
+        tvDk = findViewById(R.id.tvDk);
+        tvDk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                   Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                   startActivity(intent);
+            }
+        });
 
         btnCheckPass = findViewById(R.id.checkPass);
 
         progressDialog = new ProgressDialog(LoginActivity.this, R.style.MyProgessDialogStyle);
         btn_login.setOnClickListener(this);
+//        btn_signUp.setOnClickListener(this);
         btnCheckPass.setOnClickListener(this);
         btnLoginWithFacebook.setOnClickListener(this);
         btnLoginWithGoogle.setOnClickListener(this);
@@ -300,10 +309,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.login_button:
                 LoginFacebook();
                 break;
-            case R.id.btn_signUp:
-                Intent iSignup = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(iSignup);
-                break;
             case R.id.checkPass:
                 setBtnCheckPass(v);
                 break;
@@ -314,10 +319,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public void register(View view) {
-        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
-    }
+//    public void register(View view) {
+//        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+//        startActivity(intent);
+//    }
 
     private void setBtnCheckPass(View view) {
         if(edt_password_login.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
