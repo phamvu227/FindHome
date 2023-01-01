@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/containerRoom"
     android:orientation="horizontal"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgRoom"
@@ -56,6 +56,13 @@
             android:layout_marginStart="10dp"
             android:layout_gravity="center"
             android:id="@+id/btnFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/bg_btn_edit"
+           />
+          <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_gravity="center"
+            android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/ic_delete"

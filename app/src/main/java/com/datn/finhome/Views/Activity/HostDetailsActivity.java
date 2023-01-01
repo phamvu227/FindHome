@@ -37,7 +37,7 @@ public class HostDetailsActivity extends AppCompatActivity {
     private List<RoomModel> mRoomModel;
     String id;
     private DatabaseReference referenceHost, referenceRoom;
-    private String numberPhone = "0343745085";
+    private String numberPhone ;
     GoogleMap map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +89,11 @@ public class HostDetailsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String name = "" + snapshot.child("name").getValue();
-                String phone = "" + snapshot.child("phoneNumber").getValue();
+                numberPhone = "" + snapshot.child("phoneNumber").getValue();
                 String adrss = "" + snapshot.child("address").getValue();
                 String img = "" + snapshot.child("avatar").getValue();
                 binding.tvNameHost.setText(name);
-                binding.tvSdtHost.setText(phone);
+                binding.tvSdtHost.setText(numberPhone);
                 binding.tvAddressHost.setText(adrss);
                 Glide.with(binding.getRoot())
                         .load(img)

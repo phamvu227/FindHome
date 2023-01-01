@@ -2,6 +2,7 @@ package com.datn.finhome.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.datn.finhome.Models.ReviewModel;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
+import com.datn.finhome.Views.Activity.EditRoomActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +50,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         this.context = context;
         this.roomModelList = roomModelList;
         this.iClickItemUserListener = listener;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -72,13 +75,21 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         holder.tvAddress.setText(roomModel.getAddress());
         Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
         holder.btnFavorite.setOnClickListener(v -> {
-            //add favorite | xóa favorite
+            Intent intent = new Intent(context, EditRoomActivity.class);
+            intent.putExtra("RoomId", roomModel.getId());
+            context.startActivity(intent);
+
+        });
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             deleteRoom(roomModel);
             notifyDataSetChanged();
+            }
         });
-        holder.container.setOnClickListener(v -> {
-            iClickItemUserListener.onClickItemRoom(roomModel);
-        });
+//        holder.container.setOnClickListener(v -> {
+//            iClickItemUserListener.onClickItemRoom(roomModel);
+//        });
 
 
     }
@@ -139,7 +150,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         private LinearLayout container;
         private AppCompatImageView imgRoom;
         private TextView tvName, tvPrice, tvAddress;
-        private AppCompatCheckBox btnFavorite;
+        private AppCompatCheckBox btnFavorite, btnDelete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgRoom = itemView.findViewById(R.id.imgRoom);
@@ -147,6 +158,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvName = itemView.findViewById(R.id.tvNameRoom);
             btnFavorite = itemView.findViewById(R.id.btnFavorite);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
             container = itemView.findViewById(R.id.containerRoom);
         }
     }

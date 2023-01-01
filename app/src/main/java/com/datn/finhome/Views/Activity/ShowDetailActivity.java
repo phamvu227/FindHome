@@ -162,10 +162,10 @@ public class ShowDetailActivity extends AppCompatActivity {
                 String img = ""+snapshot.child("avatar").getValue();
                 binding.tvNameContactReviews.setText(name);
                 binding.tvAddressContactReviews.setText(address);
-                Glide.with(getApplicationContext())
-                        .load(img)
-                        .into(binding.imgContactReviews);
-
+//                Glide.with(getApplicationContext())
+//                        .load(img)
+//                        .into(binding.imgContactReviews);
+                Picasso.get().load(img).into(binding.imgContactReviews);
 
             }
 

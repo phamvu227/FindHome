@@ -70,9 +70,10 @@ public class HostActivity extends AppCompatActivity {
                     String fullName = userModel.name;
                     String Phone = userModel.phoneNumber;
                     String avatar = userModel.avatar;
-
+                    String adress = userModel.address;
                     tvName.setText(fullName);
                     tvPhone.setText(Phone);
+//                    t.setText(Phone);
                     Glide.with(getApplicationContext()).load(avatar).into(imgUser);
                 }
             }

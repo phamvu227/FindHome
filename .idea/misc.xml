@@ -40,6 +40,7 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_account_info.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_add.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_edit_room.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_edit_room2.xml" value="0.13333333333333333" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_favorite.xml" value="0.10552536231884058" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_history.xml" value="0.10552536231884058" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_host.xml" value="0.16666666666666666" />
@@ -57,6 +58,7 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/fragment_search.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/fragment_user.xml" value="0.16666666666666666" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_detail_reviews.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_photo.xml" value="0.10552536231884058" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_photo_viewpage.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_reviews.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_room.xml" value="0.1308876811594203" />

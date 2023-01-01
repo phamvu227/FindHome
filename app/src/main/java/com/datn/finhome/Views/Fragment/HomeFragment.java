@@ -1,5 +1,6 @@
 package com.datn.finhome.Views.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.Models.photoViewPage;
 import com.datn.finhome.R;
 import com.datn.finhome.Utils.LoaderDialog;
+import com.datn.finhome.Views.Activity.LoginActivity;
 import com.datn.finhome.Views.Activity.ShowDetailActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +48,7 @@ public class HomeFragment extends Fragment {
     private RoomAdapterHome roomAdapter;
     private List<RoomModel> mRoomModel;
     private List<photoViewPage> list;
-//    LoaderDialog loaderDialog;
+    LoaderDialog loaderDialog;
 
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -77,8 +79,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @androidx.annotation.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-
-
+//        loaderDialog.createDialog(activity);
         mRoomModel = new ArrayList<>();
         mViewPager = view.findViewById(R.id.viewPage);
         circleIndicator = view.findViewById(R.id.cir);
@@ -140,10 +141,10 @@ public class HomeFragment extends Fragment {
 
     private List<photoViewPage> getLisphoto(){
         List<photoViewPage> list = new ArrayList<>();
-        list.add(new photoViewPage(R.drawable.a1));
-        list.add(new photoViewPage(R.drawable.a2));
-        list.add(new photoViewPage(R.drawable.a3));
-        list.add(new photoViewPage(R.drawable.a4));
+        list.add(new photoViewPage(R.drawable.banner1));
+        list.add(new photoViewPage(R.drawable.banner2));
+        list.add(new photoViewPage(R.drawable.banner3));
+        list.add(new photoViewPage(R.drawable.banner4));
         return  list;
     }
 
