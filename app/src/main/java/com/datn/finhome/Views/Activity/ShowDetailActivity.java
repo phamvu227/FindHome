@@ -212,17 +212,22 @@ public class ShowDetailActivity extends AppCompatActivity {
     private void Comment(){
         EditText edtReviews = findViewById(R.id.text_send);
         ImageButton btnsend = findViewById(R.id.btn_send);
+
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Room");
+                String bl =  edtReviews.getText().toString().trim();
+                if (bl.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Vui lòng nhập bình luận", Toast.LENGTH_SHORT).show();
+                    return;
+                } else{
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Room");
                 String key = FirebaseDatabase.getInstance().getReference("Reviews").push().getKey();
                 String pattern = "HH:mm MM/dd/yyyy";
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                 String date = simpleDateFormat.format(new Date());
                 ReviewModel reviewModel = new ReviewModel(
-                        user.getUid().toString(),
-                        edtReviews.getText().toString().trim(),
+                        user.getUid().toString(), bl,
                         roomModel.getId()
                 );
                 reviewModel.setIdComment(key);
@@ -235,6 +240,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                         edtReviews.setText("");
                     }
                 });
+            }
             }
         });
     }
@@ -250,7 +256,10 @@ public class ShowDetailActivity extends AppCompatActivity {
                       isInMyFavorite = snapshot.exists();
                       if (isInMyFavorite){
 //                          imageView.setCompoun
-//                          imageView.setImageDrawable(Drawable.);
+                          imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_heart_red_24));
+                      }else {
+                          imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_false));
+
                       }
                   }
 

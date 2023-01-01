@@ -31,10 +31,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHolder> {
@@ -62,8 +64,10 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             return;
         }
         holder.tvName.setText(roomModel.getName());
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(locale);
         if (roomModel.getPrice() != null){
-            holder.tvPrice.setText(roomModel.getPrice().toString());
+            holder.tvPrice.setText(currencyFormat.format(Integer.parseInt (roomModel.getPrice())) + " VNĐ/Phòng");
         }
         holder.tvAddress.setText(roomModel.getAddress());
         Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);

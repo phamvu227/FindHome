@@ -1,5 +1,6 @@
 package com.datn.finhome.Views.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +38,7 @@ import java.util.List;
 import me.relex.circleindicator.CircleIndicator;
 
 public class HomeFragment extends Fragment {
+    Context context;
     private ViewPager mViewPager;
     private CircleIndicator circleIndicator;
     private RecyclerView rcv;
@@ -44,6 +46,7 @@ public class HomeFragment extends Fragment {
     private RoomAdapterHome roomAdapter;
     private List<RoomModel> mRoomModel;
     private List<photoViewPage> list;
+//    LoaderDialog loaderDialog;
 
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
@@ -66,7 +69,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        LoaderDialog.createDialog(getActivity());
+//        LoaderDialog.createDialog(getActivity());
         return view;
     }
 
@@ -117,7 +120,8 @@ public class HomeFragment extends Fragment {
                     rcv.setAdapter(roomAdapter);
 
                 }
-                LoaderDialog.dismiss();
+//                    loaderDialog.dismiss();
+
             }
 
             @Override

@@ -21,8 +21,10 @@ import com.datn.finhome.Interfaces.IClickItemUserListener;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder> implements Filterable {
     Context context;
@@ -54,8 +56,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewholder
             return;
         }
         holder.tvName.setText(roomModel.getName());
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(locale);
         if (roomModel.getPrice() != null){
-            holder.tvPrice.setText(roomModel.getPrice().toString());
+            holder.tvPrice.setText(currencyFormat.format(Integer.parseInt (roomModel.getPrice())) + " VNĐ/Phòng");
         }
         holder.tvAddress.setText(roomModel.getAddress());
         Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);

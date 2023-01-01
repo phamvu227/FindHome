@@ -167,8 +167,8 @@ public class AddRoomActivity extends AppCompatActivity {
         String pattern = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
-        if (name.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "vui long nhap", Toast.LENGTH_SHORT).show();
+        if (name.isEmpty() && MoTa.isEmpty() && size.isEmpty() && Asdress.isEmpty() && Price.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
 

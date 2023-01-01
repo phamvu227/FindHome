@@ -84,13 +84,14 @@ public class HostDetailsActivity extends AppCompatActivity {
     private void initHost() {
 
         referenceHost = FirebaseDatabase.getInstance().getReference("Users");
-        referenceHost.child(id).addValueEventListener(new ValueEventListener() {
+        referenceHost.child(id);
+        referenceHost.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = ""+snapshot.child("name").getValue();
-                String phone = ""+snapshot.child("phoneNumber").getValue();
-                String adrss = ""+snapshot.child("address").getValue();
-                String img = ""+snapshot.child("avatar").getValue();
+                String name = "" + snapshot.child("name").getValue();
+                String phone = "" + snapshot.child("phoneNumber").getValue();
+                String adrss = "" + snapshot.child("address").getValue();
+                String img = "" + snapshot.child("avatar").getValue();
                 binding.tvNameHost.setText(name);
                 binding.tvSdtHost.setText(phone);
                 binding.tvAddressHost.setText(adrss);
@@ -103,7 +104,7 @@ public class HostDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("",error.getMessage());
+                Log.d("", error.getMessage());
 
             }
 

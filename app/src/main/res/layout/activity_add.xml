@@ -63,8 +63,8 @@
                     android:layout_marginRight="@dimen/_10sdp"
                     android:background="@drawable/edit_text_border"
                     android:ems="10"
-                    android:hint="Kích thước"
-                    android:inputType="text"
+                    android:hint="Kích thước m2"
+                    android:inputType="number"
                     android:paddingLeft="@dimen/_18sdp"
                     android:textColorHint="@color/grey" />
 
