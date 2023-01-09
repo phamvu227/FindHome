@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -73,7 +74,8 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             holder.tvPrice.setText(currencyFormat.format(Integer.parseInt (roomModel.getPrice())) + " VNĐ/Phòng");
         }
         holder.tvAddress.setText(roomModel.getAddress());
-        Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
+//        Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
+        Picasso.get().load(roomModel.getImg()).into(holder.imgRoom);
         holder.btnFavorite.setOnClickListener(v -> {
             Intent intent = new Intent(context, EditRoomActivity.class);
             intent.putExtra("RoomId", roomModel.getId());

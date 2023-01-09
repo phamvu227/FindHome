@@ -7,9 +7,8 @@ public class UserCategory {
     private UserModel user;
     private List<Image> images;
 
-    public UserCategory(UserModel user, List<Image> images) {
+    public UserCategory(UserModel user) {
         this.user = user;
-        this.images = images;
     }
 
     public UserModel getUser() {

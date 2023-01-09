@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.datn.finhome.Interfaces.IClickItemUserListener;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -63,7 +64,8 @@ public class RoomAdapterHome extends RecyclerView.Adapter<RoomAdapterHome.RoomVi
             holder.tvPrice.setText(currencyFormat.format(Integer.parseInt (roomModel.getPrice())) + " VNĐ/Phòng");
         }
         holder.tvAddress.setText(roomModel.getAddress());
-        Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
+//        Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
+        Picasso.get().load(roomModel.getImg()).into(holder.imgRoom);
         holder.container.setOnClickListener(v -> {
             iClickItemUserListener.onClickItemRoom(roomModel);
         });

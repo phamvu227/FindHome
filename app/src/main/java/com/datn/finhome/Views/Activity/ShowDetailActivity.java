@@ -44,11 +44,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ShowDetailActivity extends AppCompatActivity {
 
@@ -145,8 +147,10 @@ public class ShowDetailActivity extends AppCompatActivity {
         });
 
         Picasso.get().load(roomModel.getImg()).into(binding.imgview);
+        Locale locale = new Locale("vi", "VN");
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance(locale);
         if (roomModel.getPrice() != null) {
-            binding.tvPriceReview.setText(roomModel.getPrice().toString()+"VND/phòng");
+            binding.tvPriceReview.setText(currencyFormat.format(Integer.parseInt (roomModel.getPrice())) + " VNĐ/Phòng");
         }
         binding.tvTitleRoomReview.setText(roomModel.getName());
 //        binding.tvAddressContactReviews.setText(roomModel.getAddress());
@@ -162,9 +166,6 @@ public class ShowDetailActivity extends AppCompatActivity {
                 String img = ""+snapshot.child("avatar").getValue();
                 binding.tvNameContactReviews.setText(name);
                 binding.tvAddressContactReviews.setText(address);
-//                Glide.with(getApplicationContext())
-//                        .load(img)
-//                        .into(binding.imgContactReviews);
                 Picasso.get().load(img).into(binding.imgContactReviews);
 
             }

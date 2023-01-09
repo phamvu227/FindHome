@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -83,7 +84,7 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
     private void deleteComment(ReviewModel description) {
         AlertDialog.Builder  builder =new AlertDialog.Builder(context);
         builder.setTitle("Delete comment")
-                .setMessage("Bạn có muốn xóa bifnhb luận này không")
+                .setMessage("Bạn có muốn xóa binhb luận này không")
                 .setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -116,7 +117,8 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
                 String name = ""+snapshot.child("name").getValue();
                 String img = ""+snapshot.child("avatar").getValue();
                 holder.tvNameUser.setText(name);
-                Glide.with(context).load(img).into(holder.imgUser);
+//                Glide.with(context).load(img).into(holder.imgUser);
+                Picasso.get().load(img).into(holder.imgUser);
             }
 
             @Override

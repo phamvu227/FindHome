@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +74,8 @@ public class HostActivity extends AppCompatActivity {
                     String adress = userModel.address;
                     tvName.setText(fullName);
                     tvPhone.setText(Phone);
-//                    t.setText(Phone);
-                    Glide.with(getApplicationContext()).load(avatar).into(imgUser);
+//                    Glide.with(getApplicationContext()).load(avatar).into(imgUser);
+                    Picasso.get().load(avatar).into(imgUser);
                 }
             }
 

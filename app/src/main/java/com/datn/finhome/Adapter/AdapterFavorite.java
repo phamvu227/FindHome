@@ -40,7 +40,7 @@ public class AdapterFavorite extends RecyclerView.Adapter<AdapterFavorite.Holder
     @NonNull
     @Override
     public HolderRoomFavorite onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room2, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room_favorite, parent, false);
         return new HolderRoomFavorite(view);
     }
 
@@ -53,8 +53,6 @@ public class AdapterFavorite extends RecyclerView.Adapter<AdapterFavorite.Holder
             //add favorite | xóa favorite
             removeFavorite(context,roomModel.getId());
         });
-//        holder.container.setOnClickListener(v -> {
-//        });
     }
 
     private static void removeFavorite(Context context,String roomId){
@@ -68,7 +66,7 @@ public class AdapterFavorite extends RecyclerView.Adapter<AdapterFavorite.Holder
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(context, "Bo yeu thich", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

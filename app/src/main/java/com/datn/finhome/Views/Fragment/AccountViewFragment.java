@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class AccountViewFragment extends Fragment implements View.OnClickListener {
     private Button btnLogout,btnChangePass,btnFavorite,btnSettingAccount, btnMyRoom;
@@ -92,7 +93,8 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
 
                     tvName.setText(fullName);
                     tvPhone.setText(Phone);
-                    Glide.with(mContext).load(avatar).into(ImgAvt);
+//                    Glide.with(mContext).load(avatar).into(ImgAvt);
+                    Picasso.get().load(avatar).into(ImgAvt);
                     tvDiaChi.setText(address);
                 }
             }
@@ -112,7 +114,8 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
 
         tvName.setText(userName);
         tvPhone.setText(userEmail);
-        Glide.with(this).load(userAvt).into(ImgAvt);
+        Picasso.get().load(userAvt).into(ImgAvt);
+//        Glide.with(this).load(userAvt).into(ImgAvt);
     }
     @Override
     public void onAttach(@NonNull Context context) {

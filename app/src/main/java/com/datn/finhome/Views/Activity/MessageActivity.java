@@ -54,7 +54,7 @@ public class MessageActivity extends AppCompatActivity {
     private ValueEventListener seenListener;
     private String userId;
     private String urlImageUser;
-    public static final String KEY = "GET";
+    public static final String KEY = "id";
     public static final String KEY_URL = "KEY_URL";
 
     @Override
@@ -83,6 +83,7 @@ public class MessageActivity extends AppCompatActivity {
         intent = getIntent();
         userId = intent.getStringExtra("id");
         urlImageUser = intent.getStringExtra(KEY_URL);
+        userId = intent.getStringExtra(KEY);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         adapter = new MessageAdapter(MessageActivity.this, list, urlImageUser);
@@ -105,9 +106,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 UserModel user = snapshot.getValue(UserModel.class);
                 txtUsername.setText(user.getName());
-                if (urlImageUser != null) {
-                    Glide.with(MessageActivity.this).load(urlImageUser).into(circleImage);
-                }
+                Glide.with(MessageActivity.this).load(user.getAvatar()).into(circleImage);
                 readMessage(firebaseUser.getUid(), userId, urlImageUser);
             }
 
@@ -183,8 +182,7 @@ public class MessageActivity extends AppCompatActivity {
                 list.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
-                    if (chat.getReceiver().equals(myId) && chat.getSender().equals(userId) ||
-                            chat.getReceiver().equals(userId) && chat.getSender().equals(myId)) {
+                    if (chat.getReceiver().equals(myId) && chat.getSender().equals(userId) || chat.getReceiver().equals(userId) && chat.getSender().equals(myId)) {
                         list.add(chat);
                     }
                     adapter.setListAdapter(list, imageURL);

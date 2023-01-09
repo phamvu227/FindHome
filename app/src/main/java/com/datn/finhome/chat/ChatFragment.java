@@ -70,7 +70,7 @@ public class ChatFragment extends Fragment {
             public void onClickShowUser(UserCategory user) {
                 Intent intent = new Intent(getContext(), MessageActivity.class);
                 intent.putExtra(MessageActivity.KEY, user.getUser().getUserID());
-                intent.putExtra(MessageActivity.KEY_URL, user.getImages().get(0).getUrl());
+//                intent.putExtra(MessageActivity.KEY_URL, user.getImages().get(0).getUrl());
                 getActivity().startActivity(intent);
             }
         });
@@ -86,7 +86,7 @@ public class ChatFragment extends Fragment {
                     ChatList chatList = snapshot.getValue(ChatList.class);
                     userList.add(chatList);
                 }
-                readChats();
+            readChats();
             }
 
             @Override
@@ -105,7 +105,7 @@ public class ChatFragment extends Fragment {
                 if (i == 0 && i2 == 0) {
 
                 } else {
-                    searchUser(charSequence.toString().toLowerCase());
+//                    searchUser(charSequence.toString().toLowerCase());
                 }
             }
 
@@ -127,29 +127,8 @@ public class ChatFragment extends Fragment {
                 mUser.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     UserModel user = snapshot.getValue(UserModel.class);
-                    for (ChatList chatList : userList) {
-                        if (user.getUserID().equals(chatList.getId())) {
-                            reference.child(user.getUserID()).child("images").addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot snapshot) {
-                                                mListImage = new ArrayList<>();
-                                                for (DataSnapshot dsChild : snapshot.getChildren()) {
-                                                    HashMap<String,Object> map = (HashMap<String, Object>) dsChild.getValue();
-                                                    String idImg = (String) map.get("id");
-                                                    String urlImg = (String) map.get("imageURL");
-                                                    mListImage.add(new Image(idImg, urlImg));
-                                                }
-                                                mUser.add(new UserCategory(user, mListImage));
-                                                adapter.setList(mUser);
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                                            }
-                                        });
-                        }
-                    }
+                    mUser.add(new UserCategory(user));
+                    adapter.setList(mUser);
                 }
             }
 
@@ -159,55 +138,55 @@ public class ChatFragment extends Fragment {
             }
         });
     }
-
-    private void searchUser(String s) {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search")
-                .startAt(s).endAt(s + "\uf8ff");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
-                mUser.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    UserModel user = snapshot.getValue(UserModel.class);
-                    assert firebaseUser != null;
-                    assert user != null;
-                    if (!user.getUserID().equals(firebaseUser.getUid())) {
-                        reference.child(user.getUserID()).child("images").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot snapshot) {
-                                mListImage = new ArrayList<>();
-                                for (DataSnapshot dsChild : snapshot.getChildren()) {
-                                    HashMap<String,Object> map = (HashMap<String, Object>) dsChild.getValue();
-                                    String idImg = (String) map.get("id");
-                                    String urlImg = (String) map.get("imageURL");
-                                    mListImage.add(new Image(idImg, urlImg));
-                                }
-                                mUser.add(new UserCategory(user, mListImage));
-                                adapter.setList(mUser);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                            }
-                        });
-                    }
-                }
-                adapter.setList(mUser);
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+//
+//    private void searchUser(String s) {
+//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search")
+//                .startAt(s).endAt(s + "\uf8ff");
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull @NotNull DataSnapshot dataSnapshot) {
+//                mUser.clear();
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    UserModel user = snapshot.getValue(UserModel.class);
+//                    assert firebaseUser != null;
+//                    assert user != null;
+//                    if (!user.getUserID().equals(firebaseUser.getUid())) {
+//                        reference.child(user.getUserID()).child("images").addValueEventListener(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(DataSnapshot snapshot) {
+//                                mListImage = new ArrayList<>();
+//                                for (DataSnapshot dsChild : snapshot.getChildren()) {
+//                                    HashMap<String,Object> map = (HashMap<String, Object>) dsChild.getValue();
+//                                    String idImg = (String) map.get("id");
+//                                    String urlImg = (String) map.get("imageURL");
+//                                    mListImage.add(new Image(idImg, urlImg));
+//                                }
+//                                mUser.add(new UserCategory(user, mListImage));
+//                                adapter.setList(mUser);
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//                            }
+//                        });
+//                    }
+//                }
+//                adapter.setList(mUser);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        binding = null;
+//    }
 
 }
