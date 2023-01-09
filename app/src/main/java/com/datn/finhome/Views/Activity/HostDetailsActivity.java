@@ -26,6 +26,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +60,24 @@ public class HostDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        initHost();
+        referenceHost = FirebaseDatabase.getInstance().getReference("Users").child(id);
+        referenceHost.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                UserModel user = snapshot.getValue(UserModel.class);
+                 numberPhone = user.getPhoneNumber();
+                binding.tvNameHost.setText(user.getName());
+                binding.tvSdtHost.setText(numberPhone);
+                binding.tvAddressHost.setText(user.getAddress());
+                Picasso.get().load(user.getAvatar()).into(binding.imgHost);
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
         initRoom();
 
         binding.btnCall.setOnClickListener(v -> {
@@ -81,38 +101,6 @@ public class HostDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void initHost() {
-
-        referenceHost = FirebaseDatabase.getInstance().getReference("Users");
-        referenceHost.child(id);
-        referenceHost.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = "" + snapshot.child("name").getValue();
-                numberPhone = "" + snapshot.child("phoneNumber").getValue();
-                String adrss = "" + snapshot.child("address").getValue();
-                String img = "" + snapshot.child("avatar").getValue();
-                binding.tvNameHost.setText(name);
-                binding.tvSdtHost.setText(numberPhone);
-                binding.tvAddressHost.setText(adrss);
-                Glide.with(binding.getRoot())
-                        .load(img)
-                        .into(binding.imgHost);
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("", error.getMessage());
-
-            }
-
-
-        });
-
-
-    }
 
     private void initRoom() {
 
