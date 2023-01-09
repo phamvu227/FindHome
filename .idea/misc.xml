@@ -38,6 +38,8 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/bg_indicator.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/chat.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/frame.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/ic_back.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/ic_share_24.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/ic_svg_facebook_100.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_account_info.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_add.xml" value="0.1" />
@@ -73,6 +75,8 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/layout.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/loader_dialog.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/menu/main_menu.xml" value="0.1796875" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/menu/toobar_menu.xml" value="0.1796875" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/xml/paths.xml" value="0.15579710144927536" />
         <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/edit_text_border.xml" value="0.1965" />
         <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/ic_favorite_false.xml" value="0.1965" />
         <entry key="..\:/Users/mha28/finhome/app/src/main/res/drawable-v24/ic_favorite_true.xml" value="0.1965" />

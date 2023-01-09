@@ -29,6 +29,19 @@
                android:background="@null"
                android:src="@drawable/ic_back" />
 
+          <ImageButton
+              android:id="@+id/share"
+              android:background="@null"
+              android:layout_marginEnd="15dp"
+              android:layout_alignParentTop="true"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentEnd="true"
+
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="200dp"
+              android:src="@drawable/ic_share_24"/>
+
        </RelativeLayout>
 
        <FrameLayout

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -60,6 +61,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     String uid;
     ImageView imageView;
+    ImageButton imageButton;
     RecyclerView recyclerView;
     private FirebaseUser user;
     RoomModel roomModel;
@@ -107,6 +109,23 @@ public class ShowDetailActivity extends AppCompatActivity {
 
         recyclerView = binding.rcvBinhLuan;
         imageView = binding.btnFavoriteReview;
+        imageButton = binding.share;
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_SUBJECT,"Subject Here");
+                    i.putExtra(Intent.EXTRA_TEXT,"link app : https://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName());
+                    startActivity(Intent.createChooser(i,"share With"));
+                }catch (Exception e){
+                    Toast.makeText(ShowDetailActivity.this, "unable to sharex this app", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
