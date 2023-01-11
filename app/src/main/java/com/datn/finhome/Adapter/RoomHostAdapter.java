@@ -1,11 +1,17 @@
 package com.datn.finhome.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +30,8 @@ import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Views.Activity.EditRoomActivity;
+import com.datn.finhome.Views.Activity.HostActivity;
+import com.datn.finhome.Views.Activity.ThanhToanActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,6 +90,13 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             context.startActivity(intent);
 
         });
+
+        holder.tvDayTin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDialog();
+            }
+        });
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +110,29 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
 
 
     }
+
+    private void ShowDialog() {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheetlayout);
+        Button buttonThanhToan = dialog.findViewById(R.id.btnThanhToan);
+
+        buttonThanhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ThanhToanActivity.class);
+                context.startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+    }
+
     private void deleteRoom(RoomModel roomModel) {
         AlertDialog.Builder  builder =new AlertDialog.Builder(context);
         builder.setTitle("Delete Room")
@@ -151,7 +189,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
         private LinearLayout container;
         private AppCompatImageView imgRoom;
-        private TextView tvName, tvPrice, tvAddress;
+        private TextView tvName, tvPrice, tvAddress, tvDayTin;
         private AppCompatCheckBox btnFavorite, btnDelete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -159,6 +197,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             tvAddress = itemView.findViewById(R.id.tvAddressRoom);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvName = itemView.findViewById(R.id.tvNameRoom);
+            tvDayTin = itemView.findViewById(R.id.tvDayTin);
             btnFavorite = itemView.findViewById(R.id.btnFavorite);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             container = itemView.findViewById(R.id.containerRoom);

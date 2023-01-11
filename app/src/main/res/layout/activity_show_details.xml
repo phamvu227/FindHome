@@ -42,6 +42,13 @@
               android:layout_marginLeft="200dp"
               android:src="@drawable/ic_share_24"/>
 
+           <ImageButton
+               android:id="@+id/imgThanhtoan"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_share_24"
+               android:layout_marginLeft="100dp"/>
+
        </RelativeLayout>
 
        <FrameLayout
@@ -270,7 +277,10 @@
                        app:layout_constraintVertical_bias="0.529"
                        app:strokeColor="@color/black"
                        app:strokeWidth="@dimen/_1sdp" />
+
                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                <View
                    android:background="#B1B1B1"
                    android:layout_width="match_parent"

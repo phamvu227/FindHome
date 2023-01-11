@@ -37,6 +37,7 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/bg_custom_dialog_top.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/bg_indicator.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/chat.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/dialog_bg.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/frame.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/ic_back.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/drawable/ic_share_24.xml" value="0.1" />
@@ -55,7 +56,9 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_register.xml" value="0.10054347826086957" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_setting_account.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_show_details.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_thanh_toan.xml" value="0.15806159420289856" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_viewhistory.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/bottomsheetlayout.xml" value="0.15806159420289856" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/dialog_custom.xml" value="0.10552536231884058" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/fragment_add_room.xml" value="0.1" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
@@ -67,7 +70,7 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_photo_viewpage.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_reviews.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_room.xml" value="0.1308876811594203" />
-        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_room2.xml" value="0.10552536231884058" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_room2.xml" value="0.3333333333333333" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_room_favorite.xml" value="0.10552536231884058" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_room_home.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_room_rent.xml" value="0.10552536231884058" />

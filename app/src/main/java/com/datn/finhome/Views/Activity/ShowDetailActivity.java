@@ -1,38 +1,33 @@
 package com.datn.finhome.Views.Activity;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.datn.finhome.Adapter.AdapterFavorite;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.datn.finhome.Adapter.DescriptionAdapter;
 import com.datn.finhome.Adapter.RoomAdapterHome;
 import com.datn.finhome.Models.ReviewModel;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
-import com.datn.finhome.Utils.LoaderDialog;
 import com.datn.finhome.databinding.ActivityShowDetailsBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,7 +38,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
+import com.stripe.android.PaymentConfiguration;
+import com.stripe.android.paymentsheet.*;
+
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -52,6 +52,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class ShowDetailActivity extends AppCompatActivity {
 
@@ -61,7 +62,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     String uid;
     ImageView imageView;
-    ImageButton imageButton;
+    ImageButton imageButton, imgThanh;
     RecyclerView recyclerView;
     private FirebaseUser user;
     RoomModel roomModel;
@@ -71,12 +72,15 @@ public class ShowDetailActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private List<RoomModel> mRoomModel;
     private RoomAdapterHome roomAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityShowDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+
+
         mRoomModel = new ArrayList<>();
         rcv = findViewById(R.id.rcvXemThem);
         reference = FirebaseDatabase.getInstance().getReference("Room");
@@ -110,6 +114,8 @@ public class ShowDetailActivity extends AppCompatActivity {
         recyclerView = binding.rcvBinhLuan;
         imageView = binding.btnFavoriteReview;
         imageButton = binding.share;
+        imgThanh = binding.imgThanhtoan;
+
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
