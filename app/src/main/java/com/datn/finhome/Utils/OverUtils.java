@@ -25,6 +25,8 @@ public class OverUtils {
     public static final String VALIDATE_PHONE = "Số điện thoại không hợp lệ";
     public static final String VALIDATE_NAME = "Quý khánh vui lòng đặt tên đăng nhập từ 6 kí tự trở lên";
     public static final String VALIDATE_TK_MK = "Tài khoản mật khẩu không hợp lệ";
+    public static final String PASS_FILE = "PASS_FILE";
+    public static final String PASS_FLASH_ACTIVITY = "PASS_FLASH_ACTIVITY";
     public static void makeToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }

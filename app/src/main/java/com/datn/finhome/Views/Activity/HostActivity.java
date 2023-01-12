@@ -1,6 +1,7 @@
 package com.datn.finhome.Views.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import com.datn.finhome.Adapter.RoomHostAdapter;
+import com.datn.finhome.Controllers.UserDao;
+import com.datn.finhome.Interfaces.IAfterGetAllObject;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
@@ -75,7 +78,7 @@ public class HostActivity extends AppCompatActivity {
                     tvName.setText(fullName);
                     tvPhone.setText(Phone);
 //                    Glide.with(getApplicationContext()).load(avatar).into(imgUser);
-                    Picasso.get().load(avatar).into(imgUser);
+                    Picasso.get().load(avatar).placeholder(R.mipmap.ic_launcher).into(imgUser);
                 }
             }
 
@@ -115,6 +118,7 @@ public class HostActivity extends AppCompatActivity {
             }
         });
     }
+
     private  void onClickGoToDetail(RoomModel roomModel){
         Intent intent = new Intent(this, ShowDetailActivity.class);
         Bundle bundle = new Bundle();

@@ -94,7 +94,7 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
                     tvName.setText(fullName);
                     tvPhone.setText(Phone);
 //                    Glide.with(mContext).load(avatar).into(ImgAvt);
-                    Picasso.get().load(avatar).into(ImgAvt);
+                    Picasso.get().load(avatar).placeholder(R.mipmap.ic_launcher).into(ImgAvt);
                     tvDiaChi.setText(address);
                 }
             }

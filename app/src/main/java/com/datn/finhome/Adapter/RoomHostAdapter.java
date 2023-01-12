@@ -83,7 +83,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         }
         holder.tvAddress.setText(roomModel.getAddress());
 //        Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
-        Picasso.get().load(roomModel.getImg()).into(holder.imgRoom);
+        Picasso.get().load(roomModel.getImg()).placeholder(R.mipmap.ic_launcher).into(holder.imgRoom);
         holder.btnFavorite.setOnClickListener(v -> {
             Intent intent = new Intent(context, EditRoomActivity.class);
             intent.putExtra("RoomId", roomModel.getId());

@@ -107,6 +107,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 userModel.setGender(genderUser);
                                 userModel.setOwner(owner);
                                 userModel.setPhoneNumber(phone);
+                                userModel.setEnable(true);
                                 userController.addUser(userModel, uid);
                                 progressDialog.dismiss();
                                 overUtils.makeToast(getApplicationContext(),"Đăng ký thành công");

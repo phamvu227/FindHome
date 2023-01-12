@@ -22,13 +22,38 @@ public class UserModel implements Parcelable {
    public String email;
    public String phoneNumber;
    public String address;
+    private boolean enable;
     boolean owner, gender;
+
     private List<Image> mListImage;
 
     //Id người dùng ở đây là uid trong firebaseauthen
     String userID;
 
     RequestCreator compressionImageFit;
+
+    public UserModel(String avatar, String name, String email, String phoneNumber, String address, boolean enable, boolean owner, boolean gender, List<Image> mListImage, String userID, RequestCreator compressionImageFit, DatabaseReference nodeRoot) {
+        this.avatar = avatar;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.enable = enable;
+        this.owner = owner;
+        this.gender = gender;
+        this.mListImage = mListImage;
+        this.userID = userID;
+        this.compressionImageFit = compressionImageFit;
+        this.nodeRoot = nodeRoot;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 
     protected UserModel(Parcel in) {
         avatar = in.readString();

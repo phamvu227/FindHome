@@ -61,7 +61,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                         try {
                             JSONObject object = new JSONObject(response);
                             CustomerId = object.getString("id");
-                            Toast.makeText(ThanhToanActivity.this, CustomerId, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(ThanhToanActivity.this, CustomerId, Toast.LENGTH_SHORT).show();
                             getEmphericalkey(CustomerId);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -110,7 +110,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                         try {
                             JSONObject object = new JSONObject(response);
                             EphericalKey = object.getString("id");
-                            Toast.makeText(ThanhToanActivity.this, EphericalKey, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(ThanhToanActivity.this, EphericalKey, Toast.LENGTH_SHORT).show();
                             getClientSecret(CustomerId, EphericalKey);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -153,7 +153,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                         try {
                             JSONObject object = new JSONObject(response);
                             ClientSecret = object.getString("client_secret");
-                            Toast.makeText(ThanhToanActivity.this, ClientSecret, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(ThanhToanActivity.this, ClientSecret, Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
