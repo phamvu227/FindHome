@@ -79,6 +79,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         Locale locale = new Locale("vi", "VN");
         NumberFormat currencyFormat = NumberFormat.getNumberInstance(locale);
         if (roomModel.getPrice() != null){
+
             holder.tvPrice.setText(currencyFormat.format(Integer.parseInt (roomModel.getPrice())) + " VNĐ/Phòng");
         }
         holder.tvAddress.setText(roomModel.getAddress());

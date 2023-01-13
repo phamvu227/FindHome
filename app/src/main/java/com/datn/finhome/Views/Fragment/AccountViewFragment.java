@@ -59,7 +59,7 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         userId = firebaseUser.getUid();
         initControl();
         getInformationUser();
-        getInformationGoogle();
+//        getInformationGoogle();
         return layout;
     }
     private void initControl() {
@@ -106,17 +106,17 @@ public class AccountViewFragment extends Fragment implements View.OnClickListene
         });
     }
 
-    private void getInformationGoogle(){
-        SharedPreferences preferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String userName = preferences.getString("username","");
-        String userEmail = preferences.getString("useremail","");
-        String userAvt = preferences.getString("userAvatar","");
-
-        tvName.setText(userName);
-        tvPhone.setText(userEmail);
-        Picasso.get().load(userAvt).into(ImgAvt);
-//        Glide.with(this).load(userAvt).into(ImgAvt);
-    }
+//    private void getInformationGoogle(){
+//        SharedPreferences preferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+//        String userName = preferences.getString("username","");
+//        String userEmail = preferences.getString("useremail","");
+//        String userAvt = preferences.getString("userAvatar","");
+//
+//        tvName.setText(userName);
+//        tvPhone.setText(userEmail);
+//        Picasso.get().load(userAvt).into(ImgAvt);
+////        Glide.with(this).load(userAvt).into(ImgAvt);
+//    }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);

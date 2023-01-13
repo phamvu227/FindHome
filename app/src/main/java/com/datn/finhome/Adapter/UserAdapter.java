@@ -63,7 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         UserCategory user = list.get(position);
         String upperString = user.getUser().getName().substring(0, 1).toUpperCase() + user.getUser().getName().substring(1).toLowerCase();
         holder.txtFullname.setText(upperString);
-//        Glide.with(context).load(user.getImages().get(0).getUrl()).into(holder.profilePicc);
+        Glide.with(context).load(user.getUser().getAvatar()).into(holder.profilePicc);
         lastMessage(user.getUser().getUserID(),holder.lastMessage);
         holder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override

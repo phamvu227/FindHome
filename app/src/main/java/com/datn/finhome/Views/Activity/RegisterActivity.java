@@ -101,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         });
                                 String uid = task.getResult().getUser().getUid();
                                 UserModel userModel = new UserModel();
+                                userModel.setUserID(uid);
                                 userModel.setName(name);
                                 userModel.setEmail(email);
                                 userModel.setAvatar(avatar);

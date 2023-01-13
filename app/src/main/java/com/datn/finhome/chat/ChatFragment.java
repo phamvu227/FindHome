@@ -138,7 +138,7 @@ public class ChatFragment extends Fragment {
             }
         });
     }
-//
+
 //    private void searchUser(String s) {
 //        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 //        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("search")
@@ -182,11 +182,11 @@ public class ChatFragment extends Fragment {
 //            }
 //        });
 //    }
-//
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        binding = null;
-//    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
 }
