@@ -1,13 +1,21 @@
 package com.datn.finhome.Views.Activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +33,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.datn.finhome.Adapter.DescriptionAdapter;
 import com.datn.finhome.Adapter.RoomAdapterHome;
+import com.datn.finhome.Models.Report;
 import com.datn.finhome.Models.ReviewModel;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.R;
@@ -63,6 +72,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     String uid;
     ImageView imageView;
     ImageButton imageButton, imgThanh;
+    TextView tvBaoCao;
     RecyclerView recyclerView;
     private FirebaseUser user;
     RoomModel roomModel;
@@ -77,10 +87,7 @@ public class ShowDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityShowDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-
-
-
+        baocao();
         mRoomModel = new ArrayList<>();
         rcv = findViewById(R.id.rcvXemThem);
         reference = FirebaseDatabase.getInstance().getReference("Room");
@@ -233,6 +240,48 @@ public class ShowDetailActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+    private void baocao(){
+        binding.tvBaoCao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    final Dialog dialog = new Dialog(ShowDetailActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.bottomsheetlayoutbaocao);
+                    Button buttonThanhToan = dialog.findViewById(R.id.btnThanhToan);
+                    EditText edtBaoCao = dialog.findViewById(R.id.edtBaoCao);
+
+                    buttonThanhToan.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            String bc =  edtBaoCao.getText().toString().trim();
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                            String key = FirebaseDatabase.getInstance().getReference("Report").push().getKey();
+                            Report report = new Report(user.getUid().toString(), bc,
+                                    roomModel.getId());
+                            report.setIdComment(key);
+                            mDatabase.child("Report").push().setValue(report, (databaseError, databaseReference) -> {
+                                if (databaseError != null) {
+                                    Toast.makeText(ShowDetailActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(ShowDetailActivity.this, "Đã gửi Báo cáo sai phạm", Toast.LENGTH_SHORT).show();
+//                                    edtReviews.setText("");
+                                }
+                            });
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.show();
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                    dialog.getWindow().setGravity(Gravity.CENTER);
+
+            }
+        });
     }
 
     private void Comment(){
