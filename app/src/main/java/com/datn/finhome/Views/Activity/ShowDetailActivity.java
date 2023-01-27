@@ -261,7 +261,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                             String key = FirebaseDatabase.getInstance().getReference("Report").push().getKey();
                             Report report = new Report(user.getUid().toString(), bc,
                                     roomModel.getId());
-                            report.setIdComment(key);
+                            report.setIdReport(key);
                             mDatabase.child("Report").push().setValue(report, (databaseError, databaseReference) -> {
                                 if (databaseError != null) {
                                     Toast.makeText(ShowDetailActivity.this, "Lỗi: " + databaseError + "", Toast.LENGTH_SHORT).show();

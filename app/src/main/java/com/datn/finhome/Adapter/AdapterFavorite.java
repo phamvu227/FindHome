@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -103,7 +104,7 @@ public class AdapterFavorite extends RecyclerView.Adapter<AdapterFavorite.Holder
                         holder.tvName.setText(roomTitle);
                         holder.tvPrice.setText(roomPrice);
                         holder.tvAddress.setText(roomAdr);
-                        Glide.with(context).load(roomImg).into(holder.imgRoom);
+                        Picasso.get().load(roomImg).into(holder.imgRoom);
                     }
 
                     @Override
