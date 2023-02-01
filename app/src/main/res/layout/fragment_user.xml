@@ -39,7 +39,7 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="0dp"
             android:layout_toEndOf="@+id/cv_imgUser"
-            android:text="Pham Lam Vu"
+            android:text="Nha tro abc"
             android:textSize="@dimen/_15sdp"
             android:textStyle="bold" />
         <LinearLayout

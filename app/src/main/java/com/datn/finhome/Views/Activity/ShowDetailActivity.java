@@ -83,7 +83,6 @@ public class ShowDetailActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private List<RoomModel> mRoomModel;
     private RoomAdapterHome roomAdapter;
-    Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -268,6 +267,10 @@ public class ShowDetailActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             String bc =  edtBaoCao.getText().toString().trim();
+                            if (bc.length() == 0) {
+                                Toast.makeText(getApplicationContext(), "Vui lòng nhập báo cáo sai phạm", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
                             String key = FirebaseDatabase.getInstance().getReference("Report").push().getKey();
                             Report report = new Report(user.getUid().toString(), bc,
@@ -371,7 +374,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(context, "Da them vao danh sach yeu thich", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -395,7 +398,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            Toast.makeText(context, "Bo yeu thich", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Đã bỏ yêu thích", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

@@ -71,14 +71,7 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
 
         holder.tvDescription.setText(description.getReviews());
         holder.tvTime.setText("Bình luận lúc: "+time);
-        holder.imgdlt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (firebaseAuth.getCurrentUser() != null && uid.equals(firebaseAuth.getUid())){
-                    deleteComment(description);
-                }
-            }
-        });
+
     }
 
     private void deleteComment(ReviewModel description) {

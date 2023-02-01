@@ -44,7 +44,7 @@ public class HostActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private String userId;
     RoomModel roomModel;
-    TextView  tvName,tvPhone;
+    TextView  tvName,tvPhone,tvAdress;
     ImageView imgUser;
     ImageButton btnback;
     @Override
@@ -54,6 +54,7 @@ public class HostActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tvNameUser);
         tvPhone = findViewById(R.id.tvSdtUser);
         imgUser = findViewById(R.id.imgUser);
+        tvAdress = findViewById(R.id.tvAddressUser);
         btnback = findViewById(R.id.btnBack);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +78,7 @@ public class HostActivity extends AppCompatActivity {
                     String adress = userModel.address;
                     tvName.setText(fullName);
                     tvPhone.setText(Phone);
-//                    Glide.with(getApplicationContext()).load(avatar).into(imgUser);
+                    tvAdress.setText(adress);
                     Picasso.get().load(avatar).placeholder(R.mipmap.ic_launcher).into(imgUser);
                 }
             }
