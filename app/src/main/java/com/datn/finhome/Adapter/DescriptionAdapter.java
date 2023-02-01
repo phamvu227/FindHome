@@ -142,7 +142,6 @@ public class DescriptionAdapter extends RecyclerView.Adapter<DescriptionAdapter.
             tvDescription = itemView.findViewById(R.id.tvAddressRoom);
             tvTime = itemView.findViewById(R.id.tvTime);
             imgUser = itemView.findViewById(R.id.imgUserReview);
-            imgdlt = itemView.findViewById(R.id.imgdlt);
         }
     }
 }
