@@ -61,7 +61,6 @@
                    android:id="@+id/imgview"
                    android:layout_width="match_parent"
                    android:layout_height="200dp"
-                   android:layout_marginBottom="@dimen/_20sdp"
                    android:scaleType="centerCrop"
                    android:src="@drawable/banner"/>
                <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,6 +70,8 @@
                    android:layout_margin="10dp">
                    <TextView
                        android:id="@+id/tvTitleRoomReview"
+                       android:textStyle="bold"
+                       android:textSize="20dp"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                        android:text="Phòng trọ có gác xép, đủ rộng cho 2 người"
@@ -157,7 +158,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:text="40m2"
-                       android:textColor="@color/cardview_dark_background"
+                       android:textColor="@color/teal_700"
                        android:textSize="16dp"
                        app:layout_constraintBottom_toBottomOf="parent"
                        app:layout_constraintEnd_toEndOf="parent"
@@ -260,15 +261,35 @@
                            android:layout_width="15dp"
                            android:layout_height="15dp"
                            android:background="@drawable/ic_location"/>
+
+                       <LinearLayout
+                           android:layout_width="100dp"
+                           android:layout_height="wrap_content">
+                           <TextView
+                               android:id="@+id/tvAddressContactReviews"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Hà Nội"
+                               android:textSize="13dp"
+                               />
+
+                       </LinearLayout>
+
+
                        <TextView
-                           android:id="@+id/tvAddressContactReviews"
-                           android:layout_width="@dimen/_120sdp"
+                           android:id="@+id/tvChiDuong"
+                           android:layout_width="wrap_content"
+                           android:textStyle="bold"
+                           android:layout_marginLeft="1dp"
+                           android:textColor="@color/teal_700"
                            android:layout_height="wrap_content"
-                           android:text="Hà Nội"
+                           android:text="Chỉ Đường"
                            android:textSize="13dp"
                            />
 
                    </LinearLayout>
+
+
 
 
                    <com.google.android.material.button.MaterialButton

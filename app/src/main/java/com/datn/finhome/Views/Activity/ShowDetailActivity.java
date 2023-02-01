@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -71,8 +72,8 @@ public class ShowDetailActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     String uid;
     ImageView imageView;
-    ImageButton imageButton, imgThanh;
-    TextView tvBaoCao;
+    ImageButton imageButton;
+    TextView tvBaoCao, tvChiDuong;
     RecyclerView recyclerView;
     private FirebaseUser user;
     RoomModel roomModel;
@@ -82,6 +83,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private List<RoomModel> mRoomModel;
     private RoomAdapterHome roomAdapter;
+    Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +123,16 @@ public class ShowDetailActivity extends AppCompatActivity {
         recyclerView = binding.rcvBinhLuan;
         imageView = binding.btnFavoriteReview;
         imageButton = binding.share;
-        imgThanh = binding.imgThanhtoan;
+        tvChiDuong = binding.tvChiDuong;
+        tvChiDuong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+                mapIntent.setData(Uri.parse("geo:21.0277644, 105.8341598"));
+                Intent chooser = Intent.createChooser(mapIntent,"Lauch map");
+                startActivity(chooser);
+            }
+        });
 
 
         imageButton.setOnClickListener(new View.OnClickListener() {

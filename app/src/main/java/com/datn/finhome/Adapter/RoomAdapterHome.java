@@ -36,7 +36,7 @@ public class RoomAdapterHome extends RecyclerView.Adapter<RoomAdapterHome.RoomVi
     public RoomAdapterHome(Context context, List<RoomModel> list, IClickItemUserListener listener) {
         this.context = context;
         this.list = list;
-        this.iClickItemUserListener = listener;
+            this.iClickItemUserListener = listener;
         listFull = new ArrayList<>(list);
     }
 

@@ -56,7 +56,7 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_message.xml" value="0.10054347826086957" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_register.xml" value="0.10054347826086957" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_setting_account.xml" value="0.1" />
-        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_show_details.xml" value="0.1" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_show_details.xml" value="0.20414201183431951" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_splash.xml" value="0.15806159420289856" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_thanh_toan.xml" value="0.15806159420289856" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/activity_viewhistory.xml" value="0.1" />
@@ -80,6 +80,7 @@
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/item_user.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/layout.xml" value="0.1308876811594203" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/loader_dialog.xml" value="0.1308876811594203" />
+        <entry key="..\:/ThucTap/finhome4/app/src/main/res/layout/review_dialog.xml" value="0.15806159420289856" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/menu/main_menu.xml" value="0.1796875" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/menu/toobar_menu.xml" value="0.1796875" />
         <entry key="..\:/ThucTap/finhome4/app/src/main/res/xml/paths.xml" value="0.15579710144927536" />
