@@ -25,13 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.datn.finhome.Adapter.DescriptionAdapter;
 import com.datn.finhome.Adapter.RoomAdapterHome;
 import com.datn.finhome.Models.Report;
@@ -50,8 +43,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
-import com.stripe.android.PaymentConfiguration;
-import com.stripe.android.paymentsheet.*;
 
 import org.json.JSONObject;
 

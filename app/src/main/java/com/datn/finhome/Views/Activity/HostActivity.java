@@ -3,12 +3,17 @@ package com.datn.finhome.Views.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -62,6 +67,7 @@ public class HostActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         rv = findViewById(R.id.rvRoom);
         roomModel = new RoomModel();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -90,6 +96,13 @@ public class HostActivity extends AppCompatActivity {
         });
         initRoom();
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        getMenuInflater().inflate(R.menu.menu_ctr, menu);
     }
     private void initRoom() {
 

@@ -83,29 +83,54 @@
                 android:textSize="@dimen/_15sdp"
                 android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvSdtUser"
-                style="@style/text_user"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/llSdt"
                 android:layout_below="@+id/tvNameUser"
                 android:layout_alignStart="@+id/tvNameUser"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="0999999999"
-                android:textSize="@dimen/_12sdp" />
+                android:layout_marginTop="5dp">
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_phone"
+                    android:backgroundTint="@color/white"
+                    android:layout_marginRight="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSdtUser"
+                    style="@style/text_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0999999999"
+                    android:textSize="@dimen/_12sdp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvAddressUser"
-                style="@style/text_user"
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvSdtUser"
-                android:layout_alignStart="@+id/tvSdtUser"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text="Ba Dinh, Ha Noi"
-                android:textSize="@dimen/_12sdp" />
+                android:layout_below="@+id/llSdt"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@+id/llSdt">
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ic_location"
+                    android:backgroundTint="@color/white"
+                    android:layout_marginRight="5dp"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAddressUser"
+                    style="@style/text_user"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ba Dinh, Ha Noi"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -128,6 +153,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
