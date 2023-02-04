@@ -92,6 +92,12 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
 
         });
 
+        if (roomModel.isBrowser() == false){
+            holder.tvTrangThai.setText("Phòng đang chờ duyệt");
+        }else {
+            holder.tvTrangThai.setText("Phòng đã được duyệt");
+        }
+
         holder.tvDayTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +196,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
         private LinearLayout container;
         private AppCompatImageView imgRoom;
-        private TextView tvName, tvPrice, tvAddress, tvDayTin;
+        private TextView tvName, tvPrice, tvAddress, tvDayTin,tvTrangThai;
         private AppCompatCheckBox btnFavorite, btnDelete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -199,6 +205,7 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             tvPrice = itemView.findViewById(R.id.tvPrice);
             tvName = itemView.findViewById(R.id.tvNameRoom);
             tvDayTin = itemView.findViewById(R.id.tvDayTin);
+            tvTrangThai = itemView.findViewById(R.id.tvTrangThai);
             btnFavorite = itemView.findViewById(R.id.btnFavorite);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             container = itemView.findViewById(R.id.containerRoom);

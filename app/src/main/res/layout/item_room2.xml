@@ -49,7 +49,16 @@
                    android:layout_marginBottom="10dp"
                    android:text="Cầu Giấy, Hà Nội"
                    android:textSize="10dp" />
-               <TextView
+           <TextView
+               android:layout_marginStart="10dp"
+               android:id="@+id/tvTrangThai"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="10dp"
+               android:text="Trang thái"
+               android:textSize="10dp" />
+
+           <TextView
                    android:layout_marginStart="10dp"
                    android:id="@+id/tvDayTin"
                    android:layout_width="wrap_content"

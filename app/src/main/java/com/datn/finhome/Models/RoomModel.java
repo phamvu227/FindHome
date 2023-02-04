@@ -18,6 +18,15 @@ public class RoomModel  implements Serializable{
     String sizeRoom;
     String uid;
     String Time;
+    boolean Browser;
+
+    public boolean isBrowser() {
+        return Browser;
+    }
+
+    public void setBrowser(boolean browser) {
+        Browser = browser;
+    }
 
     public String getTime() {
         return Time;
@@ -38,8 +47,7 @@ public class RoomModel  implements Serializable{
     public RoomModel() {
     }
 
-
-    public RoomModel(String id, String title, String address, String description, String img, String name, String price, String sizeRoom) {
+    public RoomModel(String id, String title, String address, String description, String img, String name, String price, String sizeRoom, String uid, String time, boolean browser) {
         this.id = id;
         this.title = title;
         this.address = address;
@@ -48,6 +56,9 @@ public class RoomModel  implements Serializable{
         this.name = name;
         this.price = price;
         this.sizeRoom = sizeRoom;
+        this.uid = uid;
+        Time = time;
+        Browser = browser;
     }
 
     public String getId() {

@@ -144,7 +144,7 @@ public class ShowDetailActivity extends AppCompatActivity {
                     i.putExtra(Intent.EXTRA_TEXT,"link app : https://play.google.com/store/apps/details?id="+getApplicationContext().getPackageName());
                     startActivity(Intent.createChooser(i,"share With"));
                 }catch (Exception e){
-                    Toast.makeText(ShowDetailActivity.this, "unable to sharex this app", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShowDetailActivity.this, "unable to share this app", Toast.LENGTH_SHORT).show();
                 }
 
             }

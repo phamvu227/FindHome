@@ -110,7 +110,7 @@
                     android:layout_width="95dp"
                     android:layout_height="40dp"
                     android:gravity="center"
-                    android:text="Gioi tinh:"
+                    android:text="vai trò:"
                     android:textSize="18dp"
                     android:textColor="@android:color/black"
                     />
@@ -123,7 +123,7 @@
                         android:id="@+id/rad_gender_female_signUp"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Nam"
+                        android:text="Chủ Trọ"
                         android:textColor="@android:color/black"
                         android:buttonTint="@android:color/black"
                         />
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:buttonTint="@android:color/black"
-                        android:text="Nu"
+                        android:text="Người Thuê"
                         android:textColor="@android:color/black" />
                 </RadioGroup>
             </LinearLayout>

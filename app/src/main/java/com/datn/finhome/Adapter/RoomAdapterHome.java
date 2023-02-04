@@ -56,19 +56,25 @@ public class RoomAdapterHome extends RecyclerView.Adapter<RoomAdapterHome.RoomVi
         if (roomModel == null) {
             return;
         }
-        holder.tvName.setText(roomModel.getName());
-        holder.tvTime.setText("Ngày đăng: " +roomModel.getTime());
-        Locale locale = new Locale("vi", "VN");
-        NumberFormat currencyFormat = NumberFormat.getNumberInstance(locale);
-        if (roomModel.getPrice() != null){
-            holder.tvPrice.setText(currencyFormat.format(Integer.parseInt (roomModel.getPrice())) + " VNĐ/Phòng");
-        }
-        holder.tvAddress.setText(roomModel.getAddress());
+        if (roomModel.isBrowser() == false){
+            return;
+
+        }else {
+            holder.tvName.setText(roomModel.getName());
+            holder.tvTime.setText("Ngày đăng: " +roomModel.getTime());
+            Locale locale = new Locale("vi", "VN");
+            NumberFormat currencyFormat = NumberFormat.getNumberInstance(locale);
+            if (roomModel.getPrice() != null){
+                holder.tvPrice.setText(currencyFormat.format(Integer.parseInt (roomModel.getPrice())) + " VNĐ/Phòng");
+            }
+            holder.tvAddress.setText(roomModel.getAddress());
 //        Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
-        Picasso.get().load(roomModel.getImg()).into(holder.imgRoom);
-        holder.container.setOnClickListener(v -> {
-            iClickItemUserListener.onClickItemRoom(roomModel);
-        });
+            Picasso.get().load(roomModel.getImg()).into(holder.imgRoom);
+            holder.container.setOnClickListener(v -> {
+                iClickItemUserListener.onClickItemRoom(roomModel);
+            });
+        }
+
     }
 
     @Override

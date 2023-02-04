@@ -32,6 +32,7 @@ public class ThanhToanActivity extends AppCompatActivity {
     Button btnthem;
     String SECRET_KEY = "sk_test_51MOdT7HtBcRTAQQiquk5QrD4vHzMTclWcuSSchOJpsevdd65Ukd18Mqvvlc1DYFmCC5VGniAtaBiEBy2LbsQsl3P00W9hi5AQn";
     String PUBLISH_KEY = "pk_test_51MOdT7HtBcRTAQQi0k7jZ3DTbfLG3KAbyrVrDsegjYl4JGiy35EjgkgQqvZGPy31RXyG7wymFI0V6K7TCP21GLM600FbxGDnRH";
+    String usd = "1"+"00";
     PaymentSheet paymentSheet;
     String CustomerId;
     String EphericalKey;
@@ -176,7 +177,7 @@ public class ThanhToanActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
                 param.put("customer", CustomerId);
-                param.put("amount", "1"+"00");
+                param.put("amount", usd);
                 param.put("currency", "USD");
                 param.put("automatic_payment_methods[enabled]", "true");
 

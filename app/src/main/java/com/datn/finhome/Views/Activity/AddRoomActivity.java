@@ -2,12 +2,15 @@ package com.datn.finhome.Views.Activity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -16,11 +19,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.datn.finhome.Controllers.RoomController;
+import com.datn.finhome.Controllers.UserDao;
 import com.datn.finhome.Interfaces.IAfterGetAllObject;
 import com.datn.finhome.Interfaces.IAfterInsertObject;
 import com.datn.finhome.Models.RoomModel;
+import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Utils.ImgUri;
+import com.datn.finhome.Utils.OverUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,6 +42,7 @@ public class AddRoomActivity extends AppCompatActivity {
     AppCompatButton btnPost2, btnTest;
     RecyclerView recyclerImage;
     ImageView imageView;
+
 
     Toolbar toolbar;
     StorageReference storageReference;
@@ -158,31 +165,59 @@ public class AddRoomActivity extends AppCompatActivity {
 
 
     private void check(IAfterGetAllObject iAfterGetAllObject){
-        RoomModel room = new RoomModel();
-        String name = edTitle.getText().toString().trim();
-        String MoTa = edDescription.getText().toString().trim();
-        String size = edSizeRoom.getText().toString().trim();
-        String Asdress = edLocation.getText().toString().trim();
-        String Price = edPrice.getText().toString().trim();
-        String pattern = "dd/MM/yyyy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(new Date());
-        if (name.isEmpty() && MoTa.isEmpty() && size.isEmpty() && Asdress.isEmpty() && Price.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
-        room.setName(name);
-        room.setAddress(Asdress);
-        room.setDescription(MoTa);
-        room.setSizeRoom(size);
-        room.setPrice(Price);
-        room.setUid(uid);
-        room.setTime(date);
-        iAfterGetAllObject.iAfterGetAllObject(room);
+        UserDao.getInstance().getUserByUserNameListener(uid, new IAfterGetAllObject() {
+            @Override
+            public void iAfterGetAllObject(Object obj) {
+                if(obj != null) {
+                    UserModel user = (UserModel) obj;
+                    if (uid != null) {
+                        if (user.isGender() == true) {
+                            Toast.makeText(AddRoomActivity.this, "Tài khoản có vai trò là người thuê không thể sử dụng chức năng đăng bài", Toast.LENGTH_SHORT).show();
+                        }else {
+                            RoomModel room = new RoomModel();
+                            String name = edTitle.getText().toString().trim();
+                            String MoTa = edDescription.getText().toString().trim();
+                            String size = edSizeRoom.getText().toString().trim();
+                            String Asdress = edLocation.getText().toString().trim();
+                            String Price = edPrice.getText().toString().trim();
+                            String pattern = "dd/MM/yyyy";
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                            String date = simpleDateFormat.format(new Date());
+                            if (name.isEmpty() && MoTa.isEmpty() && size.isEmpty() && Asdress.isEmpty() && Price.isEmpty()) {
+                                Toast.makeText(getApplicationContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            room.setName(name);
+                            room.setAddress(Asdress);
+                            room.setDescription(MoTa);
+                            room.setSizeRoom(size);
+                            room.setPrice(Price);
+                            room.setUid(uid);
+                            room.setTime(date);
+                            room.setBrowser(false);
+                            iAfterGetAllObject.iAfterGetAllObject(room);
+
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+
+            }
+        });
+
+
 
 
 
     }
+
+
+
 
 }

@@ -129,11 +129,16 @@ public class HomeFragment extends Fragment {
                 mRoomModel.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
-                    mRoomModel.add(roomModel);
-                    roomAdapter = new RoomAdapterHome(getContext(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
-                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
-                    rcv.setLayoutManager(mLayoutManager);
-                    rcv.setAdapter(roomAdapter);
+                    if (roomModel.isBrowser() == false){
+
+                    }else {
+                        mRoomModel.add(roomModel);
+                        roomAdapter = new RoomAdapterHome(getContext(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
+                        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+                        rcv.setLayoutManager(mLayoutManager);
+                        rcv.setAdapter(roomAdapter);
+                    }
+
 
                 }
 //                    loaderDialog.dismiss();
