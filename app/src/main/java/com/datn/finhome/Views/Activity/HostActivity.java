@@ -1,9 +1,11 @@
 package com.datn.finhome.Views.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -51,7 +53,7 @@ public class HostActivity extends AppCompatActivity {
     RoomModel roomModel;
     TextView  tvName,tvPhone,tvAdress;
     ImageView imgUser;
-    ImageButton btnback;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +62,6 @@ public class HostActivity extends AppCompatActivity {
         tvPhone = findViewById(R.id.tvSdtUser);
         imgUser = findViewById(R.id.imgUser);
         tvAdress = findViewById(R.id.tvAddressUser);
-        btnback = findViewById(R.id.btnBack);
-        btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
 
         rv = findViewById(R.id.rvRoom);
         roomModel = new RoomModel();
@@ -94,8 +89,30 @@ public class HostActivity extends AppCompatActivity {
                 Toast.makeText(HostActivity.this, "That bai", Toast.LENGTH_SHORT).show();
             }
         });
+
+        toolbar = findViewById(R.id.toobar_host);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         initRoom();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

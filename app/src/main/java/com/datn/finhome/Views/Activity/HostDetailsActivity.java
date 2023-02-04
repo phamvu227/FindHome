@@ -6,9 +6,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +19,7 @@ import com.datn.finhome.Adapter.AdapterFavorite;
 import com.datn.finhome.Adapter.RoomAdapter;
 import com.datn.finhome.Models.RoomModel;
 import com.datn.finhome.Models.UserModel;
+import com.datn.finhome.R;
 import com.datn.finhome.databinding.ActivityHostDetailsBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,9 +52,12 @@ public class HostDetailsActivity extends AppCompatActivity {
         binding = ActivityHostDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         id = getIntent().getStringExtra("id");
-        binding.btnBack.setOnClickListener(v -> {
-            onBackPressed();
-        });
+
+        setSupportActionBar(binding.toobarHostDetail);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         binding.btnMess.setOnClickListener(v -> {
             Intent intent = new Intent(this, MessageActivity.class);
@@ -89,6 +96,20 @@ public class HostDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
