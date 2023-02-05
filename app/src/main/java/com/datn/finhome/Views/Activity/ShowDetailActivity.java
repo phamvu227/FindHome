@@ -99,6 +99,9 @@ public class ShowDetailActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
                     mRoomModel.add(roomModel);
+                    if (roomModel.isBrowser() == false){
+
+                    }
                     roomAdapter = new RoomAdapterHome(getApplicationContext(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
                     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
                     rcv.setLayoutManager(mLayoutManager);

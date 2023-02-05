@@ -39,7 +39,7 @@ import java.util.Date;
 public class AddRoomActivity extends AppCompatActivity {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
-    AppCompatButton btnPost2, btnTest;
+    AppCompatButton btnPost2;
     RecyclerView recyclerImage;
     ImageView imageView;
 
@@ -141,7 +141,9 @@ public class AddRoomActivity extends AppCompatActivity {
         RoomController.getInstance().insertProduct(roomModel, new IAfterInsertObject() {
             @Override
             public void onSuccess(Object obj) {
-                Toast.makeText(getApplicationContext(), "thanh cong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Đăng phòng thành công", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AddRoomActivity.this,HostActivity.class);
+                startActivity(intent);
             }
 
             @Override

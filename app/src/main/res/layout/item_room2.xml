@@ -5,11 +5,13 @@
     android:id="@+id/containerRoom"
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:layout_marginBottom="10dp"
     android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgRoom"
             android:layout_width="100dp"
-            android:layout_height="130dp"
+            android:scaleType="fitXY"
+            android:layout_height="match_parent"
             android:src="@drawable/bg_room"
             />
 
