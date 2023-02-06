@@ -89,14 +89,16 @@ public class ShowDetailActivity extends AppCompatActivity {
                 mRoomModel.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     RoomModel roomModel = dataSnapshot.getValue(RoomModel.class);
-                    mRoomModel.add(roomModel);
                     if (roomModel.isBrowser() == false){
 
+                    }else {
+                        mRoomModel.add(roomModel);
+                        roomAdapter = new RoomAdapterHome(getApplication(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
+                        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplication(), 2);
+                        rcv.setLayoutManager(mLayoutManager);
+                        rcv.setAdapter(roomAdapter);
                     }
-                    roomAdapter = new RoomAdapterHome(getApplicationContext(), mRoomModel, roomModel1 -> onClickGoToDetail(roomModel1));
-                    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-                    rcv.setLayoutManager(mLayoutManager);
-                    rcv.setAdapter(roomAdapter);
+
 
                 }
             }

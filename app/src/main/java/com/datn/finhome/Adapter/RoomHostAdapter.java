@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
+public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHolder> {
     private  Context context;
     private List<RoomModel> roomModelList;
     private IClickItemUserListener iClickItemUserListener;
@@ -100,43 +100,20 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         }
 
 
-        holder.menu_ctr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showMenu(v);
-            }
-        });
+//        holder.menu_ctr.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showMenu(v);
+//
+//            }
+//        });
 //        holder.container.setOnClickListener(v -> {
 //            iClickItemUserListener.onClickItemRoom(roomModel);
 //        });
 
-
     }
 
-    private void showMenu(View v) {
-        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-        popupMenu.inflate(R.menu.menu_ctr);
-        popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.show();
-    }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        int position = 0;
-        RoomModel roomModel = roomModelList.get(position);
-        switch (item.getItemId()) {
-            case R.id.id_edit:
-                Intent intent = new Intent(context, EditRoomActivity.class);
-                intent.putExtra("RoomId", roomModel.getId());
-                context.startActivity(intent);
-                return true;
-            case R.id.id_delete:
-                deleteRoom(roomModel);
-                return true;
-            default:
-                return false;
-        }
-    }
 
     private void deleteRoom(RoomModel roomModel) {
         AlertDialog.Builder  builder =new AlertDialog.Builder(context);
@@ -196,11 +173,11 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         return roomModelList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener{
         private LinearLayout container;
         private AppCompatImageView imgRoom;
         private TextView tvName, tvPrice, tvAddress, tvDayTin, tvTrangThai;
-        private AppCompatImageButton btnEdit, btnDelete, menu_ctr;
+        private AppCompatImageButton menu_ctr;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgRoom = itemView.findViewById(R.id.imgRoom);
@@ -209,7 +186,34 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             tvName = itemView.findViewById(R.id.tvNameRoom);
             tvDayTin = itemView.findViewById(R.id.tvDayTin);
             tvTrangThai = itemView.findViewById(R.id.tvTrangThai);
+            menu_ctr = itemView.findViewById(R.id.menu_ctr);
             container = itemView.findViewById(R.id.containerRoom);
+
+            menu_ctr.setOnClickListener(v -> showMenu(v));
+        }
+
+        private void showMenu(View v) {
+            PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+            popupMenu.inflate(R.menu.menu_ctr);
+            popupMenu.setOnMenuItemClickListener(this);
+            popupMenu.show();
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            RoomModel roomModel = roomModelList.get(getAdapterPosition());
+            switch (item.getItemId()) {
+                case R.id.id_edit:
+                    Intent intent = new Intent(context, EditRoomActivity.class);
+                    intent.putExtra("RoomId", roomModel.getId());
+                    context.startActivity(intent);
+                    return true;
+                case R.id.id_delete:
+                    deleteRoom(roomModel);
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

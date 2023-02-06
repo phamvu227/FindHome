@@ -2,6 +2,8 @@ package com.datn.finhome.Views.Activity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -12,15 +14,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.datn.finhome.Controllers.RoomController;
+import com.datn.finhome.Controllers.UserDao;
 import com.datn.finhome.Interfaces.IAfterGetAllObject;
 import com.datn.finhome.Interfaces.IAfterInsertObject;
 import com.datn.finhome.Models.RoomModel;
+import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Utils.ImgUri;
 import com.google.firebase.auth.FirebaseAuth;
@@ -157,13 +162,13 @@ public class AddRoomActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object obj) {
                 Toast.makeText(getApplicationContext(), "Đăng phòng thành công", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AddRoomActivity.this,HostActivity.class);
+                Intent intent = new Intent(AddRoomActivity.this, HostActivity.class);
                 startActivity(intent);
             }
 
             @Override
             public void onError(DatabaseError exception) {
-                Toast.makeText(getApplicationContext(), "that bai", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Thất bại", Toast.LENGTH_SHORT).show();
             }
         });
     }
