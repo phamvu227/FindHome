@@ -2,7 +2,6 @@ package com.datn.finhome.Views.Activity;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -19,14 +18,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.datn.finhome.Controllers.RoomController;
-import com.datn.finhome.Controllers.UserDao;
 import com.datn.finhome.Interfaces.IAfterGetAllObject;
 import com.datn.finhome.Interfaces.IAfterInsertObject;
 import com.datn.finhome.Models.RoomModel;
-import com.datn.finhome.Models.UserModel;
 import com.datn.finhome.R;
 import com.datn.finhome.Utils.ImgUri;
-import com.datn.finhome.Utils.OverUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -39,10 +35,9 @@ import java.util.Date;
 public class AddRoomActivity extends AppCompatActivity {
     EditText edTitle, edLocation, edSizeRoom, edPrice, edDescription;
     AppCompatImageButton btnBack;
-    AppCompatButton btnPost2;
+    AppCompatButton btnPost2, btnTest;
     RecyclerView recyclerImage;
     ImageView imageView;
-
 
     Toolbar toolbar;
     StorageReference storageReference;
@@ -59,6 +54,26 @@ public class AddRoomActivity extends AppCompatActivity {
         initView();
         setUpSaveRoom();
         setUpGetImg();
+
+        toolbar = findViewById(R.id.toobar_add);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Đăng bài");
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
     private void initView() {
         edTitle = findViewById(R.id.edit_title);
@@ -218,8 +233,5 @@ public class AddRoomActivity extends AppCompatActivity {
 
 
     }
-
-
-
 
 }

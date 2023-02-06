@@ -8,22 +8,23 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.datn.finhome.Interfaces.IClickItemUserListener;
 import com.datn.finhome.Models.ReviewModel;
 import com.datn.finhome.Models.RoomModel;
@@ -50,7 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHolder> {
+public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
     private  Context context;
     private List<RoomModel> roomModelList;
     private IClickItemUserListener iClickItemUserListener;
@@ -85,11 +86,11 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
         holder.tvAddress.setText(roomModel.getAddress());
 //        Glide.with(context).load(roomModel.getImg()).into(holder.imgRoom);
         Picasso.get().load(roomModel.getImg()).placeholder(R.mipmap.ic_launcher).into(holder.imgRoom);
-        holder.btnFavorite.setOnClickListener(v -> {
-            Intent intent = new Intent(context, EditRoomActivity.class);
-            intent.putExtra("RoomId", roomModel.getId());
-            context.startActivity(intent);
-
+        holder.tvDayTin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDialog();
+            }
         });
 
         if (roomModel.isBrowser() == false){
@@ -98,17 +99,11 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             holder.tvTrangThai.setText("Phòng đã được duyệt");
         }
 
-        holder.tvDayTin.setOnClickListener(new View.OnClickListener() {
+
+        holder.menu_ctr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowDialog();
-            }
-        });
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            deleteRoom(roomModel);
-            notifyDataSetChanged();
+                showMenu(v);
             }
         });
 //        holder.container.setOnClickListener(v -> {
@@ -118,26 +113,29 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
 
     }
 
-    private void ShowDialog() {
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.bottomsheetlayout);
-        Button buttonThanhToan = dialog.findViewById(R.id.btnThanhToan);
+    private void showMenu(View v) {
+        PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+        popupMenu.inflate(R.menu.menu_ctr);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.show();
+    }
 
-        buttonThanhToan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ThanhToanActivity.class);
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int position = 0;
+        RoomModel roomModel = roomModelList.get(position);
+        switch (item.getItemId()) {
+            case R.id.id_edit:
+                Intent intent = new Intent(context, EditRoomActivity.class);
+                intent.putExtra("RoomId", roomModel.getId());
                 context.startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
+                return true;
+            case R.id.id_delete:
+                deleteRoom(roomModel);
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void deleteRoom(RoomModel roomModel) {
@@ -169,24 +167,29 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
                 .show();
     }
 
-    private void loadRoom(RoomModel roomModel, ViewHolder holder) {
-        String uid = roomModel.getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Room");
-        ref.child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = ""+snapshot.child("name").getValue();
-                String img = ""+snapshot.child("img").getValue();
-                holder.tvName.setText(name);
-                Glide.with(context).load(img).into(holder.imgRoom);
-            }
+    private void ShowDialog() {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheetlayout);
+        Button buttonThanhToan = dialog.findViewById(R.id.btnThanhToan);
 
+        buttonThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ThanhToanActivity.class);
+                context.startActivity(intent);
+                dialog.dismiss();
             }
         });
+
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
     }
+
 
     @Override
     public int getItemCount() {
@@ -196,8 +199,8 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
         private LinearLayout container;
         private AppCompatImageView imgRoom;
-        private TextView tvName, tvPrice, tvAddress, tvDayTin,tvTrangThai;
-        private AppCompatCheckBox btnFavorite, btnDelete;
+        private TextView tvName, tvPrice, tvAddress, tvDayTin, tvTrangThai;
+        private AppCompatImageButton btnEdit, btnDelete, menu_ctr;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgRoom = itemView.findViewById(R.id.imgRoom);
@@ -206,8 +209,6 @@ public class RoomHostAdapter extends RecyclerView.Adapter<RoomHostAdapter.ViewHo
             tvName = itemView.findViewById(R.id.tvNameRoom);
             tvDayTin = itemView.findViewById(R.id.tvDayTin);
             tvTrangThai = itemView.findViewById(R.id.tvTrangThai);
-            btnFavorite = itemView.findViewById(R.id.btnFavorite);
-            btnDelete = itemView.findViewById(R.id.btnDelete);
             container = itemView.findViewById(R.id.containerRoom);
         }
     }
